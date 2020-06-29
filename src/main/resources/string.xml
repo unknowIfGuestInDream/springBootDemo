@@ -1,0 +1,22 @@
+<items>
+    <item>
+        <store_id>1001</store_id>
+        <store_desc>大连1001</store_desc>
+    </item>
+    <item>
+        <store_id>1002</store_id>
+        <store_desc>大连1002</store_desc>
+    </item>
+    <item>
+        <store_id>1003</store_id>
+        <store_desc>大连1003</store_desc>
+    </item>
+    <item>
+        <store_id>1004</store_id>
+        <store_desc>大连1004</store_desc>
+    </item>
+    <item>
+        <store_id>1005</store_id>
+        <store_desc>大连1005</store_desc>
+    </item>
+</items>

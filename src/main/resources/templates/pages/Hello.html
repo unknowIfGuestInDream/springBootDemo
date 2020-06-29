@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello</title>
+    <script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+</head>
+<body>
+Hello SpringBootDemo
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            async: true,
+            url: '/selectTest',
+            params: {},
+            dataType : "json",
+            method: 'POST',
+            success: function (data) {
+                console.log(data.result)
+            },
+            error:function (data) {
+                alert(data.result);
+            }
+        });
+    });
+</script>
+</body>
+</html>
