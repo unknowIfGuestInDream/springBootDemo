@@ -16,12 +16,17 @@ public class contextTest {
     JdbcTemplate jdbcTemplate;
 
     @Test
-    void context(){
-        System.out.println(jdbcTemplate.queryForObject("select count(*) from tx_realtime_parm_test",Integer.class));
+    void context() {
+        System.out.println(jdbcTemplate.queryForObject("select count(*) from tx_realtime_parm_test", Integer.class));
     }
 
     @Test
-    void context1(){
+    void context1() {
         System.out.println(jdbcTemplate.queryForList("select * from cb_code"));
+    }
+
+    @Test
+    void oracleTest() {
+        System.out.println(jdbcTemplate.queryForList("select * from SCRUM1"));
     }
 }

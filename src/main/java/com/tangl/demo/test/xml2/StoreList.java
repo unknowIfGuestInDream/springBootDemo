@@ -28,8 +28,17 @@ public class StoreList {
 
     @Override
     public String toString() {
-        return "StoreList{" +
-                "storeList=" + storeList +
-                '}';
+        String result = "StoreList{";
+//        storeList.stream().map(store -> {
+//            result += " store_id=" + store.getStore_id() +
+//                   " store_desc=" + store.getStore_desc();
+//        }).collect()
+//        return storeList.forEach(store -> {
+//            result += " store_id=" + store.getStore_id() +
+//                    " store_desc=" + store.getStore_desc();
+//                });
+//                + "storeList=" + storeList +
+//                '}';
+        return null;
     }
 }

@@ -31,7 +31,7 @@ public class FirstController {
 
     @GetMapping(value = "hello")
     public String hello(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
-        return "Hello";
+        return "pages/Hello";
     }
 
     @PostMapping(value = "selectTest")
