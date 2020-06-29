@@ -26,7 +26,7 @@ public class FirstServiceImpl implements FirstService {
     @Override
     public List<Map<String, Object>> selectTest() {
         Map<String, Object> paramMap = new HashMap<>();
-        String sql = "select * from tx_realtime_parm_test";
+        String sql = "select * from tx_realtime_parm_test limit 0,100";
         NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate);
         return namedParameterJdbcTemplate.queryForList(sql, paramMap);
     }

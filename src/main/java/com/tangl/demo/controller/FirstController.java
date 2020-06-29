@@ -34,6 +34,11 @@ public class FirstController {
         return "pages/Hello";
     }
 
+    @GetMapping(value = "errors")
+    public String errors(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+        return "errorPages/error";
+    }
+
     @PostMapping(value = "selectTest")
     @ResponseBody
     public Map<String, Object> selectTest(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
