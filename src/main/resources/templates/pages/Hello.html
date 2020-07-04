@@ -11,14 +11,15 @@ Hello SpringBootDemo
     $(function () {
         $.ajax({
             async: true,
-            url: '/selectTest',
-            params: {},
-            dataType : "json",
+            url: 'selectTest',
+            data: {
+            },
+            dataType: "json",
             method: 'POST',
             success: function (data) {
                 console.log(data.result)
             },
-            error:function (data) {
+            error: function (data) {
                 alert(data.result);
             }
         });

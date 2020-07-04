@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,13 +42,14 @@ public class FirstController {
 
     @PostMapping(value = "selectTest")
     @ResponseBody
-    public Map<String, Object> selectTest(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+    public Map<String, Object> selectTest(Date time, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         Map<String, Object> result = new HashMap<String, Object>();
-
+        System.out.println(time);
         try {
             List<Map<String, Object>> deptList = firstService.selectTest();
             int total = firstService.countTest();
             result.put("result", deptList);
+            result.put("date", new Date());
             result.put("total", total);
             result.put("success", true);
         } catch (Exception e) {
