@@ -31,7 +31,8 @@ public class HttpTest {
          *  URL 这个地址说从高德开发平台是找到，这种API其实网上一大把
          *  说明下 有两个核心参数  city 是城市码  key是高德上申请到
          */
-        String dataUrl="https://restapi.amap.com/v3/weather/weatherInfo?city=110101&key=138993d5bd56a52d9c9ab3a2ee5d02c2";
+        //String dataUrl="https://restapi.amap.com/v3/weather/weatherInfo?city=210203&key=138993d5bd56a52d9c9ab3a2ee5d02c2";
+        String dataUrl="https://restapi.amap.com/v3/weather/weatherInfo?city=210204&key=138993d5bd56a52d9c9ab3a2ee5d02c2";
         PostMethod postMethod=new PostMethod();
         GetMethod getMethod = new GetMethod(dataUrl);
         httpClient.executeMethod(getMethod);
