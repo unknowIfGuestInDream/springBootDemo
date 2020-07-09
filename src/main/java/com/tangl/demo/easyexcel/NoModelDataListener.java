@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class NoModelDataListener extends AnalysisEventListener<Map<Integer, String>> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(NoModelDataListener.class);
+    private static final Logger logger = LoggerFactory.getLogger(NoModelDataListener.class);
 
     /**
      * 每隔5条存储数据库，实际使用中可以3000条，然后清理list ，方便内存回收
@@ -27,7 +27,7 @@ public class NoModelDataListener extends AnalysisEventListener<Map<Integer, Stri
 
     @Override
     public void invoke(Map<Integer, String> data, AnalysisContext context) {
-        LOGGER.info("解析到一条数据:{}", JSON.toJSONString(data));
+        logger.info("解析到一条数据:{}", JSON.toJSONString(data));
         list.add(data);
 //        if (list.size() >= BATCH_COUNT) {
 //            saveData();
@@ -39,7 +39,7 @@ public class NoModelDataListener extends AnalysisEventListener<Map<Integer, Stri
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
         saveData();
-        LOGGER.info("所有数据解析完成！");
+        logger.info("所有数据解析完成！");
     }
 
     public List<Map<Integer, String>> getList() {

@@ -6,8 +6,7 @@ import com.tangl.demo.easyexcel.DemoData;
 import com.tangl.demo.easyexcel.DemoDataListener;
 import com.tangl.demo.easyexcel.NoModelDataListener;
 import com.tangl.demo.service.FirstService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +31,7 @@ import java.util.Map;
  */
 @Controller
 public class FirstController {
-    private static final Logger logger = LoggerFactory.getLogger(FirstController.class);
+    private static final Logger logger = Logger.getLogger(FirstController.class);
 
     @Autowired
     private FirstService firstService;
@@ -52,8 +51,7 @@ public class FirstController {
     @LogAnno(operateType = "查询Test")
     public Map<String, Object> selectTest(Date time, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws SQLException {
         Map<String, Object> result = new HashMap<String, Object>();
-        //System.out.println(time);
-
+        //logger.info("进入selectTest方法");
         List<Map<String, Object>> deptList = firstService.selectTest();
         int total = firstService.countTest();
         result.put("result", deptList);
@@ -86,6 +84,7 @@ public class FirstController {
     @LogAnno(operateType = "查询Excel")
     public Map<String, Object> selectExcel(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws SQLException {
         Map<String, Object> result = new HashMap<String, Object>();
+        //logger.info("进入selectExcel方法");
         String fileName = "E:\\demo.xlsx";
         DemoDataListener ddl = new DemoDataListener();
         EasyExcel.read(fileName, DemoData.class, ddl).sheet().doRead();
@@ -116,28 +115,5 @@ public class FirstController {
         //EasyExcel.read(file.getInputStream(), UploadData.class, new UploadDataListener(uploadDAO)).sheet().doRead();
         return "SUCCESS";
     }
-
-//    /**
-//     * excel文件的下载
-//     */
-//    @GetMapping("download")
-//    public void download(HttpServletResponse response) throws IOException {
-//        response.setContentType("application/vnd.ms-excel");
-//        response.setCharacterEncoding("utf-8");
-//        response.setHeader("Content-disposition", "attachment;filename=demo.xlsx");
-//        EasyExcel.write(response.getOutputStream(), DemoData.class).sheet("模板").doWrite(data());
-//    }
-//
-//    private List<DemoData> data() {
-//        List<DemoData> list = new ArrayList<DemoData>();
-//        for (int i = 0; i < 10; i++) {
-//            DemoData data = new DemoData();
-//            data.setString("字符串" + i);
-//            data.setDate(new Date());
-//            data.setDoubleData(0.56);
-//            list.add(data);
-//        }
-//        return list;
-//    }
 
 }

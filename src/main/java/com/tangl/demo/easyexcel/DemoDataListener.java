@@ -3,11 +3,14 @@ package com.tangl.demo.easyexcel;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.fastjson.JSON;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DemoDataListener extends AnalysisEventListener<DemoData> {
+    private static final Logger logger = LoggerFactory.getLogger(DemoDataListener.class);
     List<DemoData> list = new ArrayList<DemoData>();
 
     /**
@@ -24,7 +27,7 @@ public class DemoDataListener extends AnalysisEventListener<DemoData> {
      */
     @Override
     public void invoke(DemoData data, AnalysisContext context) {
-        System.out.println("解析到一条数据:{}" + JSON.toJSONString(data));
+        logger.info("解析到一条数据:{}", JSON.toJSONString(data));
         list.add(data);
     }
 
@@ -35,7 +38,7 @@ public class DemoDataListener extends AnalysisEventListener<DemoData> {
      */
     @Override
     public void doAfterAllAnalysed(AnalysisContext context) {
-        //System.out.println(JSON.toJSONString(list));
+        logger.info("所有数据解析完成！");
     }
 
     public List<DemoData> getList() {

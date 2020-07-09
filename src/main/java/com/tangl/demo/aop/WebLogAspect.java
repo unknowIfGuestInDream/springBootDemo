@@ -77,13 +77,13 @@ public class WebLogAspect {
 //        }
 //        System.out.println("被代理的对象:" + joinPoint.getTarget());
 //        System.out.println("代理对象自己:" + joinPoint.getThis());
-        //System.out.println("Before");
     }
 
     //@Around("BrokerAspect()")
     @Around("logAnno()")
     public Object doAround(ProceedingJoinPoint pjd) {
         logger.info("进入方法: {}", pjd.getSignature().getName());
+
         Object result;
         // 获取方法签名
         MethodSignature methodSignature = (MethodSignature) pjd.getSignature();
@@ -102,29 +102,22 @@ public class WebLogAspect {
         OperatingSystem os = userAgent.getOperatingSystem(); //获取操作系统信息
         String ip = getIp(request);//获取ip地址
         String url = getUrl(request);//获取url
-        System.out.println(operateType);
+
+        logger.info("方法描述: {} \n 浏览器: {} \n 操作系统: {} \n IP: {} \n URL: {}", operateType, browser, os, ip, url);
         try {
-            //前置通知
-            //System.out.println("目标方法执行前...");
             //执行目标方法
             result = pjd.proceed();
             //用新的参数值执行目标方法
             //result = pjd.proceed(new Object[]{"newSpring", "newAop"});
-            //返回通知
-            //System.out.println("目标方法返回结果后...");
             logger.info("离开方法: {} ", pjd.getSignature().getName());
         } catch (Throwable e) {
             e.printStackTrace();
             Map map = new HashMap();
             map.put("success", false);
             map.put("message", e.getMessage());
+            logger.error("异常信息: {} ", e.getMessage());
             return map;
-            //异常通知
-            //System.out.println("执行目标方法异常后...");
-            //throw new RuntimeException(e);
         }
-        //后置通知
-        //System.out.println("目标方法执行后...");
 
         return result;
     }
@@ -134,7 +127,6 @@ public class WebLogAspect {
      */
     @After("BrokerAspect()")
     public void doAfterGame(JoinPoint joinPoint) {
-        //System.out.println("After");
     }
 
     /**
@@ -142,10 +134,6 @@ public class WebLogAspect {
      */
     @AfterReturning(value = "BrokerAspect()", returning = "result")
     public void doAfterReturningGame(JoinPoint joinPoint, Object result) {
-//        System.out.println(this.getClass().getSimpleName() + " afterReturning execute, result:" + result);
-//        Map map = (HashMap) result;
-//        map.put("successful", true);
-//        System.out.println("AfterReturning");
     }
 
     /**
@@ -153,9 +141,5 @@ public class WebLogAspect {
      */
     @AfterThrowing(value = "BrokerAspect()", throwing = "exception")
     public void doAfterThrowingGame(JoinPoint joinPoint, Exception exception) {
-//        String methodName = joinPoint.getSignature().getName();
-//        System.out.println(this.getClass().getSimpleName() + " afterThrowing execute, exception:" + exception);
-//
-//        System.out.println("doAfterThrowingGame");
     }
 }
