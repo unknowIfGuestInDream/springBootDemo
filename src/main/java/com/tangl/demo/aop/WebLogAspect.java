@@ -1,14 +1,27 @@
 package com.tangl.demo.aop;
 
-import org.apache.log4j.Logger;
+import com.tangl.demo.annotation.LogAnno;
+import eu.bitwalker.useragentutils.Browser;
+import eu.bitwalker.useragentutils.OperatingSystem;
+import eu.bitwalker.useragentutils.UserAgent;
+import eu.bitwalker.useragentutils.Version;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.tangl.demo.util.BaseUtil.getIp;
+import static com.tangl.demo.util.BaseUtil.getUrl;
 
 /**
  * @author: TangLiang
@@ -20,7 +33,10 @@ import java.util.Map;
 //@Order(Ordered.LOWEST_PRECEDENCE-1)
 @Order(1)
 public class WebLogAspect {
-    private static Logger logger = Logger.getLogger(WebLogAspect.class);
+    private static final Logger logger = LoggerFactory.getLogger(WebLogAspect.class);
+
+    @Autowired
+    HttpServletRequest request;
 
     /**
      * 定义切入点
@@ -31,15 +47,24 @@ public class WebLogAspect {
 
     }
 
-    @Pointcut("execution(* com.tangl.demo.controller.*.select*(..)) || execution(* com.tangl.demo.controller.*.First(..))")
+    @Pointcut("execution(* com.tangl.demo.controller.*.select*(..))")
     public void select() {
 
+    }
+
+    @Pointcut("execution(* com.tangl.demo.controller.*.insert*(..))")
+    public void insert() {
+
+    }
+
+    @Pointcut("@annotation(com.tangl.demo.annotation.LogAnno)")
+    public void logAnno() {
     }
 
     /**
      * @description 在连接点执行之前执行的通知
      */
-    @Before("BrokerAspect()")
+    @Before("BrokerAspect() || insert()")
     public void doBeforeGame(JoinPoint joinPoint) {
 //        System.out.println("目标方法名为:" + joinPoint.getSignature().getName());
 //        System.out.println("目标方法所属类的简单类名:" + joinPoint.getSignature().getDeclaringType().getSimpleName());
@@ -52,29 +77,54 @@ public class WebLogAspect {
 //        }
 //        System.out.println("被代理的对象:" + joinPoint.getTarget());
 //        System.out.println("代理对象自己:" + joinPoint.getThis());
-        System.out.println("Before");
+        //System.out.println("Before");
     }
 
-    @Around("BrokerAspect()")
+    //@Around("BrokerAspect()")
+    @Around("logAnno()")
     public Object doAround(ProceedingJoinPoint pjd) {
-        Object result = null;
+        logger.info("进入方法: {}", pjd.getSignature().getName());
+        Object result;
+        // 获取方法签名
+        MethodSignature methodSignature = (MethodSignature) pjd.getSignature();
+        // 获取方法
+        Method method = methodSignature.getMethod();
+        LogAnno logAnno = method.getAnnotation(LogAnno.class);
+        String operateType = logAnno.operateType();
 
+        //获取request 也可以通过注解 都是安全的
+//        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+//                .getRequest();
+
+        UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));   //req就是request请求
+        Browser browser = userAgent.getBrowser();  //获取浏览器信息
+        Version version = userAgent.getBrowserVersion();//浏览器版本
+        OperatingSystem os = userAgent.getOperatingSystem(); //获取操作系统信息
+        String ip = getIp(request);//获取ip地址
+        String url = getUrl(request);//获取url
+        System.out.println(operateType);
         try {
             //前置通知
-            System.out.println("目标方法执行前...");
+            //System.out.println("目标方法执行前...");
             //执行目标方法
             result = pjd.proceed();
             //用新的参数值执行目标方法
             //result = pjd.proceed(new Object[]{"newSpring", "newAop"});
             //返回通知
             //System.out.println("目标方法返回结果后...");
+            logger.info("离开方法: {} ", pjd.getSignature().getName());
         } catch (Throwable e) {
+            e.printStackTrace();
+            Map map = new HashMap();
+            map.put("success", false);
+            map.put("message", e.getMessage());
+            return map;
             //异常通知
             //System.out.println("执行目标方法异常后...");
             //throw new RuntimeException(e);
         }
         //后置通知
-        System.out.println("目标方法执行后...");
+        //System.out.println("目标方法执行后...");
 
         return result;
     }
@@ -84,7 +134,7 @@ public class WebLogAspect {
      */
     @After("BrokerAspect()")
     public void doAfterGame(JoinPoint joinPoint) {
-        System.out.println("After");
+        //System.out.println("After");
     }
 
     /**
@@ -93,9 +143,9 @@ public class WebLogAspect {
     @AfterReturning(value = "BrokerAspect()", returning = "result")
     public void doAfterReturningGame(JoinPoint joinPoint, Object result) {
 //        System.out.println(this.getClass().getSimpleName() + " afterReturning execute, result:" + result);
-        Map map = (HashMap) result;
-        map.put("successful", true);
-        System.out.println("AfterReturning");
+//        Map map = (HashMap) result;
+//        map.put("successful", true);
+//        System.out.println("AfterReturning");
     }
 
     /**

@@ -26,7 +26,6 @@ public class FirstServiceImpl implements FirstService {
 
     @Override
     public List<Map<String, Object>> selectTest() throws SQLException {
-        System.out.println();
         Map<String, Object> paramMap = new HashMap<>();
         String sql = "select * from tx_realtime_parm_test";
         if ("MySQL".equals(jdbcTemplate.getDataSource().getConnection().getMetaData().getDatabaseProductName())) {
