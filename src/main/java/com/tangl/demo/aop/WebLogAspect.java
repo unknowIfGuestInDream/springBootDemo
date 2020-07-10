@@ -5,12 +5,11 @@ import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
 import eu.bitwalker.useragentutils.Version;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -32,8 +31,9 @@ import static com.tangl.demo.util.BaseUtil.getUrl;
 @Component
 //@Order(Ordered.LOWEST_PRECEDENCE-1)
 @Order(1)
+@Slf4j
 public class WebLogAspect {
-    private static final Logger logger = LoggerFactory.getLogger(WebLogAspect.class);
+    //private static final Logger logger = LoggerFactory.getLogger(WebLogAspect.class);
 
     @Autowired
     HttpServletRequest request;
@@ -82,8 +82,7 @@ public class WebLogAspect {
     //@Around("BrokerAspect()")
     @Around("logAnno()")
     public Object doAround(ProceedingJoinPoint pjd) {
-        logger.info("进入方法: {}", pjd.getSignature().getName());
-
+        log.info("进入[{}]方法", pjd.getSignature().getName());
         Object result;
         // 获取方法签名
         MethodSignature methodSignature = (MethodSignature) pjd.getSignature();
@@ -103,19 +102,19 @@ public class WebLogAspect {
         String ip = getIp(request);//获取ip地址
         String url = getUrl(request);//获取url
 
-        logger.info("方法描述: {} \n 浏览器: {} \n 操作系统: {} \n IP: {} \n URL: {}", operateType, browser, os, ip, url);
+        log.info("方法描述: {} \n 浏览器: {} \n 操作系统: {} \n IP: {} \n URL: {}", operateType, browser, os, ip, url);
         try {
             //执行目标方法
             result = pjd.proceed();
             //用新的参数值执行目标方法
             //result = pjd.proceed(new Object[]{"newSpring", "newAop"});
-            logger.info("离开方法: {} ", pjd.getSignature().getName());
+            log.info("离开方法: {} ", pjd.getSignature().getName());
         } catch (Throwable e) {
             e.printStackTrace();
             Map map = new HashMap();
             map.put("success", false);
             map.put("message", e.getMessage());
-            logger.error("异常信息: {} ", e.getMessage());
+            log.error("异常信息: {} ", e.getMessage());
             return map;
         }
 
