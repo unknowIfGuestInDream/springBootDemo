@@ -51,7 +51,7 @@ public class FirstController {
     @LogAnno(operateType = "查询Test")
     public Map<String, Object> selectTest(Date time, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws SQLException {
         Map<String, Object> result = new HashMap<String, Object>();
-        //logger.info("进入selectTest方法");
+        logger.info("进入selectTest方法");
         List<Map<String, Object>> deptList = firstService.selectTest();
         int total = firstService.countTest();
         result.put("result", deptList);
@@ -84,7 +84,7 @@ public class FirstController {
     @LogAnno(operateType = "查询Excel")
     public Map<String, Object> selectExcel(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws SQLException {
         Map<String, Object> result = new HashMap<String, Object>();
-        //logger.info("进入selectExcel方法");
+        logger.info("进入selectExcel方法");
         String fileName = "E:\\demo.xlsx";
         DemoDataListener ddl = new DemoDataListener();
         EasyExcel.read(fileName, DemoData.class, ddl).sheet().doRead();
