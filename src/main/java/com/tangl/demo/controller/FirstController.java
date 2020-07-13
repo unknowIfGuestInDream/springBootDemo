@@ -7,7 +7,6 @@ import com.tangl.demo.easyexcel.DemoDataListener;
 import com.tangl.demo.easyexcel.NoModelDataListener;
 import com.tangl.demo.service.FirstService;
 import lombok.extern.log4j.Log4j;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +42,16 @@ public class FirstController {
         return "pages/Hello";
     }
 
+    @GetMapping(value = "updateT")
+    public String updateTest(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+        return "pages/updateTest";
+    }
+
+    @GetMapping(value = "deleteT")
+    public String deleteTest(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+        return "pages/deleteTest";
+    }
+
     @GetMapping(value = "errors")
     public String errors(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
         return "errorPages/error";
@@ -51,15 +60,45 @@ public class FirstController {
     @PostMapping(value = "selectTest")
     @ResponseBody
     @LogAnno(operateType = "查询Test")
-    public Map<String, Object> selectTest(Date time, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws SQLException {
+    public Map<String, Object> selectTest(String ID_, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws SQLException {
         Map<String, Object> result = new HashMap<String, Object>();
         log.info("进入selectTest方法");
-        List<Map<String, Object>> deptList = firstService.selectTest();
+        List<Map<String, Object>> deptList = firstService.selectTest(ID_);
         int total = firstService.countTest();
         result.put("result", deptList);
         result.put("date", new Date());
         result.put("total", total);
         result.put("success", true);
+
+        return result;
+    }
+
+    @PostMapping(value = "updateTest")
+    @ResponseBody
+    @LogAnno(operateType = "修改Test")
+    public Map<String, Object> updateTest(String ID_, String CODE_, String NAME, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws SQLException {
+        Map<String, Object> result = new HashMap<String, Object>();
+        log.info("进入updateTest方法");
+        if (firstService.updateTest(ID_, CODE_, NAME) > 0) {
+            result.put("success", true);
+        } else {
+            result.put("success", false);
+        }
+
+        return result;
+    }
+
+    @PostMapping(value = "deleteTest")
+    @ResponseBody
+    @LogAnno(operateType = "删除Test")
+    public Map<String, Object> deleteTest(String ID_, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws SQLException {
+        Map<String, Object> result = new HashMap<String, Object>();
+        log.info("进入deleteTest方法");
+        if (firstService.deleteTest(ID_) > 0) {
+            result.put("success", true);
+        } else {
+            result.put("success", false);
+        }
 
         return result;
     }
@@ -70,7 +109,7 @@ public class FirstController {
     public Map<String, Object> insertTest(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws SQLException {
         log.info("进入insertTest方法");
         Map<String, Object> result = new HashMap<String, Object>();
-        List<Map<String, Object>> deptList = firstService.selectTest();
+        List<Map<String, Object>> deptList = firstService.selectTest(null);
         int total = firstService.countTest();
 //        if (total > 0) {
 //            throw new RuntimeException("运行发生错误");

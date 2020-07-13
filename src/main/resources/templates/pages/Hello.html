@@ -12,7 +12,9 @@ Hello SpringBootDemo
         $.ajax({
             async: true,
             url: 'selectTest',
-            data: {},
+            data: {
+                "ID_": "1"
+            },
             dataType: "json",
             method: 'POST',
             success: function (data) {
@@ -38,33 +40,33 @@ Hello SpringBootDemo
         // });
 
 
-        $.ajax({
-            async: true,
-            url: 'selectExcel',
-            data: {},
-            dataType: "json",
-            method: 'POST',
-            success: function (data) {
-                console.log(data.result)
-            },
-            error: function (data) {
-                alert(data.result);
-            }
-        });
-
-        $.ajax({
-            async: true,
-            url: 'selectExcelNoModel',
-            data: {},
-            dataType: "json",
-            method: 'POST',
-            success: function (data) {
-                console.log(data.result)
-            },
-            error: function (data) {
-                alert(data.result);
-            }
-        });
+        // $.ajax({
+        //     async: true,
+        //     url: 'selectExcel',
+        //     data: {},
+        //     dataType: "json",
+        //     method: 'POST',
+        //     success: function (data) {
+        //         console.log(data.result)
+        //     },
+        //     error: function (data) {
+        //         alert(data.result);
+        //     }
+        // });
+        //
+        // $.ajax({
+        //     async: true,
+        //     url: 'selectExcelNoModel',
+        //     data: {},
+        //     dataType: "json",
+        //     method: 'POST',
+        //     success: function (data) {
+        //         console.log(data.result)
+        //     },
+        //     error: function (data) {
+        //         alert(data.result);
+        //     }
+        // });
     });
 </script>
 </body>

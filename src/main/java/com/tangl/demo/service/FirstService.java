@@ -17,7 +17,11 @@ import java.util.Map;
 @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 public interface FirstService {
 
-    List<Map<String, Object>> selectTest() throws SQLException;
+    List<Map<String, Object>> selectTest(String ID_) throws SQLException;
 
     int countTest();
+
+    int updateTest(String ID_, String CODE_, String NAME_);
+
+    int deleteTest(String ID_);
 }
