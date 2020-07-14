@@ -6,7 +6,9 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 
-@SpringBootApplication(exclude = {SecurityAutoConfiguration.class, org.activiti.spring.boot.SecurityAutoConfiguration.class})
+//开启工作流 activiti
+//@SpringBootApplication(exclude = {SecurityAutoConfiguration.class, org.activiti.spring.boot.SecurityAutoConfiguration.class})
+@SpringBootApplication
 //@EnableScheduling //对定时任务支持
 @EnableCaching
 @ServletComponentScan(basePackages = {"com.tangl.demo.filter", "com.tangl.demo.listener"})
