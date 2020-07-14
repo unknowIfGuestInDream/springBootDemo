@@ -1,0 +1,49 @@
+server:
+  port: 8080
+spring:
+  jackson:
+    date-format: yyyy/MM/dd HH:mm:ss
+    time-zone: GMT+8
+  thymeleaf:
+    mode: HTML
+    encoding: UTF-8
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+  banner:
+    location: static/banner.txt
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    master:
+      driver-class-name: oracle.jdbc.OracleDriver
+      url: jdbc:oracle:thin:@10.18.26.201:1521:TF
+      username: TF
+      password: TF
+    cluster:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://10.18.26.36:3306/tx?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf8&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=Asia/Shanghai
+      password: root
+      username: root
+    filters: stat,wall,log4j
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    useGlobalDataSourceStat: true
+    druid:
+      aop-patterns: com.tangl.demo.controller.*,com.tangl.demo.service.*
+  cache:
+    type: redis
+  redis:
+    host: 127.0.0.1
+    password:
+    database: 0
+    timeout: 5000
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+logging:
+  file:
+    path: G:/javaWorkSpace/springBootDemo/
+    name: springbootdemo.log
+
