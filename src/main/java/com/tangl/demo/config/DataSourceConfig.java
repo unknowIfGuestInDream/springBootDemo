@@ -41,4 +41,5 @@ public class DataSourceConfig {
     public JdbcTemplate txJdbcTemplate(@Qualifier("txDataSource") DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }
+
 }
