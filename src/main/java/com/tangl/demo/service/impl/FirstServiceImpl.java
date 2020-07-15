@@ -27,6 +27,9 @@ public class FirstServiceImpl implements FirstService {
     @Autowired
     JdbcTemplate txJdbcTemplate;
 
+    @Autowired
+    JdbcTemplate tfJdbcTemplate;
+
     @Cacheable(cacheNames = "user", key = "#ID_", condition = "#ID_ != null && #ID_.length()>0", unless = "#result.size() == 0")
     @Override
     public List<Map<String, Object>> selectTest(String ID_) throws SQLException {
@@ -48,7 +51,7 @@ public class FirstServiceImpl implements FirstService {
     @Override
     public int countTest() {
         String sql = "select count(*) from tx_realtime_parm_test";
-        return txJdbcTemplate.queryForObject(sql, Integer.class);
+        return tfJdbcTemplate.queryForObject(sql, Integer.class);
     }
 
     @CacheEvict(cacheNames = "user", key = "#ID_", beforeInvocation = true)
