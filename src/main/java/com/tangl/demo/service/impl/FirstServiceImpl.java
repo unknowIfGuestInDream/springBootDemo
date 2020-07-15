@@ -39,19 +39,19 @@ public class FirstServiceImpl implements FirstService {
             sql += " and ID_ = :ID_";
             paramMap.put("ID_", ID_);
         }
-        if ("MySQL".equals(txJdbcTemplate.getDataSource().getConnection().getMetaData().getDatabaseProductName())) {
+        if ("MySQL".equals(tfJdbcTemplate.getDataSource().getConnection().getMetaData().getDatabaseProductName())) {
             sql += " limit 0,100";
-        } else if ("Oracle".equals(txJdbcTemplate.getDataSource().getConnection().getMetaData().getDatabaseProductName())) {
+        } else if ("Oracle".equals(tfJdbcTemplate.getDataSource().getConnection().getMetaData().getDatabaseProductName())) {
             sql = "select * from (select FULLTABLE.*, ROWNUM RN from (" + sql + ") FULLTABLE where ROWNUM <= " + 100 + ") where RN >= " + 0;
         }
-        NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(txJdbcTemplate);
+        NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(tfJdbcTemplate);
         return namedParameterJdbcTemplate.queryForList(sql, paramMap);
     }
 
     @Override
     public int countTest() {
         String sql = "select count(*) from tx_realtime_parm_test";
-        return tfJdbcTemplate.queryForObject(sql, Integer.class);
+        return txJdbcTemplate.queryForObject(sql, Integer.class);
     }
 
     @CacheEvict(cacheNames = "user", key = "#ID_", beforeInvocation = true)
