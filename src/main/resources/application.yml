@@ -81,4 +81,20 @@ logging:
   file:
     path: G:/javaWorkSpace/springBootDemo/
     name: springbootdemo.log
+# actuator监控
+management:
+  server:
+    # 设置监控服务端口
+    port: 8081
+  endpoints:
+    # 设置端点是否可用 默认只有shutdown可用
+    enabled-by-default: true
+    web:
+      # 设置是否暴露端点 默认只有health和info可见
+      exposure:
+        # 包括所有端点
+        include: "*" # 注意需要添加引号
+        # 排除端点
+        exclude: shutdown
+
 
