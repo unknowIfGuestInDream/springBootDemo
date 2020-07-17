@@ -96,5 +96,14 @@ management:
         include: "*" # 注意需要添加引号
         # 排除端点
         exclude: shutdown
+info: #下面的值全部自定义即可
+  app:
+    encoding: @project.build.sourceEncoding@  #应用编码
+    java:
+      source: @java.version@  #jdk 版本
+      target: @java.version@  #jdk 版本
+  author:
+    name: tangliang  #作者姓名
+    phone: 15566418409  #作者联系方式
 
 
