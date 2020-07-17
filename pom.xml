@@ -125,6 +125,12 @@
             <!--<artifactId>activiti-spring-boot-starter-basic</artifactId>-->
             <!--<version>6.0.0</version>-->
         <!--</dependency>-->
+        <!--获取系统和硬件信息-->
+        <dependency>
+            <groupId>com.github.oshi</groupId>
+            <artifactId>oshi-core</artifactId>
+            <version>3.4.2</version>
+        </dependency>
     </dependencies>
 
     <build>

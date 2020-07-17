@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * @date: 2020/7/15 8:34
  * @since: 1.0
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class tlDataSource {
 
     @Autowired
