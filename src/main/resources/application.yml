@@ -64,6 +64,25 @@ spring:
       useGlobalDataSourceStat: true
     druid:
       aop-patterns: com.tangl.demo.controller.*,com.tangl.demo.service.*
+      # 配置StatFilter
+      web-stat-filter:
+        #默认为false，设置为true启动
+        enabled: true
+        url-pattern: "/*"
+        exclusions: "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*"
+        #配置StatViewServlet
+      stat-view-servlet:
+        url-pattern: "/druid/*"
+        #允许那些ip
+        allow: 127.0.0.1
+        login-username: admin
+        login-password: 123456
+        #禁止那些ip
+        deny:
+        #是否可以重置
+        reset-enable: true
+        #启用
+        enabled: true
   cache:
     type: redis
   redis:
@@ -98,6 +117,8 @@ management:
         exclude: shutdown
 info: #下面的值全部自定义即可
   app:
+    name: springBootDemo
+    version: v1.0.0
     encoding: @project.build.sourceEncoding@  #应用编码
     java:
       source: @java.version@  #jdk 版本
