@@ -29,13 +29,13 @@ public class ScheduledService {
     }
 
     //@Async
-    @Scheduled(fixedRate = 50000)
+    @Scheduled(fixedRate = 5000)
     public void scheduled1() {
         log.info("=====>>>>>使用fixedRate{}", System.currentTimeMillis());
     }
 
     //@Async
-    @Scheduled(fixedDelay = 50000)
+    @Scheduled(fixedDelay = 5000)
     public void scheduled2() {
         log.info("=====>>>>>fixedDelay{}", System.currentTimeMillis());
     }
