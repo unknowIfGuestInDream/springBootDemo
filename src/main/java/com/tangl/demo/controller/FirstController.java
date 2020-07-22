@@ -57,6 +57,11 @@ public class FirstController {
         return "errorPages/error";
     }
 
+    @GetMapping(value = "upload")
+    public String upload(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+        return "pages/upload";
+    }
+
     @PostMapping(value = "selectTest")
     @ResponseBody
     @LogAnno(operateType = "查询Test")

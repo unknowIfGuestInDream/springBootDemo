@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文件上传</title>
+    <script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="js/uploadify/jquery.uploadify.js"></script>
+    <link type="text/css" rel="stylesheet" href="js/uploadify/uploadify.css">
+    <script type="text/javascript">
+        // $(document).ready(function () {
+        //     $('#file_upload').uploadify({
+        //         'swf': 'js/uploadify/uploadify.swf',//（flash上传插件）,uploadify.css（上传样式表）
+        //         'uploader': 'uploadFiles',
+        //         'fileObjName': 'file_upload',
+        //         'buttonText': "选择图片",
+        //         //选择文件后自动上传
+        //         'auto': false,
+        //         'onUploadSuccess': function (file, data, response) {
+        //             $("#imgPrew").attr("src", data);
+        //         },
+        //         'onUploadError': function (file, errorCode, errorMsg, errorString) {
+        //             alert("上传失败");
+        //         },
+        //         //检测FLASH失败调用
+        //         'onFallback': function () {
+        //             alert("您未安装FLASH控件，无法上传图片！请安装FLASH控件后再试。");
+        //         }
+        //     });
+        // });
+        $(function () {
+            $("#uploadify").uploadify({
+                //指定swf文件
+                'swf': 'js/uploadify/uploadify.swf',
+                //后台处理的页面
+                //'debug'    : true,
+                'uploader': 'uploadFiles',
+                //percentage
+                'progressData': 'speed',
+                //按钮显示的文字
+                'buttonText': '上传文件',
+                //'buttonImage': "js/uploadify/submit.png",
+                //显示的高度和宽度，默认 height 30；width 120
+                //'height': 15,
+                //'width': 80,
+                //上传文件的类型  默认为所有文件    'All Files'  ;  '*.*'
+                //在浏览窗口底部的文件类型下拉菜单中显示的文本
+                'fileTypeDesc': 'Image Files',
+                //'fileTypeDesc': 'All Files',
+                //允许上传的文件后缀
+                //'fileTypeExts': '*.gif; *.jpg; *.png; *.xlsx; *.xls; *.txt; *.doc; *.docx; *.pptx; *.ppt',
+                'cancel': 'js/uploadfy/uploadify-cancel.png',
+                //上传文件页面中，你想要用来作为文件队列的元素的id, 默认为false  自动生成,  不带#
+                //'queueID': 'fileQueue',
+                'fileObjName': 'file',
+                'removeCompleted': true,
+                //上传完成后每个文件消失的间隔
+                'removeTimeout': 1,
+                //'preventCaching'：默认为true，为真时一个随机数将会添加上SWF文件的URL上，这样就不会被缓存。
+                /*上传文件的大小限制允许上传文件的最大 大小。 这个值可以是一个数字或字 符串。
+                   如果它是一个字符串，它接受一个单位(B, KB, MB, or GB)。
+                   默认单位为KB您可以将此值设置为0 ，没有限制,
+                   单个文件不允许超过所设置的值 如果超过 onSelectError时间被触发*/
+                //'fileSizeLimit':'100KB',
+                //选择文件后自动上传
+                'auto': false,
+                'formData': {
+                    'text': '1'
+                },
+                //设置为true将允许多文件上传
+                'multi': true,
+                'onUploadComplete': function (file) {
+                    alert('上传完成');
+                },
+                'onCancel': function (file) {
+                    // $('#uploadify').uploadify('cancel', file.id);
+                    //alert('取消上传');
+                },
+                //检测FLASH失败调用
+                'onFallback': function () {
+                    alert("您未安装FLASH控件，无法上传图片！请安装FLASH控件后再试。");
+                }
+            });
+        });
+    </script>
+
+    <!--function changeBtnText() {-->
+    <!--$('#file_upload').uploadify('settings','buttonText','BROWSE');-->
+    <!--}-->
+
+    <!--function returnBtnText() {-->
+    <!--alert('The button says ' + $('#file_upload').uploadify('settings','buttonText'));-->
+    <!--}-->
+</head>
+<body>
+<!--<p>单文件上传</p>-->
+<!--<form action="uploadFiles" method="post" enctype="multipart/form-data">-->
+<!--文件: <input type="file" name="file">-->
+<!--文件: <input type="file" name="file">-->
+<!--<input type="submit">-->
+<!--</form>-->
+<!--<p>文件下载</p>-->
+<!--<form action="downloadFile">-->
+<!--<input type="submit" value="下载">-->
+<!--</form>-->
+<!--<a id="uploadify">开始上传</a>-->
+<input type="file" name="uploadify" id="uploadify" />
+<a href="javascript:$('#uploadify').uploadify('upload','*')" class="btn">上传</a>&nbsp;
+<a href="javascript:$('#uploadify').uploadify('cancel')">取消上传第一个</a>
+<a href="javascript:$('#uploadify').uploadify('cancel', '*')">全部取消上传</a>
+<a href="javascript:$('#uploadify').uploadify('disable', true)">禁用上传</a>
+<a href="javascript:$('#uploadify').uploadify('disable', false)">启用上传</a>
+<a href="javascript:$('#uploadify').uploadify('destroy')">Destroy Uploadify</a>
+<a href="javascript:$('#uploadify').uploadify('stop')">停止上传!</a>
+</body>
+</html>
