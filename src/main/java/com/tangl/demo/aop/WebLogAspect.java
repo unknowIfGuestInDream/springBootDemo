@@ -1,6 +1,7 @@
 package com.tangl.demo.aop;
 
 import com.tangl.demo.annotation.LogAnno;
+import com.tangl.demo.util.IpUtils;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
@@ -99,10 +100,11 @@ public class WebLogAspect {
         Browser browser = userAgent.getBrowser();  //获取浏览器信息
         Version version = userAgent.getBrowserVersion();//浏览器版本
         OperatingSystem os = userAgent.getOperatingSystem(); //获取操作系统信息
+        String ipName = IpUtils.getHostName();
         String ip = getIp(request);//获取ip地址
         String url = getUrl(request);//获取url
 
-        log.info("方法描述: {} \n 浏览器: {} \n 操作系统: {} \n IP: {} \n URL: {}", operateType, browser, os, ip, url);
+        log.info("方法描述: {} \n 浏览器: {} \n 操作系统: {} \n 用户: {} \n IP: {} \n URL: {}", operateType, browser, os, ipName, ip, url);
         try {
             //执行目标方法
             result = pjd.proceed();

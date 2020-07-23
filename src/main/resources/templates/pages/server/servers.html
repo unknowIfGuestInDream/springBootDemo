@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>服务监控</title>
+    <link rel="stylesheet" type="text/css" href="../css/ext-all.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/ext-zh_CN.css"/>
+    <script type="text/javascript" src="../js/ext4/ext-all.js"></script>
+    <script type="text/javascript" src="../js/ext4/ext-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../js/ext4/base.js"></script>
+</head>
+<body>
+<script>
+    var server;
+    Ext.onReady(function () {
+        Ext.getBody().mask('加载中...');
+
+        Ext.Ajax.request({//加载树的根节点
+            url: '/server/selectServer',
+            async: false,
+            params: {},
+            callback: function (options, success, response) {
+                if (success) {
+                    var data = Ext.decode(response.responseText);
+                    if (data.success) {
+                        server = data.server;
+                    }
+                }
+            }
+        });
+
+        var sysFilesStore = Ext.create("Ext.data.Store", {
+            storeId: 'sysFilesStore',
+            fields: ['dirName', 'sysTypeName', 'typeName', 'total', 'free', 'used', 'usage'],
+            data: server.sysFiles
+        });
+
+        var cpuPanel = Ext.create('Ext.form.Panel', {
+            id: 'cpuPanel',
+            title: 'CPU',
+            collapsible:true,
+            layout: {
+                type: 'table',
+                columns: 2
+            },
+            frame: true,
+            columnWidth: 0.3,
+            defaults: {
+                labelAlign: 'right',
+                labelWidth: 100,
+                inputWidth: 140,
+                margin: '4,0,0,0'
+            },
+            items: [{
+                xtype: 'displayfield',
+                fieldLabel: '核心数',
+                value: server.cpu.cpuNum
+            }, {
+                xtype: 'displayfield',
+                fieldLabel: '用户使用率',
+                value: server.cpu.used + '%'
+            }, {
+                xtype: 'displayfield',
+                fieldLabel: '系统使用率',
+                value: server.cpu.sys + '%'
+            }, {
+                xtype: 'displayfield',
+                fieldLabel: '当前空闲率',
+                value: server.cpu.free + '%'
+            }]
+        });
+
+        var memPanel = Ext.create('Ext.form.Panel', {
+            id: 'memPanel',
+            title: '内存',
+            collapsible:true,
+            layout: {
+                type: 'table',
+                columns: 2
+            },
+            frame: true,
+            columnWidth: 0.4,
+            defaults: {
+                labelAlign: 'right',
+                labelWidth: 100,
+                inputWidth: 140,
+                margin: '4,0,0,0'
+            },
+            items: [{
+                xtype: 'displayfield',
+                fieldLabel: '总内存',
+                value: server.mem.total + "G"
+            }, {
+                xtype: 'displayfield',
+                fieldLabel: '已用内存',
+                value: server.mem.used + 'G'
+            }, {
+                xtype: 'displayfield',
+                fieldLabel: '剩余内存',
+                value: server.mem.free + 'G'
+            }, {
+                xtype: 'displayfield',
+                fieldLabel: '使用率',
+                value: server.mem.usage + '%'
+            }]
+        });
+
+        var jvmPanel = Ext.create('Ext.form.Panel', {
+            id: 'jvmPanel',
+            collapsible:true,
+            title: 'Java虚拟机信息',
+            layout: {
+                type: 'table',
+                columns: 5
+            },
+            frame: true,
+            defaults: {
+                labelAlign: 'right',
+                labelWidth: 100,
+                inputWidth: 140,
+                margin: '4,0,0,0'
+            },
+            items: [{
+                xtype: 'displayfield',
+                fieldLabel: '总内存',
+                value: server.jvm.total + "M"
+            }, {
+                xtype: 'displayfield',
+                fieldLabel: '已用内存',
+                value: server.jvm.used + 'M'
+            }, {
+                xtype: 'displayfield',
+                fieldLabel: '剩余内存',
+                value: server.jvm.free + 'M'
+            }, {
+                xtype: 'displayfield',
+                fieldLabel: '使用率',
+                value: server.jvm.usage + '%'
+            }, {
+                xtype: 'displayfield',
+                fieldLabel: 'Java名称',
+                inputWidth: 240,
+                value: server.jvm.name
+            }, {
+                xtype: 'displayfield',
+                fieldLabel: '启动时间',
+                value: server.jvm.startTime
+            }, {
+                xtype: 'displayfield',
+                fieldLabel: '安装路径',
+                inputWidth: 400,
+                value: server.jvm.home
+            }, {
+                xtype: 'displayfield',
+                fieldLabel: '项目路径',
+                inputWidth: 400,
+                value: server.sys.userDir
+            }, {
+                xtype: 'displayfield',
+                fieldLabel: 'Java版本',
+                value: server.jvm.version
+            }, {
+                xtype: 'displayfield',
+                fieldLabel: '运行时长',
+                value: server.jvm.runTime
+            }]
+        });
+
+        var sysPanel = Ext.create('Ext.form.Panel', {
+            id: 'sysPanel',
+            collapsible:true,
+            title: '服务器信息',
+            layout: {
+                type: 'table',
+                columns: 2
+            },
+            frame: true,
+            columnWidth: 0.3,
+            defaults: {
+                labelAlign: 'right',
+                labelWidth: 100,
+                inputWidth: 140,
+                margin: '4,0,0,0'
+            },
+            items: [{
+                xtype: 'displayfield',
+                fieldLabel: '服务器名称',
+                value: server.sys.computerName
+            }, {
+                xtype: 'displayfield',
+                fieldLabel: '服务器IP',
+                value: server.sys.computerIp
+            }, {
+                xtype: 'displayfield',
+                fieldLabel: '操作系统',
+                value: server.sys.osName
+            }, {
+                xtype: 'displayfield',
+                fieldLabel: '系统架构',
+                value: server.sys.osArch
+            }]
+        });
+
+        var sysFilesPanel = Ext.create('Ext.grid.Panel', {
+            id: 'sysFilesPanel',
+            collapsible:true,
+            title: '磁盘状态',
+            store: sysFilesStore,
+            columnLines: true,
+            frame: true,
+            columns: [{
+                text: '盘符路径',
+                dataIndex: 'dirName',
+                style: 'text-align: center;',
+                flex: 1
+            }, {
+                text: '文件系统',
+                dataIndex: 'sysTypeName',
+                style: 'text-align: center;',
+                flex: 1
+            }, {
+                text: '盘符类型',
+                dataIndex: 'typeName',
+                style: 'text-align: center;',
+                flex: 1
+            }, {
+                text: '总大小',
+                dataIndex: 'total',
+                style: 'text-align: center;',
+                flex: 1
+            }, {
+                text: '可用大小',
+                dataIndex: 'free',
+                style: 'text-align: center;',
+                flex: 1
+            }, {
+                text: '已用大小',
+                dataIndex: 'used',
+                style: 'text-align: center;',
+                flex: 1
+            }, {
+                text: '已用百分比',
+                dataIndex: 'usage',
+                style: 'text-align: center;',
+                flex: 1,
+                renderer: function (value) {
+                    return value + '%';
+                }
+            }],
+            viewConfig: {
+                emptyText: '<div style="text-align: center; padding-top: 50px; font: italic bold 20px Microsoft YaHei;">没有数据</div>',
+                enableTextSelection: true
+            }
+        });
+
+        var northPanel = Ext.create('Ext.Panel', {
+            id: 'northPanel',
+            layout: 'column',
+            baseCls: 'my-panel-no-border',
+            items: []
+        });
+
+        Ext.create('Ext.container.Viewport', {
+            layout: {
+                type: 'border',
+                regionWeights: {
+                    west: 1,
+                    north: -1,
+                    south: -1,
+                    east: 1
+                }
+            },
+            defaults: {
+                border: false
+            },
+            items: [{
+                region: 'north',
+                items: [northPanel, jvmPanel]
+            }, {
+                region: 'center',
+                autoScroll: true,
+                layout: 'fit',
+                items: [sysFilesPanel]
+            }]
+        });
+
+        northPanel.add(cpuPanel);
+        northPanel.add(memPanel);
+        northPanel.add(sysPanel);
+        _init();
+    });
+
+    function _init() {
+        for (var i = 0; i < Ext.data.StoreManager.getCount(); i++) {
+            if (Ext.data.StoreManager.getAt(i).isLoading()) {
+                return;
+            }
+        }
+
+        Ext.getBody().unmask();
+    }
+</script>
+</body>
+</html>
