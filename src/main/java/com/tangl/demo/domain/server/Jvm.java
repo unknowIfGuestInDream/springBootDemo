@@ -1,6 +1,6 @@
 package com.tangl.demo.domain.server;
 
-import com.tangl.demo.domain.Arith;
+import com.tangl.demo.util.Arith;
 import com.tangl.demo.util.DateUtils;
 
 import java.lang.management.ManagementFactory;
@@ -8,7 +8,7 @@ import java.lang.management.ManagementFactory;
 /**
  * JVM相关信息
  *
- * @author ruoyi
+ * @author TangLiang
  */
 public class Jvm {
     /**

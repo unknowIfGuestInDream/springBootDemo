@@ -3,7 +3,7 @@ package com.tangl.demo.domain.server;
 /**
  * 系统相关信息
  * 
- * @author ruoyi
+ * @author TangLiang
  */
 public class Sys
 {

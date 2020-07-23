@@ -1,12 +1,12 @@
 package com.tangl.demo.domain.server;
 
 
-import com.tangl.demo.domain.Arith;
+import com.tangl.demo.util.Arith;
 
 /**
  * CPU相关信息
  * 
- * @author ruoyi
+ * @author TangLiang
  */
 public class Cpu
 {

@@ -1,6 +1,7 @@
 package com.tangl.demo.domain;
 
 import com.tangl.demo.domain.server.*;
+import com.tangl.demo.util.Arith;
 import com.tangl.demo.util.IpUtils;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
@@ -20,7 +21,7 @@ import java.util.Properties;
 /**
  * 服务器相关信息
  *
- * @author ruoyi
+ * @author TangLiang
  */
 public class Server {
 

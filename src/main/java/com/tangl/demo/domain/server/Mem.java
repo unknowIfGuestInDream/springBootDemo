@@ -1,12 +1,12 @@
 package com.tangl.demo.domain.server;
 
 
-import com.tangl.demo.domain.Arith;
+import com.tangl.demo.util.Arith;
 
 /**
  * 內存相关信息
  * 
- * @author ruoyi
+ * @author TangLiang
  */
 public class Mem
 {
