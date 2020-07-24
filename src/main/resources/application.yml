@@ -79,9 +79,9 @@ spring:
       stat-view-servlet:
         url-pattern: "/druid/*"
         #允许那些ip
-        allow: 127.0.0.1
-        login-username: admin
-        login-password: 123456
+        allow:
+        login-username:
+        login-password:
         #禁止那些ip
         deny:
         #是否可以重置
