@@ -38,7 +38,8 @@
         var cpuPanel = Ext.create('Ext.form.Panel', {
             id: 'cpuPanel',
             title: 'CPU',
-            collapsible:true,
+            closable: true,
+            collapsible: true,
             layout: {
                 type: 'table',
                 columns: 2
@@ -73,7 +74,8 @@
         var memPanel = Ext.create('Ext.form.Panel', {
             id: 'memPanel',
             title: '内存',
-            collapsible:true,
+            closable: true,
+            collapsible: true,
             layout: {
                 type: 'table',
                 columns: 2
@@ -107,7 +109,8 @@
 
         var jvmPanel = Ext.create('Ext.form.Panel', {
             id: 'jvmPanel',
-            collapsible:true,
+            collapsible: true,
+            closable: true,
             title: 'Java虚拟机信息',
             layout: {
                 type: 'table',
@@ -168,7 +171,8 @@
 
         var sysPanel = Ext.create('Ext.form.Panel', {
             id: 'sysPanel',
-            collapsible:true,
+            collapsible: true,
+            closable: true,
             title: '服务器信息',
             layout: {
                 type: 'table',
@@ -203,7 +207,8 @@
 
         var sysFilesPanel = Ext.create('Ext.grid.Panel', {
             id: 'sysFilesPanel',
-            collapsible:true,
+            collapsible: true,
+            closable: true,
             title: '磁盘状态',
             store: sysFilesStore,
             columnLines: true,
@@ -253,6 +258,16 @@
             }
         });
 
+        var druidPanel = Ext.create('Ext.Panel', {
+            id: 'druidPanel',
+            collapsible: true,
+            closable: true,
+            title: 'druid监控',
+            layout: 'fit',
+            frame: true,
+            html: ' <iframe frameborder="0" width="100%" height="100%" src="/druid/index.html"> </iframe>'
+        });
+
         var northPanel = Ext.create('Ext.Panel', {
             id: 'northPanel',
             layout: 'column',
@@ -275,12 +290,11 @@
             },
             items: [{
                 region: 'north',
-                items: [northPanel, jvmPanel]
+                items: [northPanel, jvmPanel, sysFilesPanel]
             }, {
                 region: 'center',
-                autoScroll: true,
                 layout: 'fit',
-                items: [sysFilesPanel]
+                items: [druidPanel]
             }]
         });
 
