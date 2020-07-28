@@ -20,10 +20,10 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     master:
-      driver-class-name: oracle.jdbc.OracleDriver
-      url: jdbc:oracle:thin:@10.18.26.201:1521:TF
-      username: TF
-      password: TF
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost/mydb?characterEncoding=utf8&useSSL=true&serverTimezone=UTC
+      username: root
+      password: mysql
       initialSize: 5
       maxActive: 20
       ## 配置获取连接等待超时的时间
@@ -45,9 +45,9 @@ spring:
       useGlobalDataSourceStat: true
     cluster:
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://10.18.26.36:3306/tx?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf8&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=Asia/Shanghai&autoReconnect=true
-      password: root
-      username: root
+      url: jdbc:mysql://localhost/mydb?characterEncoding=utf8&useSSL=true&serverTimezone=UTC
+      username: tangl
+      password: mysql
       initialSize: 5
       maxActive: 30
       ## 配置获取连接等待超时的时间
@@ -131,5 +131,14 @@ info: #下面的值全部自定义即可
   author:
     name: tangliang  #作者姓名
     phone: 15566418409  #作者联系方式
+http:
+  maxTotal: 500 #设置连接总数
+  defaultMaxPerRoute: 100 #设置每个主机最大的并发数
+  connectTimeout: 2000 #设置创建连接的最长时间
+  connectionRequestTimeout: 500 #从连接池中获取到连接的最长时间
+  socketTimeout: 6000 #数据传输的最长时间
+  maxIdleTime: 1 #空闲时间(用于定期清理空闲连接)
+
+
 
 
