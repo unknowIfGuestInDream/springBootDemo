@@ -21,7 +21,8 @@ public class DoGET {
         // 创建Httpclient对象
         CloseableHttpClient httpclient = HttpClients.createDefault();
         // 创建http GET请求
-        HttpGet httpGet = new HttpGet("http://www.baidu.com");
+        //HttpGet httpGet = new HttpGet("http://www.baidu.com");
+        HttpGet httpGet = new HttpGet("http://localhost:8080/doGetControllerOne");
         CloseableHttpResponse response = null;
         try {
             // 执行请求
