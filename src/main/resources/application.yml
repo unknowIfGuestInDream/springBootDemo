@@ -131,5 +131,17 @@ info: #下面的值全部自定义即可
   author:
     name: tangliang  #作者姓名
     phone: 15566418409  #作者联系方式
+http:
+  maxTotal: 500 #设置连接总数
+  defaultMaxPerRoute: 100 #设置每个主机最大的并发数
+  connectTimeout: 2000 #设置创建连接的最长时间
+  connectionRequestTimeout: 500 #从连接池中获取到连接的最长时间
+  socketTimeout: 6000 #数据传输的最长时间
+  maxIdleTime: 1 #空闲时间(用于定期清理空闲连接)
+  waitTime: 30000
+  idleConTime: 3
+  retryCount: 3
+  validateAfterInactivity: 1000
+
 
 
