@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -39,6 +40,9 @@ public class FirstController {
 
     @GetMapping(value = "hello")
     public String inserthello(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+        Cookie cookie = new Cookie("name", "唐亮");
+        response.addCookie(cookie);
+
         return "pages/Hello";
     }
 
