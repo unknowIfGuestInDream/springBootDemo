@@ -142,6 +142,12 @@ http:
   idleConTime: 3
   retryCount: 3
   validateAfterInactivity: 1000
+# Swagger配置
+swagger:
+  # 是否开启swagger
+  enabled: true
+  # 请求前缀
+  pathMapping: /
 
 
 
