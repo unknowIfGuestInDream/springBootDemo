@@ -101,10 +101,10 @@ spring:
         max-wait: -1
         max-idle: 8
         min-idle: 0
-logging:
-  file:
-    path: G:/javaWorkSpace/springBootDemo/
-    name: springbootdemo.log
+#logging:
+#  file:
+#    path: G:/javaWorkSpace/springBootDemo/
+#    name: springbootdemo.log
 # actuator监控
 management:
   server:
