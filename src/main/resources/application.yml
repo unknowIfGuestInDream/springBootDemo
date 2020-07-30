@@ -105,17 +105,6 @@ spring:
     user:
       name: tang
       password: tang
-    basic:
-      enabled: false
-#  boot:
-#    admin:
-#      client:
-#        url: http://localhost:8000
-#        instance:
-#          name: ReactiveCrud
-#          metadata: # 这个name与password用于在注册到管理端时，使管理端有权限获取客户端端点数据
-#            user.name: ${spring.security.user.name}
-#            user.password: ${spring.security.user.password}
 #logging:
 #  file:
 #    path: G:/javaWorkSpace/springBootDemo/
@@ -130,13 +119,11 @@ management:
   endpoint:
     health:
       show-details: always
-#    httptrace:
-#      enabled: true #启用httptrace端点
   endpoints:
     # 设置端点是否可用 默认只有shutdown可用
     enabled-by-default: true
     web:
-#      base-path: /actuator #基本路径
+      base-path: /actuator #基本路径
       # 设置是否暴露端点 默认只有health和info可见
       exposure:
         # 包括所有端点
