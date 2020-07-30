@@ -101,25 +101,52 @@ spring:
         max-wait: -1
         max-idle: 8
         min-idle: 0
+  security:
+    user:
+      name: tang
+      password: tang
+    basic:
+      enabled: false
+#  boot:
+#    admin:
+#      client:
+#        url: http://localhost:8000
+#        instance:
+#          name: ReactiveCrud
+#          metadata: # 这个name与password用于在注册到管理端时，使管理端有权限获取客户端端点数据
+#            user.name: ${spring.security.user.name}
+#            user.password: ${spring.security.user.password}
 #logging:
 #  file:
 #    path: G:/javaWorkSpace/springBootDemo/
 #    name: springbootdemo.log
 # actuator监控
 management:
+  security:
+    enabled: true
   server:
     # 设置监控服务端口
     port: 8080
+  endpoint:
+    health:
+      show-details: always
+#    httptrace:
+#      enabled: true #启用httptrace端点
   endpoints:
     # 设置端点是否可用 默认只有shutdown可用
     enabled-by-default: true
     web:
+#      base-path: /actuator #基本路径
       # 设置是否暴露端点 默认只有health和info可见
       exposure:
         # 包括所有端点
         include: "*" # 注意需要添加引号
         # 排除端点
         exclude: shutdown
+        # 跨域处理
+      cors:
+        allowed-origins: http://localhost:8080/   #允许跨域的ip地址
+        allowed-methods: post,delete,get,put #允许通过的请求，还有支持时间
 info: #下面的值全部自定义即可
   app:
     name: springBootDemo
