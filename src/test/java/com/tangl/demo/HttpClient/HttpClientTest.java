@@ -306,8 +306,38 @@ public class HttpClientTest {
     @Test
     public void doWebBaiDu() throws URISyntaxException {
         //CloseableHttpClient httpClient = getHttpClient(true);
-        URI uri = new URIBuilder("http://www.baidu.com/s")
-                .setParameter("wd", "java").build();
+//        URI uri = new URIBuilder("http://www.baidu.com/s")
+//                .setParameter("wd", "java").build();
+        URI uri = new URIBuilder("https://tang97155@163.com:tang1997@mail.163.com").build();
+        HttpGet httpget = new HttpGet(uri);
+        httpget.setHeader("Content-Type", "application/json;charset=utf8");
+        // 响应模型
+        CloseableHttpResponse response = null;
+        try {
+            httpget.setConfig(requestConfig);
+            // 由客户端执行(发送)Post请求
+            response = httpClient.execute(httpget);
+            // 从响应模型中获取响应实体
+            HttpEntity responseEntity = response.getEntity();
+
+            System.out.println("响应状态为:" + response.getStatusLine());
+            //主动设置编码 防止响应乱码
+            String content = EntityUtils.toString(response.getEntity(), "UTF-8");
+            if (responseEntity != null) {
+                System.out.println("响应内容长度为:" + responseEntity.getContentLength());
+                System.out.println("响应内容为:" + content);
+            }
+        } catch (ParseException | IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    //带有账号密码的url
+    @Test
+    public void doActuator() throws URISyntaxException {
+        //CloseableHttpClient httpClient = getHttpClient(true);
+        URI uri = new URIBuilder("http://tang:tang@localhost:8080/actuator").build();
         HttpGet httpget = new HttpGet(uri);
         httpget.setHeader("Content-Type", "application/json;charset=utf8");
         // 响应模型
