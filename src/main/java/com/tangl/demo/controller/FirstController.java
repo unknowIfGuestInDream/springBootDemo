@@ -69,7 +69,7 @@ public class FirstController {
     @PostMapping(value = "selectTest")
     @ResponseBody
     @LogAnno(operateType = "查询Test")
-    public Map<String, Object> selectTest(String ID_, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws SQLException {
+    public Map<String, Object> selectTest(String ID_, String pwd, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws SQLException {
         Map<String, Object> result = new HashMap<String, Object>();
         log.info("进入selectTest方法");
         List<Map<String, Object>> deptList = firstService.selectTest(ID_);
