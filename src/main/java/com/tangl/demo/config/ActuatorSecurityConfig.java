@@ -34,6 +34,7 @@ public class ActuatorSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/**" + contextPath + "/**").authenticated()
                 .anyRequest().permitAll()
+                .and().headers().frameOptions().sameOrigin()
                 //使用记住我的功能
                 .and().rememberMe()
                 //and方法是连接词 formLogin代表使用 Security默认的登录页面
