@@ -2,10 +2,10 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     master:
-      driver-class-name: oracle.jdbc.OracleDriver
-      url: jdbc:oracle:thin:@10.18.26.201:1521:TF
-      username: TF
-      password: TF
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/mydb?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=Asia/Shanghai&autoReconnect=true
+      username: root
+      password: mysql
       initialSize: 5
       maxActive: 20
       ## 配置获取连接等待超时的时间
@@ -27,9 +27,9 @@ spring:
       useGlobalDataSourceStat: true
     cluster:
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://10.18.26.36:3306/tx?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf8&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=Asia/Shanghai&autoReconnect=true
-      password: root
+      url: jdbc:mysql://localhost:3306/mydb?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=Asia/Shanghai&autoReconnect=true
       username: root
+      password: mysql
       initialSize: 5
       maxActive: 30
       ## 配置获取连接等待超时的时间
