@@ -37,11 +37,6 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc6</artifactId>
-            <version>11.2.0.3</version>
-        </dependency>
-        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.35</version>
@@ -173,6 +168,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -183,5 +182,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

@@ -20,7 +20,7 @@ spring:
   profiles:
     active: druid
     #切换配置文件
-#    spring.profiles.include: druid,ddd
+  #    spring.profiles.include: druid,ddd
   cache:
     type: redis
   redis:

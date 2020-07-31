@@ -27,18 +27,22 @@ public class ActuatorSecurityConfig extends WebSecurityConfigurerAdapter {
         if (StringUtils.isEmpty(contextPath)) {
             contextPath = "";
         }
-        http.csrf().disable();
         //authorizeRequests 方法限定只对签名成功的用户请求
         //anyRequest 方法限定所有请求
         //authenticated 方法对所有签名成功的用户允许方法
         http.authorizeRequests()
                 .antMatchers("/**" + contextPath + "/**").authenticated()
+                //.antMatchers("/server/servers").authenticated()
                 .anyRequest().permitAll()
+                //修改SpringSecurity的Frame配置.
+                //someOrigin : 页面可以在相同域名中被iFrame;deny : 不允许被iFrame;disable : 禁用Frame
+                .and().headers().frameOptions().sameOrigin()
                 //使用记住我的功能
                 .and().rememberMe()
                 //and方法是连接词 formLogin代表使用 Security默认的登录页面
                 .and().formLogin()
                 //httpBasic方法说明启用HTTP基础认证
-                .and().httpBasic();
+                .and().httpBasic()
+                .and().csrf().disable();
     }
 }
