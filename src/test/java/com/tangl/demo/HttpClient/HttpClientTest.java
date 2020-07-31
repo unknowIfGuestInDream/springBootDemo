@@ -5,7 +5,6 @@ import com.tangl.demo.test.HttpClient.User;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.ParseException;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -15,10 +14,10 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.net.ssl.SSLContext;
@@ -45,13 +44,19 @@ import java.util.List;
 @SpringBootTest
 public class HttpClientTest {
 
+    @Autowired
+    private CloseableHttpClient httpClient;
+
+    @Autowired
+    private RequestConfig requestConfig;
+
     /**
      * GET---无参测试
      */
     @Test
     public void doGetTestOne() {
         // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        //CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         //CloseableHttpClient httpClient1 = HttpClients.createDefault();  与上面相同
         //进行HTTPS请求并进行(或不进行)证书校验(示例)
         //CloseableHttpClient httpClient = getHttpClient(true);
@@ -63,6 +68,7 @@ public class HttpClientTest {
         // 响应模型
         CloseableHttpResponse response = null;
         try {
+            httpGet.setConfig(requestConfig);
             // 由客户端执行(发送)Get请求
             response = httpClient.execute(httpGet);
             // 从响应模型中获取响应实体
@@ -74,24 +80,8 @@ public class HttpClientTest {
                 System.out.println("响应内容长度为:" + responseEntity.getContentLength());
                 System.out.println("响应内容为:" + content);
             }
-        } catch (ClientProtocolException e) {
+        } catch (ParseException | IOException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                // 释放资源
-                if (httpClient != null) {
-                    httpClient.close();
-                }
-                if (response != null) {
-                    response.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -101,7 +91,7 @@ public class HttpClientTest {
     @Test
     public void doGetTestWayOne() throws URISyntaxException {
         // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        //CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 //1 直接拼接url
         // 参数
 //        StringBuffer params = new StringBuffer();
@@ -161,24 +151,8 @@ public class HttpClientTest {
                 System.out.println("响应内容长度为:" + responseEntity.getContentLength());
                 System.out.println("响应内容为:" + content);
             }
-        } catch (ClientProtocolException e) {
+        } catch (ParseException | IOException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                // 释放资源
-                if (httpClient != null) {
-                    httpClient.close();
-                }
-                if (response != null) {
-                    response.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -189,13 +163,14 @@ public class HttpClientTest {
     public void doPostTestOne() {
 
         // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        //CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
         // 创建Post请求
         HttpPost httpPost = new HttpPost("http://localhost:8080/doPostControllerOne");
         // 响应模型
         CloseableHttpResponse response = null;
         try {
+            httpPost.setConfig(requestConfig);
             // 由客户端执行(发送)Post请求
             response = httpClient.execute(httpPost);
             // 从响应模型中获取响应实体
@@ -208,24 +183,8 @@ public class HttpClientTest {
                 System.out.println("响应内容长度为:" + responseEntity.getContentLength());
                 System.out.println("响应内容为:" + content);
             }
-        } catch (ClientProtocolException e) {
+        } catch (ParseException | IOException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                // 释放资源
-                if (httpClient != null) {
-                    httpClient.close();
-                }
-                if (response != null) {
-                    response.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -236,7 +195,7 @@ public class HttpClientTest {
     public void doPostTestFour() throws URISyntaxException {
 
         // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        //CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
         // 参数
         URI uri = new URIBuilder("http://localhost:8080/doPostControllerFour").setParameter("name", "唐亮").setParameter("age", "18").build();
@@ -246,10 +205,10 @@ public class HttpClientTest {
 
         // 设置ContentType(注:如果只是传普通参数的话,ContentType不一定非要用application/json)
         httpPost.setHeader("Content-Type", "application/json;charset=utf8");
-
         // 响应模型
         CloseableHttpResponse response = null;
         try {
+            httpPost.setConfig(requestConfig);
             // 由客户端执行(发送)Post请求
             response = httpClient.execute(httpPost);
             // 从响应模型中获取响应实体
@@ -262,24 +221,8 @@ public class HttpClientTest {
                 System.out.println("响应内容长度为:" + responseEntity.getContentLength());
                 System.out.println("响应内容为:" + content);
             }
-        } catch (ClientProtocolException e) {
+        } catch (ParseException | IOException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                // 释放资源
-                if (httpClient != null) {
-                    httpClient.close();
-                }
-                if (response != null) {
-                    response.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -292,7 +235,7 @@ public class HttpClientTest {
     public void doPostTestTwo() {
 
         // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        //CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
         // 创建Post请求
         HttpPost httpPost = new HttpPost("http://localhost:8080/doPostControllerTwo");
@@ -309,10 +252,10 @@ public class HttpClientTest {
         httpPost.setEntity(entity);
 
         httpPost.setHeader("Content-Type", "application/json;charset=utf8");
-
         // 响应模型
         CloseableHttpResponse response = null;
         try {
+            httpPost.setConfig(requestConfig);
             // 由客户端执行(发送)Post请求
             response = httpClient.execute(httpPost);
             // 从响应模型中获取响应实体
@@ -325,27 +268,99 @@ public class HttpClientTest {
                 System.out.println("响应内容长度为:" + responseEntity.getContentLength());
                 System.out.println("响应内容为:" + content);
             }
-        } catch (ClientProtocolException e) {
+        } catch (ParseException | IOException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                // 释放资源
-                if (httpClient != null) {
-                    httpClient.close();
-                }
-                if (response != null) {
-                    response.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
+    @Test
+    public void doWebGaoDe() throws URISyntaxException {
+        //CloseableHttpClient httpClient = getHttpClient(true);
+        URI uri = new URIBuilder("https://restapi.amap.com/v3/weather/weatherInfo")
+                .setParameter("city", "210204")
+                .setParameter("key", "138993d5bd56a52d9c9ab3a2ee5d02c2").build();
+        HttpGet httpget = new HttpGet(uri);
+        httpget.setHeader("Content-Type", "application/json;charset=utf8");
+        // 响应模型
+        CloseableHttpResponse response = null;
+        try {
+            httpget.setConfig(requestConfig);
+            // 由客户端执行(发送)Post请求
+            response = httpClient.execute(httpget);
+            // 从响应模型中获取响应实体
+            HttpEntity responseEntity = response.getEntity();
+
+            System.out.println("响应状态为:" + response.getStatusLine());
+            //主动设置编码 防止响应乱码
+            String content = EntityUtils.toString(response.getEntity(), "UTF-8");
+            if (responseEntity != null) {
+                System.out.println("响应内容长度为:" + responseEntity.getContentLength());
+                System.out.println("响应内容为:" + content);
+            }
+        } catch (ParseException | IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
+    public void doWebBaiDu() throws URISyntaxException {
+        //CloseableHttpClient httpClient = getHttpClient(true);
+//        URI uri = new URIBuilder("http://www.baidu.com/s")
+//                .setParameter("wd", "java").build();
+        URI uri = new URIBuilder("https://tang97155@163.com:tang1997@mail.163.com").build();
+        HttpGet httpget = new HttpGet(uri);
+        httpget.setHeader("Content-Type", "application/json;charset=utf8");
+        // 响应模型
+        CloseableHttpResponse response = null;
+        try {
+            httpget.setConfig(requestConfig);
+            // 由客户端执行(发送)Post请求
+            response = httpClient.execute(httpget);
+            // 从响应模型中获取响应实体
+            HttpEntity responseEntity = response.getEntity();
+
+            System.out.println("响应状态为:" + response.getStatusLine());
+            //主动设置编码 防止响应乱码
+            String content = EntityUtils.toString(response.getEntity(), "UTF-8");
+            if (responseEntity != null) {
+                System.out.println("响应内容长度为:" + responseEntity.getContentLength());
+                System.out.println("响应内容为:" + content);
+            }
+        } catch (ParseException | IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    //带有账号密码的url
+    @Test
+    public void doActuator() throws URISyntaxException {
+        //CloseableHttpClient httpClient = getHttpClient(true);
+        URI uri = new URIBuilder("http://tang:tang@localhost:8080/actuator").build();
+        HttpGet httpget = new HttpGet(uri);
+        httpget.setHeader("Content-Type", "application/json;charset=utf8");
+        // 响应模型
+        CloseableHttpResponse response = null;
+        try {
+            httpget.setConfig(requestConfig);
+            // 由客户端执行(发送)Post请求
+            response = httpClient.execute(httpget);
+            // 从响应模型中获取响应实体
+            HttpEntity responseEntity = response.getEntity();
+
+            System.out.println("响应状态为:" + response.getStatusLine());
+            //主动设置编码 防止响应乱码
+            String content = EntityUtils.toString(response.getEntity(), "UTF-8");
+            if (responseEntity != null) {
+                System.out.println("响应内容长度为:" + responseEntity.getContentLength());
+                System.out.println("响应内容为:" + content);
+            }
+        } catch (ParseException | IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     /**
      * 根据是否是https请求，获取HttpClient客户端
@@ -463,3 +478,4 @@ public class HttpClientTest {
         return keyStore;
     }
 }
+
