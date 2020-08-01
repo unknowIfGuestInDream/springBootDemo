@@ -38,6 +38,11 @@ spring:
     user:
       name: tang
       password: tang
+  data:
+    mongodb:
+      host: localhost # mongodb的连接地址
+      port: 27017 # mongodb的连接端口号
+      database: tangl # mongodb的连接的数据库
 logging:
   file:
     path: G:/javaWorkSpace/springBootDemo/

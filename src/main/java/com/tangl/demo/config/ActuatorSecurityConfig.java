@@ -30,7 +30,9 @@ public class ActuatorSecurityConfig extends WebSecurityConfigurerAdapter {
         //authorizeRequests 方法限定只对签名成功的用户请求
         //anyRequest 方法限定所有请求
         //authenticated 方法对所有签名成功的用户允许方法
+        http.csrf().disable();
         http.authorizeRequests()
+                //.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/**" + contextPath + "/**").authenticated()
                 //.antMatchers("/server/servers").authenticated()
                 .anyRequest().permitAll()
@@ -42,7 +44,8 @@ public class ActuatorSecurityConfig extends WebSecurityConfigurerAdapter {
                 //and方法是连接词 formLogin代表使用 Security默认的登录页面
                 .and().formLogin()
                 //httpBasic方法说明启用HTTP基础认证
-                .and().httpBasic()
-                .and().csrf().disable();
+                .and().httpBasic();
+        // 禁用缓存
+        http.headers().cacheControl();
     }
 }
