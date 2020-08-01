@@ -44,9 +44,15 @@ spring:
       port: 27017 # mongodb的连接端口号
       database: tl # mongodb的连接的数据库
 logging:
+  level:
+    root: info #日志配置DEBUG,INFO,WARN,ERROR
+    com.tangl.demo: debug
+    #    org.springframework.web: debug
+    druid:
+      sql:
+        Statement: DEBUG
   file:
-    path: G:/javaWorkSpace/springBootDemo/
-    name: springbootdemo.log
+    path: E:/logs/springBootDemo/
 # actuator监控
 management:
   security:

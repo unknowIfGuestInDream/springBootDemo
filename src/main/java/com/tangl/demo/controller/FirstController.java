@@ -6,7 +6,7 @@ import com.tangl.demo.easyexcel.DemoData;
 import com.tangl.demo.easyexcel.DemoDataListener;
 import com.tangl.demo.easyexcel.NoModelDataListener;
 import com.tangl.demo.service.FirstService;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,10 +30,9 @@ import java.util.Map;
  * @date: 2020/6/28 14:02
  * @since: 1.0
  */
-@Log4j
+@Slf4j
 @Controller
 public class FirstController {
-    //private static final Logger logger = Logger.getLogger(FirstController.class);
 
     @Autowired
     private FirstService firstService;

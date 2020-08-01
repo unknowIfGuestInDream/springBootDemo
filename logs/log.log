@@ -1741,3 +1741,10 @@ java.sql.SQLSyntaxErrorException: ORA-00955: 名称已由现有对象使用
 2020-08-01 12:21:32,182  INFO FirstController:74 - 进入selectTest方法
 2020-08-01 12:21:46,035  INFO FirstController:74 - 进入selectTest方法
 2020-08-01 12:21:49,731  INFO FirstController:74 - 进入selectTest方法
+2020-08-01 15:20:16,669  INFO MyFilter1:43 - myFilter1 destroy
+2020-08-01 15:21:56,702  INFO MyFilter1:43 - myFilter1 destroy
+2020-08-01 15:23:33,041  INFO MyFilter1:43 - myFilter1 destroy
+2020-08-01 15:25:26,482  INFO MyFilter1:43 - myFilter1 destroy
+2020-08-01 15:26:02,550  INFO MyFilter1:43 - myFilter1 destroy
+2020-08-01 15:29:22,759  INFO FirstController:74 - 进入selectTest方法
+2020-08-01 15:29:52,237  INFO FirstController:74 - 进入selectTest方法

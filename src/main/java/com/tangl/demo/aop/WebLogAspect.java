@@ -104,7 +104,7 @@ public class WebLogAspect {
         String ip = getIp(request);//获取ip地址
         String url = getUrl(request);//获取url
 
-        log.info("方法描述: {} \n 浏览器: {} \n 操作系统: {} \n 用户: {} \n IP: {} \n URL: {}", operateType, browser, os, ipName, ip, url);
+        log.info("方法描述: {}  浏览器: {}  操作系统: {}  用户: {}  IP: {}  URL: {}", operateType, browser, os, ipName, ip, url);
         try {
             //执行目标方法
             result = pjd.proceed();

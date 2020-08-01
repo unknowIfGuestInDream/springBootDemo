@@ -22,7 +22,7 @@ spring:
       ## 打开PSCache，并且指定每个连接上PSCache的大小
       poolPreparedStatements: true
       maxPoolPreparedStatementPerConnectionSize: 20
-      filters: stat,wall,log4j
+      filters: stat,wall,slf4j
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
       useGlobalDataSourceStat: true
     cluster:
@@ -46,11 +46,11 @@ spring:
       ## 打开PSCache，并且指定每个连接上PSCache的大小
       poolPreparedStatements: true
       maxPoolPreparedStatementPerConnectionSize: 20
-      filters: stat,wall,log4j
+      filters: stat,wall,slf4j
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
       useGlobalDataSourceStat: true
     druid:
-      aop-patterns: com.tangl.demo.controller.*,com.tangl.demo.service.*
+      aop-patterns: com.tangl.demo.service.*
       # 配置StatFilter
       web-stat-filter:
         #默认为false，设置为true启动
@@ -59,6 +59,7 @@ spring:
         exclusions: "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*"
         #配置StatViewServlet
       stat-view-servlet:
+        enable: true
         url-pattern: "/druid/*"
         #允许那些ip
         allow:
@@ -70,3 +71,11 @@ spring:
         reset-enable: true
         #启用
         enabled: true
+      filter:
+        slf4j:
+          enabled: true
+          statement-create-after-log-enabled: false
+          statement-log-enabled: false
+          statement-executable-sql-log-enable: true
+          statement-log-error-enabled: true
+          result-set-log-enabled: false

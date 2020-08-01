@@ -3,6 +3,7 @@ package com.tangl.demo.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -16,12 +17,16 @@ import java.time.Duration;
 
 /**
  * cache默认配置，如果需要自由操作Redis 调用 RedisService
+ *
  * @author 唐亮
  * @date 13:02 2020/7/11
  * @return
  */
 @Configuration
 public class RedisConfig {
+
+    @Value("${redis.key.expire.authCode}")
+    private Long AUTH_CODE_EXPIRE_SECONDS;
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
@@ -55,7 +60,7 @@ public class RedisConfig {
                 .defaultCacheConfig()
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer()))
                 //.entryTtl(Duration.ofDays(1));
-                .entryTtl(Duration.ofSeconds(30));
+                .entryTtl(Duration.ofSeconds(AUTH_CODE_EXPIRE_SECONDS));
 //                .disableCachingNullValues()
 //                .disableKeyPrefix();
         return new RedisCacheManager(redisCacheWriter, redisCacheConfiguration);
