@@ -15,6 +15,7 @@ import org.springframework.data.redis.serializer.*;
 import java.time.Duration;
 
 /**
+ * cache默认配置，如果需要自由操作Redis 调用 RedisService
  * @author 唐亮
  * @date 13:02 2020/7/11
  * @return
