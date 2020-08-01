@@ -10,7 +10,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- * 定时任务(多线程)
+ * 线程池
  *
  * @author: TangLiang
  * @date: 2020/7/10 9:17
