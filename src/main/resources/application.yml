@@ -106,11 +106,11 @@ swagger:
   enabled: true
   # 请求前缀
   pathMapping: /
-# 自定义redis key
+## 自定义redis key
 redis:
   key:
     prefix:
-      authCode: "portal:authCode:"
+      authCode: "demo:authCode:"
     expire:
       authCode: 120 # 验证码超期时间
 
