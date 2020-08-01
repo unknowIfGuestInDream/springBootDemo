@@ -1,6 +1,6 @@
 package com.tangl.demo.service.impl;
 
-import com.tangl.demo.redis.RedisService;
+import com.tangl.demo.redis.StringRedisService;
 import com.tangl.demo.service.UmsMemberService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import java.util.Random;
 @Service
 public class UmsMemberServiceImpl implements UmsMemberService {
     @Autowired
-    private RedisService redisService;
+    private StringRedisService redisService;
     @Value("${redis.key.prefix.authCode}")
     private String REDIS_KEY_PREFIX_AUTH_CODE;
     @Value("${redis.key.expire.authCode}")
