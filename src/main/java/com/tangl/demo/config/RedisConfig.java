@@ -1,8 +1,10 @@
 package com.tangl.demo.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +27,8 @@ import java.time.Duration;
 @Configuration
 public class RedisConfig {
 
+    @Value("${redis.key.prefix.authCode}")
+    private String REDIS_KEY_PREFIX_AUTH_CODE;
     @Value("${redis.key.expire.authCode}")
     private Long AUTH_CODE_EXPIRE_SECONDS;
 
@@ -47,7 +51,8 @@ public class RedisConfig {
         Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<>(Object.class);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance,
+                ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
         serializer.setObjectMapper(objectMapper);
         return serializer;
     }
@@ -59,10 +64,11 @@ public class RedisConfig {
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration
                 .defaultCacheConfig()
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer()))
-                //.entryTtl(Duration.ofDays(1));
-                .entryTtl(Duration.ofSeconds(AUTH_CODE_EXPIRE_SECONDS));
-//                .disableCachingNullValues()
-//                .disableKeyPrefix();
+                .prefixCacheNameWith(REDIS_KEY_PREFIX_AUTH_CODE)
+                //失效时间
+                .entryTtl(Duration.ofSeconds(AUTH_CODE_EXPIRE_SECONDS))
+                .disableCachingNullValues();
+        //.disableKeyPrefix();
         return new RedisCacheManager(redisCacheWriter, redisCacheConfiguration);
     }
 }

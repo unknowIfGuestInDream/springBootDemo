@@ -1,5 +1,6 @@
 package com.tangl.demo.aop;
 
+import com.alibaba.fastjson.JSONObject;
 import com.tangl.demo.annotation.LogAnno;
 import com.tangl.demo.util.IpUtils;
 import eu.bitwalker.useragentutils.Browser;
@@ -10,10 +11,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.reflect.CodeSignature;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
@@ -34,10 +37,6 @@ import static com.tangl.demo.util.BaseUtil.getUrl;
 @Order(1)
 @Slf4j
 public class WebLogAspect {
-    //private static final Logger logger = LoggerFactory.getLogger(WebLogAspect.class);
-
-    @Autowired
-    HttpServletRequest request;
 
     /**
      * 定义切入点
@@ -93,8 +92,8 @@ public class WebLogAspect {
         String operateType = logAnno.operateType();
 
         //获取request 也可以通过注解 都是安全的
-//        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
-//                .getRequest();
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+                .getRequest();
 
         UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));   //req就是request请求
         Browser browser = userAgent.getBrowser();  //获取浏览器信息
@@ -103,8 +102,14 @@ public class WebLogAspect {
         String ipName = IpUtils.getHostName();
         String ip = getIp(request);//获取ip地址
         String url = getUrl(request);//获取url
-
-        log.info("方法描述: {}  浏览器: {}  操作系统: {}  用户: {}  IP: {}  URL: {}", operateType, browser, os, ipName, ip, url);
+        Map<String, Object> paramMap = new HashMap();
+        Object[] args = pjd.getArgs();
+        String[] paramNames = ((CodeSignature) pjd.getSignature()).getParameterNames();
+        for (int i = 0, leng = paramNames.length; i < leng; i++) {
+            paramMap.put(paramNames[i], args[i]);
+        }
+        String paramJson = JSONObject.toJSONString(paramMap);
+        log.info("方法描述: {}  浏览器: {}  浏览器版本： {}  操作系统: {}  用户: {}  IP: {}  URL: {} 参数： {}", operateType, browser, version, os, ipName, ip, url, paramJson);
         try {
             //执行目标方法
             result = pjd.proceed();
@@ -143,4 +148,5 @@ public class WebLogAspect {
     @AfterThrowing(value = "BrokerAspect()", throwing = "exception")
     public void doAfterThrowingGame(JoinPoint joinPoint, Exception exception) {
     }
+
 }

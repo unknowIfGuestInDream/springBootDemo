@@ -68,9 +68,8 @@ public class FirstController {
     @PostMapping(value = "selectTest")
     @ResponseBody
     @LogAnno(operateType = "查询Test")
-    public Map<String, Object> selectTest(String ID_, String pwd, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws SQLException {
+    public Map<String, Object> selectTest(String ID_, String pwd) throws SQLException {
         Map<String, Object> result = new HashMap<String, Object>();
-        log.info("进入selectTest方法");
         List<Map<String, Object>> deptList = firstService.selectTest(ID_);
         int total = firstService.countTest();
         result.put("result", deptList);
@@ -86,7 +85,6 @@ public class FirstController {
     @LogAnno(operateType = "修改Test")
     public Map<String, Object> updateTest(String ID_, String CODE_, String NAME, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws SQLException {
         Map<String, Object> result = new HashMap<String, Object>();
-        log.info("进入updateTest方法");
         if (firstService.updateTest(ID_, CODE_, NAME) > 0) {
             result.put("success", true);
         } else {
@@ -101,7 +99,6 @@ public class FirstController {
     @LogAnno(operateType = "删除Test")
     public Map<String, Object> deleteTest(String ID_, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws SQLException {
         Map<String, Object> result = new HashMap<String, Object>();
-        log.info("进入deleteTest方法");
         if (firstService.deleteTest(ID_) > 0) {
             result.put("success", true);
         } else {
@@ -115,7 +112,6 @@ public class FirstController {
     @ResponseBody
     @LogAnno(operateType = "添加Test")
     public Map<String, Object> insertTest(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws SQLException {
-        log.info("进入insertTest方法");
         Map<String, Object> result = new HashMap<String, Object>();
         List<Map<String, Object>> deptList = firstService.selectTest(null);
         int total = firstService.countTest();

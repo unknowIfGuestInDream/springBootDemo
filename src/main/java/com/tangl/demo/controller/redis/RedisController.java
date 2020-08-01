@@ -79,7 +79,7 @@ public class RedisController {
         value.put("id", "1");
         value.put("name", "唐三");
         redisService.lPushAll(key, value);
-        redisService.lRemove(key, 1, value);
+        //redisService.lRemove(key, 1, value);
         result.put("success", true);
         result.put("result", redisService.lRange(key, 0, 3));
         return result;
