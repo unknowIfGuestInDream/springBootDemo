@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -30,11 +31,19 @@ public class ActuatorSecurityConfig extends WebSecurityConfigurerAdapter {
         //authorizeRequests 方法限定只对签名成功的用户请求
         //anyRequest 方法限定所有请求
         //authenticated 方法对所有签名成功的用户允许方法
-        http.csrf().disable();
-        http.authorizeRequests()
-                //.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                //对网站静态资源无授权访问
+                .antMatchers(HttpMethod.GET, "/", "/*.html", "/favicon.ico",
+                        "/**/*.html", "/**/*.css", "/**/*.js",
+                        "/swagger-recources/**", "/v2/api-docs/**").permitAll()
+                //跨域请求放行
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                //actuator请求验证
                 .antMatchers("/**" + contextPath + "/**").authenticated()
-                //.antMatchers("/server/servers").authenticated()
+                .antMatchers("/server/servers").authenticated()
+                //除以上请求其余的放行permitAll/验证authenticated
                 .anyRequest().permitAll()
                 //修改SpringSecurity的Frame配置.
                 //someOrigin : 页面可以在相同域名中被iFrame;deny : 不允许被iFrame;disable : 禁用Frame
