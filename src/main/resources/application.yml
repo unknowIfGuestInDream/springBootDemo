@@ -26,8 +26,8 @@ spring:
   redis:
     host: 127.0.0.1
     password:
-    database: 0
-    timeout: 5000
+    database: 1
+    timeout: 3000
     lettuce:
       pool:
         max-active: 8
@@ -100,6 +100,13 @@ swagger:
   enabled: true
   # 请求前缀
   pathMapping: /
+# 自定义redis key
+redis:
+  key:
+    prefix:
+      authCode: "portal:authCode:"
+    expire:
+      authCode: 120 # 验证码超期时间
 
 
 
