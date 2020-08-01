@@ -9,5 +9,4 @@ health 显示应用的健康状态
 logfile 返回log file中的内容(如果logging.file或者logging.path被设置)
 env 显示当前的环境特性
 mappings 显示所有的@RequestMapping路径
-scheduledtasks 显示应用中的调度任务
 
