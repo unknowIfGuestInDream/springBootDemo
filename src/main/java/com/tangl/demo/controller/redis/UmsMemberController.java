@@ -1,5 +1,6 @@
 package com.tangl.demo.controller.redis;
 
+import com.tangl.demo.annotation.LogAnno;
 import com.tangl.demo.service.UmsMemberService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,6 +27,7 @@ public class UmsMemberController {
     @Autowired
     private UmsMemberService memberService;
 
+    @LogAnno(operateType = "获取验证码")
     @ApiOperation("获取验证码")
     @RequestMapping(value = "/getAuthCode", method = RequestMethod.GET)
     @ResponseBody
@@ -33,6 +35,7 @@ public class UmsMemberController {
         return memberService.generateAuthCode(telephone);
     }
 
+    @LogAnno(operateType = "判断验证码是否正确")
     @ApiOperation("判断验证码是否正确")
     @RequestMapping(value = "/verifyAuthCode", method = RequestMethod.POST)
     @ResponseBody

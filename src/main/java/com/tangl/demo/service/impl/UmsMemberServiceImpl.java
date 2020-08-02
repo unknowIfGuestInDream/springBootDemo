@@ -92,6 +92,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         if (accurate) {
             result.put("success", true);
             result.put("message", "验证码校验成功");
+            redisService.remove(REDIS_KEY_PREFIX_AUTH_CODE + telephone);
         } else {
             result.put("success", false);
             result.put("message", "验证码不正确");
