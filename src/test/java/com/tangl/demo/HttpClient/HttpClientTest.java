@@ -1,6 +1,7 @@
 package com.tangl.demo.HttpClient;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.tangl.demo.test.HttpClient.User;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
@@ -46,7 +47,6 @@ public class HttpClientTest {
 
     @Autowired
     private CloseableHttpClient httpClient;
-
     @Autowired
     private RequestConfig requestConfig;
 
@@ -360,6 +360,60 @@ public class HttpClientTest {
             e.printStackTrace();
         }
 
+    }
+
+    @Test
+    public void sendEMS() throws URISyntaxException {
+
+        JSONObject jsonObject = new JSONObject();
+        //基础配置，在开发平台认证后获取
+        jsonObject.put("sid", "fac23d51fd052b72e783af972f022ca3");
+        jsonObject.put("token", "7e5b9bcdf6261d469553f5aba6d8621a");
+        jsonObject.put("appid", "910106016f0541e6913a2d72a0621754");
+        //模板ID，在开发平台创建模板对应的模板ID
+        jsonObject.put("templateid", "559190");
+        //模板对应的参数，参数之间拼接用逗号作为间隔符
+        jsonObject.put("param", "123456"); //"123456,123"
+        //要发送的手机号
+        jsonObject.put("mobile", "15566418409");
+        //用户透传ID，随状态报告返回,可以不填写
+        jsonObject.put("uid", "9749456486");
+        String json = JSONObject.toJSONString(jsonObject);
+
+        //单发短信API
+//        String url = "https://open.ucpaas.com/ol/sms/sendsms";
+//        //使用restTemplate进行访问远程服务
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+//        org.springframework.http.HttpEntity<String> httpEntity = new org.springframework.http.HttpEntity<String>(json, headers);
+//        String result = restTemplate.postForObject(url, httpEntity, String.class);
+//        System.out.println(result);
+
+
+        HttpPost httpPost = new HttpPost("https://open.ucpaas.com/ol/sms/sendsms");
+        StringEntity entity = new StringEntity(json, "UTF-8");
+        // post请求是将参数放在请求体里面传过去的;这里将entity放入post请求体中
+        httpPost.setEntity(entity);
+        httpPost.setHeader("Content-Type", "application/json;charset=utf8");
+        // 响应模型
+        CloseableHttpResponse response = null;
+        try {
+            httpPost.setConfig(requestConfig);
+            // 由客户端执行(发送)Post请求
+            response = httpClient.execute(httpPost);
+            // 从响应模型中获取响应实体
+            HttpEntity responseEntity = response.getEntity();
+
+            System.out.println("响应状态为:" + response.getStatusLine());
+            //主动设置编码 防止响应乱码
+            String content = EntityUtils.toString(response.getEntity(), "UTF-8");
+            if (responseEntity != null) {
+                System.out.println("响应内容长度为:" + responseEntity.getContentLength());
+                System.out.println("响应内容为:" + content);
+            }
+        } catch (ParseException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
