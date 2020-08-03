@@ -16,6 +16,11 @@ public interface UmsMemberService {
     Map generateAuthCode(String telephone);
 
     /**
+     * 生成验证码
+     */
+    Map generateAuthCodeRabbitMQ(String telephone);
+
+    /**
      * 判断验证码和手机号码是否匹配
      */
     Map verifyAuthCode(String telephone, String authCode);

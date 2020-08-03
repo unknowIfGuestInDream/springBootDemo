@@ -43,4 +43,12 @@ public class UmsMemberController {
                               @RequestParam String authCode) {
         return memberService.verifyAuthCode(telephone, authCode);
     }
+
+    @LogAnno(operateType = "获取验证码RabbitMQ")
+    @ApiOperation("获取验证码RabbitMQ")
+    @RequestMapping(value = "/getAuthCodeRabbitMQ", method = RequestMethod.GET)
+    @ResponseBody
+    public Map sendMsgRabbitMQ(@RequestParam String telephone) {
+        return memberService.generateAuthCodeRabbitMQ(telephone);
+    }
 }

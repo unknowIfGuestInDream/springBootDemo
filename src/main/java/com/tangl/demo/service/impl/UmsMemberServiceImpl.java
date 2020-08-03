@@ -1,5 +1,6 @@
 package com.tangl.demo.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.aliyuncs.CommonRequest;
 import com.aliyuncs.CommonResponse;
@@ -11,11 +12,15 @@ import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.tangl.demo.redis.StringRedisService;
 import com.tangl.demo.service.UmsMemberService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -26,16 +31,28 @@ import java.util.Random;
  * @since: 1.0
  */
 @Service
+@Slf4j
 public class UmsMemberServiceImpl implements UmsMemberService {
     @Autowired
     private StringRedisService redisService;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
     @Value("${redis.key.prefix.authCode}")
     private String REDIS_KEY_PREFIX_AUTH_CODE;
     @Value("${redis.key.expire.authCode}")
     private Long AUTH_CODE_EXPIRE_SECONDS;
+    @Value("${aliyun.sms.accessKeyId}")
+    private String ACCESSKEY_ID;
+    @Value("${aliyun.sms.accessKeySecret}")
+    private String ACCESSKEY_SECRET;
+    @Value("${aliyun.sms.template_code}")
+    private String TEMPLATE_CODE;
+    @Value("${aliyun.sms.sign_name}")
+    private String SIGN_NAME;
 
     @Override
     public Map generateAuthCode(String telephone) {
+        Instant start = Instant.now();
         StringBuilder sb = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < 6; i++) {
@@ -74,6 +91,32 @@ public class UmsMemberServiceImpl implements UmsMemberService {
 
         Map result = new HashMap();
         result.put("success", true);
+        Instant end = Instant.now();
+        log.info("不用RabbitMQ耗费时间: {}", Duration.between(start, end).toMillis());
+        return result;
+    }
+
+    @Override
+    public Map generateAuthCodeRabbitMQ(String telephone) {
+        Instant start = Instant.now();
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < 6; i++) {
+            sb.append(random.nextInt(10));
+        }
+        //验证码绑定手机号并存储到redis
+        redisService.set(REDIS_KEY_PREFIX_AUTH_CODE + telephone, sb.toString());
+        redisService.expire(REDIS_KEY_PREFIX_AUTH_CODE + telephone, AUTH_CODE_EXPIRE_SECONDS);
+        //直连模式,将电话号码和验证码发送出去。
+        Map map = new HashMap();
+        map.put("phone", telephone);
+        map.put("code", sb.toString());
+        Map result = new HashMap();
+        result.put("success", true);
+        result.put("message", sb.toString());
+        rabbitTemplate.convertAndSend("queueSms", JSON.toJSONString(map));
+        Instant end = Instant.now();
+        log.info("用RabbitMQ耗费时间: {}", Duration.between(start, end).toMillis());
         return result;
     }
 

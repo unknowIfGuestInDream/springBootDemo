@@ -1,8 +1,12 @@
 package com.tangl.demo.aop;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.tangl.demo.Document.LogDocument;
 import com.tangl.demo.annotation.LogAnno;
+import com.tangl.demo.util.DateUtils;
 import com.tangl.demo.util.IpUtils;
+import com.tangl.demo.util.uuid.UUID;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
@@ -13,6 +17,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.CodeSignature;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -20,6 +26,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,6 +46,11 @@ import static com.tangl.demo.util.BaseUtil.getUrl;
 @Order(1)
 @Slf4j
 public class WebLogAspect {
+
+    //    @Autowired
+//    private LogTomongoRepository logTomongoRepository;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     /**
      * 定义切入点
@@ -82,6 +96,7 @@ public class WebLogAspect {
     //@Around("BrokerAspect()")
     @Around("logAnno()")
     public Object doAround(ProceedingJoinPoint pjd) {
+        Instant start = Instant.now();
         log.info("进入[{}]方法", pjd.getSignature().getName());
         Object result;
         // 获取方法签名
@@ -109,7 +124,25 @@ public class WebLogAspect {
             paramMap.put(paramNames[i], args[i]);
         }
         String paramJson = JSONObject.toJSONString(paramMap);
-        log.info("方法描述: {}  浏览器: {}  浏览器版本： {}  操作系统: {}  用户: {}  IP: {}  URL: {} 参数： {}", operateType, browser, version, os, ipName, ip, url, paramJson);
+        log.info("方法描述: [{}]  浏览器: [{}]  浏览器版本： [{}]  操作系统: [{}]  用户: [{}]  IP: [{}]  URL: [{}] 参数： [{}]", operateType, browser, version, os, ipName, ip, url, paramJson);
+
+        LogDocument logDocument = new LogDocument();
+        logDocument.setId(String.valueOf(UUID.fastUUID()));
+        logDocument.setOperateType(operateType);
+        logDocument.setBrowser(browser.getName());
+        logDocument.setVersion(version.getVersion());
+        logDocument.setOs(os.getName());
+        logDocument.setIpName(ipName);
+        logDocument.setIp(ip);
+        logDocument.setUrl(url);
+        logDocument.setParams(paramJson);
+        logDocument.setCreateTime(DateUtils.parseDateToStr(DateUtils.YYYY_MM_DD_HH_MM_SS, new Date()));
+
+        //logTomongoRepository.save(logDocument);
+        rabbitTemplate.convertAndSend("logToMongo", JSON.toJSONString(logDocument));
+        Instant end = Instant.now();
+        log.info("用RabbitMQ耗费时间: {}", Duration.between(start, end).toMillis());
+
         try {
             //执行目标方法
             result = pjd.proceed();
