@@ -96,7 +96,6 @@ public class WebLogAspect {
     //@Around("BrokerAspect()")
     @Around("logAnno()")
     public Object doAround(ProceedingJoinPoint pjd) {
-        Instant start = Instant.now();
         log.info("进入[{}]方法", pjd.getSignature().getName());
         Object result;
         // 获取方法签名
@@ -140,8 +139,6 @@ public class WebLogAspect {
 
         //logTomongoRepository.save(logDocument);
         rabbitTemplate.convertAndSend("logToMongo", JSON.toJSONString(logDocument));
-        Instant end = Instant.now();
-        log.info("用RabbitMQ耗费时间: {}", Duration.between(start, end).toMillis());
 
         try {
             //执行目标方法
