@@ -34,15 +34,15 @@ public class ActuatorSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
+                //跨域请求放行
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .antMatchers("/server/servers","/druid/*").authenticated()
                 //对网站静态资源无授权访问
                 .antMatchers(HttpMethod.GET, "/", "/*.html", "/favicon.ico",
                         "/**/*.html", "/**/*.css", "/**/*.js",
                         "/swagger-recources/**", "/v2/api-docs/**").permitAll()
-                //跨域请求放行
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 //actuator请求验证
                 .antMatchers("/**" + contextPath + "/**").authenticated()
-                .antMatchers("/server/servers").authenticated()
                 //除以上请求其余的放行permitAll/验证authenticated
                 .anyRequest().permitAll()
                 //修改SpringSecurity的Frame配置.
