@@ -21,6 +21,7 @@ public class LogDocument {
     private String ipName;
     private String ip;
     private String url;
+    private String signature;
     private String params;
     private String createTime;
 }

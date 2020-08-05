@@ -134,6 +134,7 @@ public class WebLogAspect {
         logDocument.setIpName(ipName);
         logDocument.setIp(ip);
         logDocument.setUrl(url);
+        logDocument.setSignature(pjd.getSignature().toString());
         logDocument.setParams(paramJson);
         logDocument.setCreateTime(DateUtils.parseDateToStr(DateUtils.YYYY_MM_DD_HH_MM_SS, new Date()));
 

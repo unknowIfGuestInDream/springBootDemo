@@ -40,19 +40,26 @@ spring:
       password: tang
   data:
     mongodb:
+      username: root
+      password: root
       host: localhost # mongodb的连接地址
       port: 27017 # mongodb的连接端口号
       database: tl # mongodb的连接的数据库
+      authenticationDatabase: admin
   rabbitmq:
     host: 127.0.0.1
     port: 5672
     username: guest
     password: guest
     virtualHost: /
+    listener:
+      simple:
+        concurrency: 100
+        max-concurrency: 1000
 logging:
   level:
     root: info #日志配置DEBUG,INFO,WARN,ERROR
-    com.tangl.demo: debug
+    org.springframework.data.mongodb.core: DEBUG
     #    org.springframework.web: debug
     druid:
       sql:
@@ -125,5 +132,13 @@ aliyun:
     accessKeySecret: yFpmuwHsuF630ua1iUBCDa0jcJh0Hy
     template_code: SMS_198667593
     sign_name: ABC商城
+#线程池配置
+thread:
+  corePoolSize: 50 #核心线程数
+  maxPoolSize: 200 #设置最大线程数
+  queueCapacity: 1000 #队列容量
+  keepAliveSeconds: 30 #线程活跃时间（秒）
+  threadNamePrefix: Anno-Executor #默认线程名称
+
 
 

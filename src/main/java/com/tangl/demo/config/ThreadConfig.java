@@ -18,20 +18,17 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 @Configuration
 @EnableAsync
-public class AsyncConfig {
+public class ThreadConfig {
 
-    /*
-     *此处成员变量应该使用@Value从配置中读取
-     */
-    @Value("10") //设置核心线程数
+    @Value("${thread.corePoolSize}")//设置核心线程数
     private int corePoolSize;
-    @Value("100") //设置最大线程数
+    @Value("${thread.maxPoolSize}") //设置最大线程数
     private int maxPoolSize;
-    @Value("10") //设置队列容量
+    @Value("${thread.queueCapacity}") //设置队列容量
     private int queueCapacity;
-    @Value("60") //设置线程活跃时间（秒）
+    @Value("${thread.keepAliveSeconds}") //设置线程活跃时间（秒）
     private int keepAliveSeconds;
-    @Value("Anno-Executor") //设置默认线程名称
+    @Value("${thread.threadNamePrefix}") //设置默认线程名称
     private String threadNamePrefix;
 
     @Bean

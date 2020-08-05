@@ -48,6 +48,7 @@ public class FirstServiceImpl implements FirstService {
         return namedParameterJdbcTemplate.queryForList(sql, paramMap);
     }
 
+    @Cacheable(cacheNames = "userCount", key = "#root.method")
     @Override
     public int countTest() {
         String sql = "select count(*) from tx_realtime_parm_test";
