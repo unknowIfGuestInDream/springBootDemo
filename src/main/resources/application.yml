@@ -56,6 +56,20 @@ spring:
       simple:
         concurrency: 100
         max-concurrency: 1000
+  mail:
+    protocol: smtps
+    host: smtp.163.com
+    port: 994
+    username: tang97155@163.com
+    password: ELACZHTZLMLVJYDF
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
 logging:
   level:
     root: info #日志配置DEBUG,INFO,WARN,ERROR

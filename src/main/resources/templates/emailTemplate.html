@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>模板</title>
+    <script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+</head>
+
+<body>
+您好，您的验证码为<span th:text="${code}"></span>,请在两分钟内使用完成操作。
+<br/>
+您好,这是验证邮件,请点击下面的链接完成验证,<br/>
+<a href="#" th:href="@{ http://www.ityouknow.com/neo/{id}(id=${id}) }">激活账号</a>
+
+</body>
+</html>
