@@ -1,6 +1,8 @@
 server:
   port: 8080
 spring:
+  application:
+    name: springBootDemo
   servlet:
     multipart:
       enabled: true
@@ -70,6 +72,10 @@ spring:
           starttls:
             enable: true
             required: true
+#  boot:
+#    admin:
+#      client:
+#        url: http://192.168.1.180:8000/admin-server
 logging:
   level:
     root: info #日志配置DEBUG,INFO,WARN,ERROR
@@ -152,7 +158,7 @@ thread:
   maxPoolSize: 200 #设置最大线程数
   queueCapacity: 1000 #队列容量
   keepAliveSeconds: 30 #线程活跃时间（秒）
-  threadNamePrefix: Anno-Executor #默认线程名称
+  threadNamePrefix: Tang-Executor #默认线程名称
 
 
 
