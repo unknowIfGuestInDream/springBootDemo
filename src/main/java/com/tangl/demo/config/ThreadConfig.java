@@ -1,8 +1,10 @@
 package com.tangl.demo.config;
 
+import com.tangl.demo.async.AsyncExceptionHandler;
+import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
@@ -18,7 +20,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 @Configuration
 @EnableAsync
-public class ThreadConfig {
+public class ThreadConfig implements AsyncConfigurer {
 
     @Value("${thread.corePoolSize}")//设置核心线程数
     private int corePoolSize;
@@ -31,8 +33,8 @@ public class ThreadConfig {
     @Value("${thread.threadNamePrefix}") //设置默认线程名称
     private String threadNamePrefix;
 
-    @Bean
-    public Executor asyncTaskExecutor() {
+    @Override
+    public Executor getAsyncExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(corePoolSize);
         executor.setMaxPoolSize(maxPoolSize);
@@ -45,6 +47,11 @@ public class ThreadConfig {
         executor.setWaitForTasksToCompleteOnShutdown(true);
         executor.initialize();
         return executor;
+    }
+
+    @Override
+    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+        return new AsyncExceptionHandler();
     }
 
 }
