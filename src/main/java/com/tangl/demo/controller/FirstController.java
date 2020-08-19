@@ -2,6 +2,7 @@ package com.tangl.demo.controller;
 
 import com.alibaba.excel.EasyExcel;
 import com.tangl.demo.annotation.LogAnno;
+import com.tangl.demo.annotation.RepeatSubmit;
 import com.tangl.demo.easyexcel.DemoData;
 import com.tangl.demo.easyexcel.DemoDataListener;
 import com.tangl.demo.easyexcel.NoModelDataListener;
@@ -68,6 +69,7 @@ public class FirstController {
     @PostMapping(value = "selectTest")
     @ResponseBody
     @LogAnno(operateType = "查询Test")
+    @RepeatSubmit
     public Map<String, Object> selectTest(String ID_, String pwd) throws SQLException {
         Map<String, Object> result = new HashMap<String, Object>();
         List<Map<String, Object>> deptList = firstService.selectTest(ID_);

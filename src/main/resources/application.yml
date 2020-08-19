@@ -41,6 +41,9 @@ spring:
       name: tang
       password: tang
   data:
+    redis:
+      repositories:
+        enabled: false
     mongodb:
       username: root
       password: root
