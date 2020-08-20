@@ -162,6 +162,13 @@ thread:
   queueCapacity: 1000 #队列容量
   keepAliveSeconds: 30 #线程活跃时间（秒）
   threadNamePrefix: Tang-Executor #默认线程名称
+xss:
+  # 过滤开关
+  enabled: true
+  # 排除链接（多个用逗号分隔）
+  excludes: /druid/*
+  # 匹配链接
+  urlPatterns: /*
 
 
 
