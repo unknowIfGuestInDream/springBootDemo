@@ -64,7 +64,7 @@ public class XssFilter implements Filter {
             return false;
         }
         String url = request.getServletPath();
-        System.out.println("url: " + url);
+       // System.out.println("url: " + url);
         for (String pattern : excludes) {
             Pattern p = Pattern.compile("^" + pattern);
             Matcher m = p.matcher(url);

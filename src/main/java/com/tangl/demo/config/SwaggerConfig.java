@@ -109,7 +109,7 @@ public class SwaggerConfig {
                 // 描述
                 .description("用于springBoot的练习项目")
                 // 作者信息
-                .contact(new Contact("唐亮", null, null))
+                .contact(new Contact("唐亮", "https://www.baidu.com", null))
                 // 版本
                 .version("版本号:" + "1.1")
                 .build();

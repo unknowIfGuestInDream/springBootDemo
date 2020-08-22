@@ -25,10 +25,10 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
             int length = values.length;
             String[] escapseValues = new String[length];
             for (int i = 0; i < length; i++) {
-                System.out.println(values[i]);
+                //System.out.println(values[i]);
                 // 防xss攻击和过滤前后空格
                 escapseValues[i] = EscapeUtil.clean(values[i]).trim();
-                System.out.println(escapseValues[i]);
+                //System.out.println(escapseValues[i]);
             }
             return escapseValues;
         }

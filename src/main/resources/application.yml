@@ -166,7 +166,7 @@ xss:
   # 过滤开关
   enabled: true
   # 排除链接（多个用逗号分隔）
-  excludes: /druid/*
+  excludes: /druid/*,/js/*,/css/*
   # 匹配链接
   urlPatterns: /*
 
