@@ -33,7 +33,6 @@ public class MemberReadHistoryController {
     @ApiOperation("创建浏览记录")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-
     public Map create(@RequestBody MemberReadHistory memberReadHistory) {
         Map result = new HashMap();
         int count = memberReadHistoryService.create(memberReadHistory);
