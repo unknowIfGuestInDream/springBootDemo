@@ -51,6 +51,9 @@ spring:
       port: 27017 # mongodb的连接端口号
       database: tl # mongodb的连接的数据库
       authenticationDatabase: admin
+    elasticsearch:
+      repositories:
+        enabled: true
   rabbitmq:
     host: 127.0.0.1
     port: 5672
@@ -75,18 +78,36 @@ spring:
           starttls:
             enable: true
             required: true
+  elasticsearch:
+    rest:
+      uris: http://localhost:9200
 #  boot:
 #    admin:
 #      client:
 #        url: http://192.168.1.180:8000/admin-server
 logging:
   level:
-    root: info #日志配置DEBUG,INFO,WARN,ERROR
-    org.springframework.data.mongodb.core: DEBUG
+    root: info #日志配置,DEBUG,INFO,WARN,ERROR
+    #org.springframework.data.mongodb.core: DEBUG
     #    org.springframework.web: debug
     druid:
       sql:
         Statement: DEBUG
+    #org.springframework.data.mongodb.core: DEBUG
+    org:
+      springframework:
+        data:
+          mongodb:
+            core: DEBUG
+          convert:
+            CustomConversions: ERROR
+          elasticsearch:
+            support:
+              VersionInfo: WARN
+          repository:
+            config:
+              RepositoryConfigurationDelegate: WARN
+              RepositoryConfigurationExtensionSupport: WARN
   file:
     path: E:/logs/springBootDemo/
 # actuator监控
