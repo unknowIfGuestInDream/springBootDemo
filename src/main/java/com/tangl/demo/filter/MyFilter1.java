@@ -1,6 +1,7 @@
 package com.tangl.demo.filter;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
@@ -16,8 +17,8 @@ import java.io.IOException;
  * @since: 1.0
  */
 @WebFilter(filterName = "myFilter1", urlPatterns = "/hello")
+@Slf4j
 public class MyFilter1 implements Filter {
-    private Logger logger = Logger.getLogger(MyFilter1.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -40,6 +41,6 @@ public class MyFilter1 implements Filter {
 
     @Override
     public void destroy() {
-        logger.info("myFilter1 destroy");
+        log.info("myFilter1 destroy");
     }
 }
