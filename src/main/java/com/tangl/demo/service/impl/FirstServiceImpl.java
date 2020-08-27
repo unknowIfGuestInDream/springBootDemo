@@ -52,7 +52,7 @@ public class FirstServiceImpl implements FirstService {
     @Override
     public int countTest() {
         String sql = "select count(*) from tx_realtime_parm_test";
-        return tfJdbcTemplate.queryForObject(sql, Integer.class);
+        return txJdbcTemplate.queryForObject(sql, Integer.class);
     }
 
     @CacheEvict(cacheNames = "user", key = "#ID_", beforeInvocation = true)
