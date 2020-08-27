@@ -62,8 +62,8 @@ spring:
     virtualHost: /
     listener:
       simple:
-        concurrency: 100
-        max-concurrency: 1000
+        concurrency: 10
+        max-concurrency: 100
   mail:
     protocol: smtps
     host: smtp.163.com

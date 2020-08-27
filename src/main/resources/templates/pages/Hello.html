@@ -9,6 +9,7 @@
     <script type="text/javascript" src="js/md5.js"></script>
 </head>
 <body>
+<div id="main"></div>
 Hello SpringBootDemo
 <script type="text/javascript">
     $(function () {
@@ -22,7 +23,10 @@ Hello SpringBootDemo
             dataType: "json",
             method: 'POST',
             success: function (data) {
-                console.log(data.result)
+                if (data.success) {
+                } else {
+                    alert(data.message);
+                }
             },
             error: function (data) {
                 alert(data.result);
