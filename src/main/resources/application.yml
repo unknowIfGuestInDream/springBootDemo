@@ -94,6 +94,13 @@ logging:
       sql:
         Statement: DEBUG
     #org.springframework.data.mongodb.core: DEBUG
+    springfox:
+      documentation:
+        spring:
+          web:
+            readers:
+              operation:
+                CachingOperationNameGenerator: WARN
     org:
       springframework:
         data:
@@ -102,6 +109,7 @@ logging:
           convert:
             CustomConversions: ERROR
           elasticsearch:
+            core: DEBUG
             support:
               VersionInfo: WARN
           repository:
