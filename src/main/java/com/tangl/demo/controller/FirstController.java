@@ -66,6 +66,11 @@ public class FirstController {
         return "pages/upload";
     }
 
+    @GetMapping(value = "createErWM")
+    public String createErWM(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+        return "pages/createErWM";
+    }
+
     @PostMapping(value = "selectTest")
     @ResponseBody
     @LogAnno(operateType = "查询Test")

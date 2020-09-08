@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>分享至微信</title>
+    <link rel="icon" th:href="@{favicon.ico}">
+</head>
+<body>
+
+<div id="qrcode" style="margin-bottom: 20px;margin-top: 20px" align="center">
+
+</div>
+<hr class="layui-bg-black">
+<p style="font-size: 14px;color: #999;text-align: center">打开微信扫一扫，分享至朋友圈</p>
+<hr class="layui-bg-black">
+
+<script type="text/javascript" th:src="@{js/jquery-1.12.4.js}"></script>
+<!-- 生成二维码 -->
+<script type="text/javascript" th:src="@{js/jquery.qrcode.min.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+
+    // 生成二维码
+    $(function() {
+        $('#qrcode').qrcode({
+            width: 240,
+            height: 240,
+            text: decodeURIComponent('http://www.baidu.com')
+        });
+    });
+</script>
+</body>
+</html>

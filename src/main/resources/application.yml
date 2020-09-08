@@ -198,6 +198,12 @@ xss:
   excludes: /druid/*,/js/*,/css/*
   # 匹配链接
   urlPatterns: /*
+# MinIO对象存储相关配置
+minio:
+  endpoint: http://localhost:9000 #MinIO服务所在地址
+  bucketName: springbd #存储桶名称
+  accessKey: tangliang #访问的key
+  secretKey: tangliang #访问的秘钥
 
 
 

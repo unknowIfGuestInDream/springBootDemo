@@ -7,10 +7,12 @@
     <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
     <script type="text/javascript" src="js/jquery-1.12.4.js"></script>
     <script type="text/javascript" src="js/md5.js"></script>
+    <script type="text/javascript" src="js/layer/layer.js"></script>
 </head>
 <body>
 <div id="main"></div>
 Hello SpringBootDemo
+<button onclick="shareTo('wechat')">微信</button>
 <script type="text/javascript">
     $(function () {
         $.ajax({
@@ -32,50 +34,21 @@ Hello SpringBootDemo
                 alert(data.result);
             }
         });
-        //
-        // $.ajax({
-        //     async: true,
-        //     url: 'insertTest',
-        //     data: {},
-        //     dataType: "json",
-        //     method: 'POST',
-        //     success: function (data) {
-        //         console.log(data.result)
-        //     },
-        //     error: function (data) {
-        //         alert(data.result);
-        //     }
-        // });
-
-
-        // $.ajax({
-        //     async: true,
-        //     url: 'selectExcel',
-        //     data: {},
-        //     dataType: "json",
-        //     method: 'POST',
-        //     success: function (data) {
-        //         console.log(data.result)
-        //     },
-        //     error: function (data) {
-        //         alert(data.result);
-        //     }
-        // });
-        //
-        // $.ajax({
-        //     async: true,
-        //     url: 'selectExcelNoModel',
-        //     data: {},
-        //     dataType: "json",
-        //     method: 'POST',
-        //     success: function (data) {
-        //         console.log(data.result)
-        //     },
-        //     error: function (data) {
-        //         alert(data.result);
-        //     }
-        // });
     });
+
+    function shareTo(stype) {
+        if (stype == 'wechat') {
+            layer.open({
+                type: 2,
+                title: '扫一扫，分享至微信',
+                shade: 0.2,
+                area: ['300px', '450px'],
+                offset: '100px',
+                shadeClose: false,
+                content: 'createErWM'
+            });
+        }
+    }
 </script>
 </body>
 </html>

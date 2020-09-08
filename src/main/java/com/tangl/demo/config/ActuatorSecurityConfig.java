@@ -36,7 +36,7 @@ public class ActuatorSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //跨域请求放行
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers("/server/servers", "/druid/*").authenticated()
+                //.antMatchers("/server/servers", "/druid/*").authenticated()
                 //对网站静态资源无授权访问
                 .antMatchers(HttpMethod.GET, "/", "/*.html", "/favicon.ico",
                         "/**/*.html", "/**/*.css", "/**/*.js",
