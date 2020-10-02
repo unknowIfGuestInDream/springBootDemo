@@ -18,10 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.Map;
 
 /**
@@ -53,7 +50,7 @@ public class GridFsController {
     @ResponseBody
     public Map listLogs() throws FileNotFoundException {
         //获取要存储的文件
-        File file = new File("C:\\Users\\admin\\Pictures\\Camera Roll\\夕阳大海.jpg");
+        File file = new File("E:\\xfmovie\\adnadd065un.rmvb");
         //将要存储的文件写入输入流
         FileInputStream fileInputStream = new FileInputStream(file);
         //文件开始存储
@@ -76,7 +73,8 @@ public class GridFsController {
     @ResponseBody
     public Map listone() throws IOException {
         //根据文件id查询文件
-        GridFSFile gridFSFile = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is("5f77327ddd664a25189c76ed")));
+        GridFSFile gridFSFile = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is("5f77376c58df9371f0d66149")));
+
         //使用GridFsBucket打开一个下载流对象
         GridFSDownloadStream gridFSDownloadStream = gridFSBucket.openDownloadStream(gridFSFile.getObjectId());
         //创建GridFsResource对象，获取流
@@ -87,13 +85,45 @@ public class GridFsController {
         return null;
     }
 
+    @LogAnno(operateType = "下载mongo文件")
+    @ApiOperation("下载mongo文件")
+    @RequestMapping(value = "/downFs", method = RequestMethod.GET)
+    @ResponseBody
+    public Map download() throws IOException {
+        String fileId = "5f77376c58df9371f0d66149";
+        //根据id查询文件
+        GridFSFile gridFSFile =
+                gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(fileId)));
+        //打开下载流对象
+        GridFSDownloadStream gridFSDownloadStream =
+                gridFSBucket.openDownloadStream(gridFSFile.getObjectId());
+        //创建gridFsResource，用于获取流对象
+        GridFsResource gridFsResource = new GridFsResource(gridFSFile, gridFSDownloadStream);
+        //获取流中的数据
+        InputStream inputStream = gridFsResource.getInputStream();
+        File f1 = new File("D:\\get.rmvb");
+        if (!f1.exists()) {
+            f1.getParentFile().mkdirs();
+        }
+        byte[] bytes = new byte[1024];
+        // 创建基于文件的输出流
+        FileOutputStream fos = new FileOutputStream(f1);
+        int len = 0;
+        while ((len = inputStream.read(bytes)) != -1) {
+            fos.write(bytes, 0, len);
+        }
+        inputStream.close();
+        fos.close();
+        return null;
+    }
+
     @LogAnno(operateType = "删除mongo文件")
     @ApiOperation("删除mongo文件")
     @RequestMapping(value = "/delFs", method = RequestMethod.GET)
     @ResponseBody
     public Map delFs() {
         //根据文件id删除fs.files表和fs.chunks表中的记录
-        gridFsTemplate.delete(Query.query(Criteria.where("_id").is("5f77327ddd664a25189c76ed")));
+        gridFsTemplate.delete(Query.query(Criteria.where("_id").is("5f77376c58df9371f0d66149")));
         return null;
     }
 }
