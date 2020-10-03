@@ -6,8 +6,18 @@ spring:
   servlet:
     multipart:
       enabled: true
-      max-file-size: 100MB
-      max-request-size: 200MB
+      max-file-size: 1000MB
+      max-request-size: 2000MB
+  boot:
+    admin:
+      client:
+        # Spring Boot Admin 服务端地址
+        url: http://tang:123456@192.168.1.105:9301
+        instance:
+          metadata:
+            # 客户端端点信息的安全认证信息
+            user.name: ${spring.security.user.name}
+            user.password: ${spring.security.user.password}
   jackson:
     date-format: yyyy/MM/dd HH:mm:ss
     time-zone: GMT+8
@@ -55,10 +65,10 @@ spring:
       repositories:
         enabled: true
   rabbitmq:
-    host: 127.0.0.1
+    host: 192.168.1.180
     port: 5672
-    username: guest
-    password: guest
+    username: tang
+    password: tang
     virtualHost: /
     listener:
       simple:
@@ -80,7 +90,7 @@ spring:
             required: true
   elasticsearch:
     rest:
-      uris: http://localhost:9200
+      uris: http://192.168.1.105:9200
 #  boot:
 #    admin:
 #      client:
@@ -117,7 +127,7 @@ logging:
               RepositoryConfigurationDelegate: WARN
               RepositoryConfigurationExtensionSupport: WARN
   file:
-    path: E:/logs/springBootDemo/
+    path: demoLog
 # actuator监控
 management:
   security:
@@ -200,7 +210,7 @@ xss:
   urlPatterns: /*
 # MinIO对象存储相关配置
 minio:
-  endpoint: http://localhost:9000 #MinIO服务所在地址
+  endpoint: http://192.168.1.180:9000 #MinIO服务所在地址
   bucketName: springbd #存储桶名称
   accessKey: tangliang #访问的key
   secretKey: tangliang #访问的秘钥

@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 /**
  * @author: TangLiang
@@ -18,6 +19,8 @@ import java.util.Map;
 public interface FirstService {
 
     List<Map<String, Object>> selectTest(String ID_) throws SQLException;
+
+    Future<List<Map<String, Object>>> selectAstncTest(String ID_);
 
     int countTest();
 

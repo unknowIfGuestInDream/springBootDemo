@@ -9,6 +9,7 @@ import com.tangl.demo.easyexcel.NoModelDataListener;
 import com.tangl.demo.service.FirstService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 /**
  * @author: TangLiang
@@ -74,13 +77,28 @@ public class FirstController {
     @PostMapping(value = "selectTest")
     @ResponseBody
     @LogAnno(operateType = "查询Test")
-    @RepeatSubmit
+    //@RepeatSubmit
     public Map<String, Object> selectTest(String ID_, String pwd) throws SQLException {
         Map<String, Object> result = new HashMap<String, Object>();
         List<Map<String, Object>> deptList = firstService.selectTest(ID_);
         int total = firstService.countTest();
         result.put("result", deptList);
         result.put("date", new Date());
+        result.put("total", total);
+        result.put("success", true);
+
+        return result;
+    }
+
+    @GetMapping(value = "selectAstncTest")
+    @ResponseBody
+    //@LogAnno(operateType = "查询Test")
+    @Async
+    public Map<String, Object> selectAstncTest(String ID_, String pwd) throws SQLException, ExecutionException, InterruptedException {
+        Map<String, Object> result = new HashMap<String, Object>();
+        Future<List<Map<String, Object>>> deptList = firstService.selectAstncTest(ID_);
+        int total = firstService.countTest();
+        result.put("result", deptList.get());
         result.put("total", total);
         result.put("success", true);
 

@@ -6,6 +6,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 /**
  * @author: TangLiang
@@ -46,6 +48,22 @@ public class FirstServiceImpl implements FirstService {
         }
         NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(tfJdbcTemplate);
         return namedParameterJdbcTemplate.queryForList(sql, paramMap);
+    }
+
+    @Override
+    public Future<List<Map<String, Object>>> selectAstncTest(String ID_) {
+        Map<String, Object> paramMap = new HashMap<>();
+        String sql = "select * from tx_realtime_parm_test where 1 = 1";
+        if (!StringUtils.isEmpty(ID_)) {
+            sql += " and ID_ = :ID_";
+            paramMap.put("ID_", ID_);
+        }
+        sql += " limit 0,10";
+
+        NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(tfJdbcTemplate);
+        Future<List<Map<String, Object>>> future;
+        future = new AsyncResult<>(namedParameterJdbcTemplate.queryForList(sql, paramMap));
+        return future;
     }
 
     @Cacheable(cacheNames = "userCount", key = "#root.method")

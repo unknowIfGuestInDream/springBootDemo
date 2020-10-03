@@ -7,13 +7,16 @@ spring:
       username: root
       password: mysql
       initialSize: 5
-      maxActive: 20
+      maxActive: 300
       ## 配置获取连接等待超时的时间
-      maxWait: 60000
+      maxWait: 30000
+#      remove-abandoned: true
+#      remove-abandoned-timeout: 20
+#      log-abandoned: true
       ## 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
       timeBetweenEvictionRunsMillis: 60000
       ## 配置一个连接在池中最小生存的时间，单位是毫秒
-      minEvictableIdleTimeMillis: 300000
+      minEvictableIdleTimeMillis: 30000
       ## 校验SQL，Oracle配置 spring.datasource.validationQuery=SELECT 1 FROM DUAL，如果不配validationQuery项，则下面三项配置无用
       validationQuery: SELECT 1
       testWhileIdle: true
@@ -27,17 +30,23 @@ spring:
       useGlobalDataSourceStat: true
     cluster:
       driver-class-name: org.mariadb.jdbc.Driver
-      url: jdbc:mariadb://localhost:3307/mall?characterEncoding=utf-8&useSSL=false&useTimezone=true&serverTimezone=GMT%2B8
+      url: jdbc:mariadb://192.168.1.180:3307/mall?characterEncoding=utf-8&useSSL=false&useTimezone=true&serverTimezone=GMT%2B8
       username: root
       password: root
       initialSize: 5
-      maxActive: 30
+      maxActive: 100
       ## 配置获取连接等待超时的时间
-      maxWait: 60000
+      maxWait: 30000
+      #超时回收
+#      remove-abandoned: true
+#      # 超时连接回收时间，单位秒
+#      remove-abandoned-timeout: 20
+#      # 回收连接时打印日志
+#      log-abandoned: true
       ## 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
       timeBetweenEvictionRunsMillis: 60000
       ## 配置一个连接在池中最小生存的时间，单位是毫秒
-      minEvictableIdleTimeMillis: 300000
+      minEvictableIdleTimeMillis: 30000
       ## 校验SQL，Oracle配置 spring.datasource.validationQuery=SELECT 1 FROM DUAL，如果不配validationQuery项，则下面三项配置无用
       #validationQuery: SELECT 1 FROM DUAL
       testWhileIdle: false
@@ -62,7 +71,7 @@ spring:
         enable: true
         url-pattern: "/druid/*"
         #允许那些ip
-        allow:
+        allow: 192.168.1.180
         login-username:
         login-password:
         #禁止那些ip

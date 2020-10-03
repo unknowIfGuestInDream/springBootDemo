@@ -1,5 +1,6 @@
 package com.tangl.demo;
 
+import co.elastic.apm.attach.ElasticApmAttacher;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
@@ -16,6 +17,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 public class SpringBootDemoApplication {
 
     public static void main(String[] args) {
+        //ElasticApmAttacher.attach();
         SpringApplication.run(SpringBootDemoApplication.class, args);
     }
 
