@@ -1,5 +1,9 @@
 server:
   port: 8080
+  ssl:
+    key-store: classpath:httpsKey.p12 #key-store表示密钥文件名
+    key-alias: tomcathttps #key-alias表示密钥别名
+    key-store-password: 123456 # key-store-password就是在cmd命令执行过程中输入的密码
 spring:
   application:
     name: springBootDemo
