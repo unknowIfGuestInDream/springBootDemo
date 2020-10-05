@@ -2,14 +2,12 @@ package com.tangl.demo.controller;
 
 import com.alibaba.excel.EasyExcel;
 import com.tangl.demo.annotation.LogAnno;
-import com.tangl.demo.annotation.RepeatSubmit;
 import com.tangl.demo.easyexcel.DemoData;
 import com.tangl.demo.easyexcel.DemoDataListener;
 import com.tangl.demo.easyexcel.NoModelDataListener;
 import com.tangl.demo.service.FirstService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -96,9 +94,9 @@ public class FirstController {
     public Map<String, Object> selectAstncTest(String ID_, String pwd) throws SQLException, ExecutionException, InterruptedException {
         Map<String, Object> result = new HashMap<String, Object>();
         Future<List<Map<String, Object>>> deptList = firstService.selectAstncTest(ID_);
-        //int total = firstService.countTest();
+        int total = firstService.countTest();
         result.put("result", deptList.get());
-        //result.put("total", total);
+        result.put("total", total);
         result.put("success", true);
 
         return result;

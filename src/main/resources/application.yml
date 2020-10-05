@@ -107,7 +107,6 @@ logging:
     druid:
       sql:
         Statement: DEBUG
-    #org.springframework.data.mongodb.core: DEBUG
     springfox:
       documentation:
         spring:
@@ -130,6 +129,11 @@ logging:
             config:
               RepositoryConfigurationDelegate: WARN
               RepositoryConfigurationExtensionSupport: WARN
+    com:
+      tangl:
+        demo:
+          config:
+            RedisConfig: DEBUG
   file:
     path: demoLog
 # actuator监控

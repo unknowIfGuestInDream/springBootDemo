@@ -65,11 +65,12 @@ public class FirstServiceImpl implements FirstService {
     public Future<List<Map<String, Object>>> selectAstncTest(String ID_) {
         if (org.apache.commons.lang3.StringUtils.isNotEmpty(ID_)) {
             if (redisService.hasKey("demo:userAsync:" + ID_)) {
-                return new AsyncResult<>((List<Map<String, Object>>) redisService.get(ID_));
+                return new AsyncResult<>((List<Map<String, Object>>) redisService.get("demo:userAsync:" + ID_));
             } else {
                 lock.lock();
                 if (redisService.hasKey("demo:userAsync:" + ID_)) {
-                    return new AsyncResult<>((List<Map<String, Object>>) redisService.get(ID_));
+                    lock.unlock();//释放后会被其他线程占用
+                    return new AsyncResult<>((List<Map<String, Object>>) redisService.get("demo:userAsync:" + ID_));
                 }
             }
         }
