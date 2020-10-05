@@ -93,7 +93,6 @@ public class FirstController {
     @GetMapping(value = "selectAstncTest")
     @ResponseBody
     //@LogAnno(operateType = "查询Test")
-    @Async
     public Map<String, Object> selectAstncTest(String ID_, String pwd) throws SQLException, ExecutionException, InterruptedException {
         Map<String, Object> result = new HashMap<String, Object>();
         Future<List<Map<String, Object>>> deptList = firstService.selectAstncTest(ID_);

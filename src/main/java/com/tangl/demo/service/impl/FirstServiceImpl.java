@@ -6,6 +6,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -51,6 +52,7 @@ public class FirstServiceImpl implements FirstService {
     }
 
     @Override
+    @Async
     public Future<List<Map<String, Object>>> selectAstncTest(String ID_) {
         Map<String, Object> paramMap = new HashMap<>();
         String sql = "select * from tx_realtime_parm_test where 1 = 1";

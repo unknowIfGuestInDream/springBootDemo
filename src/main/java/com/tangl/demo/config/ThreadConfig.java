@@ -19,7 +19,6 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @since: 1.0
  */
 @Configuration
-@EnableAsync
 public class ThreadConfig implements AsyncConfigurer {
 
     @Value("${thread.corePoolSize}")//设置核心线程数
