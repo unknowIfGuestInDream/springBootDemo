@@ -16,6 +16,7 @@ import org.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.interceptor.CacheErrorHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -107,7 +108,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     }
 
     @Bean
-    public CacheManager CacheManager(RedisConnectionFactory redisConnectionFactory) {
+    public CacheManager redisCacheManager(RedisConnectionFactory redisConnectionFactory) {
         RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);
         //设置Redis缓存有效期为1天
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration
@@ -119,5 +120,10 @@ public class RedisConfig extends CachingConfigurerSupport {
                 .disableCachingNullValues();
         //.disableKeyPrefix();
         return new RedisCacheManager(redisCacheWriter, redisCacheConfiguration);
+    }
+
+    @Override
+    public CacheErrorHandler errorHandler() {
+        return new IgnoreExceptionCacheErrorHandler();
     }
 }

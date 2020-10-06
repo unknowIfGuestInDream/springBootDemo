@@ -57,7 +57,7 @@ public class FirstServiceImpl implements FirstService {
         return namedParameterJdbcTemplate.queryForList(sql, paramMap);
     }
 
-    private static Lock lock = new ReentrantLock();
+    private static volatile Lock lock = new ReentrantLock();
 
     @SuppressWarnings("unchecked")
     @Override
