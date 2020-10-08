@@ -67,10 +67,32 @@ public class FirstServiceImpl implements FirstService {
             if (redisService.hasKey("demo:userAsync:" + ID_)) {
                 return new AsyncResult<>((List<Map<String, Object>>) redisService.get("demo:userAsync:" + ID_));
             } else {
-                lock.lock();
-                if (redisService.hasKey("demo:userAsync:" + ID_)) {
-                    lock.unlock();//释放后会被其他线程占用
-                    return new AsyncResult<>((List<Map<String, Object>>) redisService.get("demo:userAsync:" + ID_));
+                if (lock.tryLock()) {
+                    try {
+                        Map<String, Object> paramMap = new HashMap<>();
+                        String sql = "select * from tx_realtime_parm_test where 1 = 1";
+                        if (!StringUtils.isEmpty(ID_)) {
+                            sql += " and ID_ = :ID_";
+                            paramMap.put("ID_", ID_);
+                        }
+                        sql += " limit 0,10";
+
+                        NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(tfJdbcTemplate);
+                        List<Map<String, Object>> result = namedParameterJdbcTemplate.queryForList(sql, paramMap);
+                        redisService.set("demo:userAsync:" + ID_, result, 120L);
+                        return new AsyncResult<>(result);
+                    } finally {
+                        lock.unlock();
+                    }
+                } else {
+                    if (!redisService.hasKey("demo:userAsync:" + ID_)) {
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        return selectAstncTest(ID_);
+                    }
                 }
             }
         }
@@ -81,13 +103,8 @@ public class FirstServiceImpl implements FirstService {
             paramMap.put("ID_", ID_);
         }
         sql += " limit 0,10";
-
         NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(tfJdbcTemplate);
         List<Map<String, Object>> result = namedParameterJdbcTemplate.queryForList(sql, paramMap);
-        if (org.apache.commons.lang3.StringUtils.isNotEmpty(ID_)) {
-            redisService.set("demo:userAsync:" + ID_, result, 120L);
-            lock.unlock();
-        }
         Future<List<Map<String, Object>>> future = new AsyncResult<>(result);
         return future;
     }
