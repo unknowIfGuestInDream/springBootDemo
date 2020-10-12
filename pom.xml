@@ -216,6 +216,11 @@
             <artifactId>guava</artifactId>
             <version>29.0-jre</version>
         </dependency>
+        <!--Spring集成MQTT-->
+        <dependency>
+            <groupId>org.springframework.integration</groupId>
+            <artifactId>spring-integration-mqtt</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

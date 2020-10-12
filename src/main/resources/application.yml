@@ -222,6 +222,12 @@ minio:
   bucketName: springbd #存储桶名称
   accessKey: tangliang #访问的key
   secretKey: tangliang #访问的秘钥
+rabbitmq:
+  mqtt:
+    url: tcp://localhost:1883
+    username: tang
+    password: tang
+    defaultTopic: testTopic
 
 
 

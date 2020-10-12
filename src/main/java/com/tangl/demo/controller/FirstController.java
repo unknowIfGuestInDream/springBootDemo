@@ -47,6 +47,11 @@ public class FirstController {
         return "pages/Hello";
     }
 
+    @GetMapping(value = "mqtt")
+    public String mqtt(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+        return "pages/mqtt";
+    }
+
     @GetMapping(value = "updateT")
     public String updateTest(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
         return "pages/updateTest";
