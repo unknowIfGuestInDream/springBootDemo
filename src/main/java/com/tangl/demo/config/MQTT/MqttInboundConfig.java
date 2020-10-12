@@ -15,7 +15,7 @@ import org.springframework.messaging.MessageHandler;
 import org.springframework.messaging.MessagingException;
 
 /**
- * MQTT消息订阅者相关配置
+ * MQTT消息订阅者相关配置 消费端
  *
  * @author: TangLiang
  * @date: 2020/10/12 22:16
@@ -46,6 +46,7 @@ public class MqttInboundConfig {
     }
 
     @Bean
+    //ServiceActivator注解表明当前方法用于处理MQTT消息，inputChannel参数指定了用于接收消息信息的channel。
     @ServiceActivator(inputChannel = "mqttInputChannel")
     public MessageHandler handler() {
         return new MessageHandler() {
@@ -57,5 +58,19 @@ public class MqttInboundConfig {
             }
 
         };
+
+//        return message -> {
+//            String payload = message.getPayload().toString();
+//            String topic = message.getHeaders().get("mqtt_receivedTopic").toString();
+//            // 根据topic分别进行消息处理。
+//            if (topic.equals("topic1")) {
+//                System.out.println("topic1: 处理消息 " + payload);
+//            } else if (topic.equals("topic2")) {
+//                System.out.println("topic2: 处理消息 " + payload);
+//            } else {
+//                System.out.println(topic + ": 丢弃消息 " + payload);
+//            }
+//        };
+
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 
 /**
- * MQTT消息发布者相关配置
+ * MQTT消息发布者相关配置 发送端
  *
  * @author: TangLiang
  * @date: 2020/10/12 22:17
@@ -36,6 +36,11 @@ public class MqttOutboundConfig {
         return factory;
     }
 
+    /**
+     * 发送消息和消费消息Channel可以使用相同MqttPahoClientFactory
+     *
+     * @return
+     */
     @Bean
     @ServiceActivator(inputChannel = "mqttOutboundChannel")
     public MessageHandler mqttOutbound() {
