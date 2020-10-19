@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Async
 public class ScheduledService {
+    //https://cron.qqe2.com/
 
     //fixedRate：定义一个按一定频率执行的定时任务
     //fixedDelay：定义一个按一定频率执行的定时任务，与上面不同的是，改属性可以配合initialDelay，
