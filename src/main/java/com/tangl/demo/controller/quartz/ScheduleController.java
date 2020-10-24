@@ -9,6 +9,8 @@ import com.tangl.demo.quartz.SendEmailJob;
 import com.tangl.demo.quartz.SendMessageJob;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +32,9 @@ import java.util.Date;
 public class ScheduleController {
     @Autowired
     private ScheduleService scheduleService;
+    @Autowired
+    private Scheduler scheduler;
+    private String defaultGroup = "default_group";
 
     @ApiOperation("定时发送邮件")
     @PostMapping("/sendEmail")
@@ -59,5 +64,12 @@ public class ScheduleController {
     public AjaxResult cancelScheduleJob(@RequestParam String jobName) {
         Boolean success = scheduleService.cancelScheduleJob(jobName);
         return AjaxResult.success(success);
+    }
+
+    @ApiOperation("quartzAPI")
+    @PostMapping("/list")
+    public AjaxResult list(@RequestParam String jobName) throws SchedulerException {
+        System.out.println(scheduler.getCurrentlyExecutingJobs());
+        return AjaxResult.success(true);
     }
 }
