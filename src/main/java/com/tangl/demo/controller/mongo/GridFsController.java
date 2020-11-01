@@ -5,7 +5,6 @@ import com.mongodb.client.gridfs.GridFSDownloadStream;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import com.tangl.demo.annotation.LogAnno;
 import com.tangl.demo.common.AjaxResult;
-import io.minio.policy.PolicyType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -24,8 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Map;
 
 /**
@@ -127,7 +124,7 @@ public class GridFsController {
         GridFsResource gridFsResource = new GridFsResource(gridFSFile, gridFSDownloadStream);
         //获取流中的数据
         InputStream inputStream = gridFsResource.getInputStream();
-        File f1 = new File("D:\\get.rmvb");
+        File f1 = new File("D:\\" + gridFSFile.getFilename());
         if (!f1.exists()) {
             f1.getParentFile().mkdirs();
         }
