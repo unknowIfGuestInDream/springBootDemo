@@ -99,25 +99,27 @@ spring:
 #    admin:
 #      client:
 #        url: http://192.168.1.180:8000/admin-server
-  quartz:
-    job-store-type: jdbc # quartz任务存储类型：jdbc或memory
-    wait-for-jobs-to-complete-on-shutdown: true # 关闭时等待任务完成
-    overwrite-existing-jobs: true # 可以覆盖已有的任务
-    properties: # quartz原生配置
-      org:
-        quartz:
-          scheduler:
-            instanceName: demo-quartz # 调度器实例名称
-            instanceId: AUTO # 调度器实例ID自动生成
-          jobStore:
-            class: org.quartz.impl.jdbcjobstore.JobStoreTX # 调度信息存储处理类
-            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate # 使用完全兼容JDBC的驱动
-            tablePrefix: QRTZ_ # quartz相关表前缀
-            useProperties: false # 是否将JobDataMap中的属性转为字符串存储
-          threadPool:
-            class: org.quartz.simpl.SimpleThreadPool # 指定线程池实现类，对调度器提供固定大小的线程池
-            threadCount: 10 # 设置并发线程数量
-            threadPriority: 5 # 指定线程优先级
+
+
+#  quartz:
+#    job-store-type: jdbc # quartz任务存储类型：jdbc或memory
+#    wait-for-jobs-to-complete-on-shutdown: true # 关闭时等待任务完成
+#    overwrite-existing-jobs: true # 可以覆盖已有的任务
+#    properties: # quartz原生配置
+#      org:
+#        quartz:
+#          scheduler:
+#            instanceName: demo-quartz # 调度器实例名称
+#            instanceId: AUTO # 调度器实例ID自动生成
+#          jobStore:
+#            class: org.quartz.impl.jdbcjobstore.JobStoreTX # 调度信息存储处理类
+#            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate # 使用完全兼容JDBC的驱动
+#            tablePrefix: QRTZ_ # quartz相关表前缀
+#            useProperties: false # 是否将JobDataMap中的属性转为字符串存储
+#          threadPool:
+#            class: org.quartz.simpl.SimpleThreadPool # 指定线程池实现类，对调度器提供固定大小的线程池
+#            threadCount: 10 # 设置并发线程数量
+#            threadPriority: 5 # 指定线程优先级
 logging:
   level:
     root: info #日志配置,DEBUG,INFO,WARN,ERROR
@@ -247,6 +249,12 @@ rabbitmq:
     username: tang
     password: tang
     defaultTopic: testTopic
+#powerjob:
+#  worker:
+#    akka-port: 27777 # akka 工作端口
+#    app-name: demo-powerjob # 接入应用名称，用于分组隔离
+#    server-address: 192.168.1.180:7700 # 调度服务器地址
+#    store-strategy: disk # 持久化方式
 
 
 

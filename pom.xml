@@ -232,6 +232,11 @@
             <artifactId>hutool-all</artifactId>
             <version>4.5.7</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.kfcfans</groupId>
+            <artifactId>powerjob-worker-spring-boot-starter</artifactId>
+            <version>3.2.3</version>
+        </dependency>
     </dependencies>
 
     <build>
