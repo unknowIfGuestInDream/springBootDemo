@@ -63,7 +63,7 @@ spring:
       password: root
       host: localhost # mongodb的连接地址
       port: 27017 # mongodb的连接端口号
-      database: powerjob_daily # mongodb的连接的数据库
+      database: tl # mongodb的连接的数据库
       authenticationDatabase: admin
     elasticsearch:
       repositories:
