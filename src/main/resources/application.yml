@@ -64,7 +64,8 @@ spring:
       host: localhost # mongodb的连接地址
       port: 27017 # mongodb的连接端口号
       database: tl # mongodb的连接的数据库
-      authenticationDatabase: admin
+      authenticationDatabase: adminR
+      grid-fs-database: powerjob_daily
     elasticsearch:
       repositories:
         enabled: true

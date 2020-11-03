@@ -32,8 +32,11 @@ public class MongoConfig {
     @Value("${spring.data.mongodb.port}")
     private Integer port;
 
-    @Value("${spring.data.mongodb.database}")
+    @Value("${spring.data.mongodb.grid-fs-database}")
     private String db;
+
+    @Value("log")
+    private String bucketName;
 
     @Bean
     @Qualifier("mongoClient")
@@ -50,12 +53,12 @@ public class MongoConfig {
     public GridFsTemplate gridFsTemplate(@Qualifier("mongoClient") MongoClient mongoClient, MongoConverter converter) {
         MongoDatabase database = mongoClient.getDatabase(db);
         MongoDatabaseFactory mongoDatabaseFactory = new SimpleMongoClientDatabaseFactory(mongoClient, database.getName());
-        return new GridFsTemplate(mongoDatabaseFactory, converter, "log");
+        return new GridFsTemplate(mongoDatabaseFactory, converter, bucketName);
     }
 
     @Bean
     public GridFSBucket getGridFSBuckets(@Qualifier("mongoClient") MongoClient mongoClient) {
         MongoDatabase database = mongoClient.getDatabase(db);
-        return GridFSBuckets.create(database, "log");
+        return GridFSBuckets.create(database, bucketName);
     }
 }
