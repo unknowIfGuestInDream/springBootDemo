@@ -2,12 +2,17 @@ package com.tangl.demo.config;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 /**
  * 只对EndPoint的访问加验证
@@ -21,6 +26,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class ActuatorSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     Environment env;
+    @Autowired
+    private DataSource dataSource;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -50,11 +57,20 @@ public class ActuatorSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().headers().frameOptions().sameOrigin()
                 //使用记住我的功能
                 .and().rememberMe()
+                .tokenRepository(persistentTokenRepository()) // 配置token持久化仓库
+                .tokenValiditySeconds(3600)
                 //and方法是连接词 formLogin代表使用 Security默认的登录页面
                 .and().formLogin()
                 //httpBasic方法说明启用HTTP基础认证
                 .and().httpBasic();
         // 禁用缓存
         http.headers().cacheControl();
+    }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl persistentTokenRepository = new JdbcTokenRepositoryImpl();
+        persistentTokenRepository.setDataSource(dataSource);
+        return persistentTokenRepository;
     }
 }
