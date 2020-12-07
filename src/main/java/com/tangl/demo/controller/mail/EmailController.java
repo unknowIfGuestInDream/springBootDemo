@@ -23,7 +23,7 @@ import java.io.File;
  * @since: 1.0
  */
 @RestController
-@RequestMapping("/email")
+//@RequestMapping("/email")
 @Api(tags = "邮件业务")
 public class EmailController {
 
@@ -134,6 +134,36 @@ public class EmailController {
             helper.setText(template, true);
             jms.send(message);
             return "发送成功";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
+    }
+
+    @ApiOperation("测试返回模板")
+    @RequestMapping(value = "/getTemplateTest", method = RequestMethod.GET)
+    public String getTemplateTest(String id) {
+        try {
+            Context context = new Context();
+            context.setVariable("id", id);
+            context.setVariable("code", "774875");
+            String template = templateEngine.process("emailTemplate", context);
+            return template;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
+    }
+
+    @ApiOperation("测试返回二级菜单下的模板")
+    @RequestMapping(value = "/getTemplateTestLevel", method = RequestMethod.GET)
+    public String getTemplateTestLevel(String id) {
+        try {
+            Context context = new Context();
+            context.setVariable("id", id);
+            context.setVariable("code", "774875");
+            String template = templateEngine.process("pages/Hello", context);
+            return template;
         } catch (Exception e) {
             e.printStackTrace();
             return e.getMessage();
