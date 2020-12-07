@@ -43,7 +43,7 @@ public class FirstController {
     public String inserthello(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
         Cookie cookie = new Cookie("name", "唐亮");
         response.addCookie(cookie);
-
+        request.setAttribute("curDate", new Date());
         return "pages/Hello";
     }
 
@@ -91,7 +91,7 @@ public class FirstController {
         List<Map<String, Object>> deptList = firstService.selectTest(ID_);
         int total = firstService.countTest();
         result.put("result", deptList);
-        result.put("date", new Date());
+        result.put("curDate", new Date());
         result.put("total", total);
         result.put("success", true);
 

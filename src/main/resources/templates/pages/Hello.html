@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>hello</title>
@@ -12,6 +12,12 @@
 <body>
 <div id="main"></div>
 Hello SpringBootDemo
+<br>
+<span id="s1" th:text="${#dates.format(curDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
+<br>
+<!--<img th:src="@{/images/夕阳大海.jpg}" height="128"/>-->
+<img src="/images/夕阳大海.jpg" alt="夕阳大海" height="128">
+<br>
 <button onclick="shareTo('wechat')">微信</button>
 <script type="text/javascript">
     $(function () {

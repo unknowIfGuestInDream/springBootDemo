@@ -16,6 +16,7 @@ import org.thymeleaf.context.Context;
 
 import javax.mail.internet.MimeMessage;
 import java.io.File;
+import java.util.Date;
 
 /**
  * @author: TangLiang
@@ -160,7 +161,7 @@ public class EmailController {
     public String getTemplateTestLevel(String id) {
         try {
             Context context = new Context();
-            context.setVariable("id", id);
+            context.setVariable("curDate", new Date());
             context.setVariable("code", "774875");
             String template = templateEngine.process("pages/Hello", context);
             return template;
