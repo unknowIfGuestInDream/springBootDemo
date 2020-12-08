@@ -1,12 +1,12 @@
 package com.tangl.demo.aop;
 
+import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.tangl.demo.Document.LogDocument;
 import com.tangl.demo.annotation.LogAnno;
 import com.tangl.demo.util.DateUtils;
 import com.tangl.demo.util.IpUtils;
-import com.tangl.demo.util.uuid.UUID;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
@@ -26,8 +26,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -126,7 +124,8 @@ public class WebLogAspect {
         log.info("方法描述: [{}]  浏览器: [{}]  浏览器版本： [{}]  操作系统: [{}]  用户: [{}]  IP: [{}]  URL: [{}] 参数： [{}]", operateType, browser, version, os, ipName, ip, url, paramJson);
 
         LogDocument logDocument = new LogDocument();
-        logDocument.setId(String.valueOf(UUID.fastUUID()));
+        //logDocument.setId(String.valueOf(UUID.fastUUID()));
+        logDocument.setId(IdUtil.objectId());
         logDocument.setOperateType(operateType);
         logDocument.setBrowser(browser.getName());
         logDocument.setVersion(version.getVersion());
