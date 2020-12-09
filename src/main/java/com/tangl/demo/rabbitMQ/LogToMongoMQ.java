@@ -23,6 +23,11 @@ public class LogToMongoMQ {
 
     //监听logToMongo队列
     @RabbitListener(queuesToDeclare = @Queue("logToMongo"))
+//    @RabbitListener(bindings=@QueueBinding(
+//            value=@Queue("mysolamsg"),
+//            exchange=@Exchange("myexchange"),
+//            key="myso"
+//    ))
     public void receiveMessage(Message message) throws UnsupportedEncodingException {
         String msg = new String(message.getBody(), "utf-8");
         LogDocument logDocument = JSON.parseObject(msg, LogDocument.class);
