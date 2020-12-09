@@ -177,4 +177,30 @@ public class LogMongoController {
         result.put("total", total);
         return result;
     }
+
+    @ApiOperation("查询日志模糊查询")
+    @RequestMapping(value = "/findByOperateTypeLike", method = RequestMethod.GET)
+    @ResponseBody
+    public Map findByOperateTypeLike(String operateType) {
+
+        List<LogDocument> logDocumentList = logTomongoRepository.findByOperateTypeLike(operateType);
+
+        Map result = new HashMap();
+        result.put("success", true);
+        result.put("result", logDocumentList);
+        return result;
+    }
+
+    @ApiOperation("查询日志时间查询")
+    @RequestMapping(value = "/findByCreateTimeBetween", method = RequestMethod.GET)
+    @ResponseBody
+    public Map findByCreateTimeBetween(String start, String end) {
+
+        List<LogDocument> logDocumentList = logTomongoRepository.findByCreateTimeBetween(start, end);
+
+        Map result = new HashMap();
+        result.put("success", true);
+        result.put("result", logDocumentList);
+        return result;
+    }
 }

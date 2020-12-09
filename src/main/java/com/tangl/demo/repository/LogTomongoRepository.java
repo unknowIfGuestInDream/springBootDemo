@@ -1,8 +1,9 @@
 package com.tangl.demo.repository;
 
 import com.tangl.demo.Document.LogDocument;
-import com.tangl.demo.rabbitMQ.LogToMongoMQ;
 import org.springframework.data.mongodb.repository.MongoRepository;
+
+import java.util.List;
 
 /**
  * 会员商品浏览历史Repository
@@ -12,4 +13,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * @since: 1.0
  */
 public interface LogTomongoRepository extends MongoRepository<LogDocument, String> {
+    List<LogDocument> findByOperateTypeLike(String operateType);
+
+    List<LogDocument> findByCreateTimeBetween(String start, String end);
 }
