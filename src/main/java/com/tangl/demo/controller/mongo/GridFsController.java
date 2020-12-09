@@ -1,5 +1,7 @@
 package com.tangl.demo.controller.mongo;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.gridfs.GridFSDownloadStream;
 import com.mongodb.client.gridfs.model.GridFSFile;
@@ -23,6 +25,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,6 +45,16 @@ public class GridFsController {
     @Autowired
     GridFSBucket gridFSBucket;
 
+    @LogAnno(operateType = "查询所有mongodb文件信息")
+    @ApiOperation("查询所有mongodb文件信息")
+    @RequestMapping(value = "/listAll", method = RequestMethod.GET)
+    @ResponseBody
+    public Map listAll() throws IOException {
+        List<GridFSFile> fileList = new ArrayList<>();
+        gridFsTemplate.find(new Query()).into(fileList);
+        return AjaxResult.success(fileList);
+    }
+
     /**
      * GridFs存储文件的测试
      * 将文件按大小256k分割存到mongodb数据库
@@ -49,8 +63,8 @@ public class GridFsController {
      *
      * @throws FileNotFoundException
      */
-    @LogAnno(operateType = "上传文件至mongodb")
-    @ApiOperation("上传文件")
+    @LogAnno(operateType = "上传文件至mongodb(死数据)")
+    @ApiOperation("上传文件至mongodb(死数据)")
     @RequestMapping(value = "/uploadFS", method = RequestMethod.GET)
     @ResponseBody
     public Map listLogs() throws FileNotFoundException {
@@ -66,14 +80,18 @@ public class GridFsController {
         return null;
     }
 
-    @ApiOperation("文件上传")
+    @LogAnno(operateType = "上传文件至mongodb")
+    @ApiOperation("上传文件至mongodb")
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
     public AjaxResult upload(@RequestParam("file") MultipartFile file) throws IOException {
         try {
             String filename = file.getOriginalFilename();
+
+            DBObject metaData = new BasicDBObject();
+            metaData.put("user", "tang");
             //文件开始存储
-            ObjectId objectId = gridFsTemplate.store(file.getInputStream(), filename, file.getContentType());
+            ObjectId objectId = gridFsTemplate.store(file.getInputStream(), filename, file.getContentType(), metaData);
             //获取存储的文件id
             String fileId = objectId.toString();
             log.info("文件上传成功!");
