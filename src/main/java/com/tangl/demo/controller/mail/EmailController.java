@@ -41,6 +41,7 @@ public class EmailController {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom(from);
+            message.setCc(from);//抄送人
             message.setTo("1195542421@qq.com"); // 接收地址
             message.setSubject("一封简单的邮件"); // 标题
             message.setText("使用Spring Boot发送简单邮件。"); // 内容
@@ -125,8 +126,9 @@ public class EmailController {
             message = jms.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setFrom(from);
+            helper.setCc(from);//抄送人
             helper.setTo("1195542421@qq.com"); // 接收地址
-            helper.setSubject("邮件摸板测试"); // 标题
+            helper.setSubject("邮件摸板来信回复"); // 标题
             // 处理邮件模板
             Context context = new Context();
             context.setVariable("id", id);
