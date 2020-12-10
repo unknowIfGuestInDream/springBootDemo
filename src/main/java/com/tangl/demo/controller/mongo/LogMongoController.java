@@ -2,12 +2,19 @@ package com.tangl.demo.controller.mongo;
 
 import com.tangl.demo.Document.LogDocument;
 import com.tangl.demo.annotation.LogAnno;
+import com.tangl.demo.common.AjaxResult;
 import com.tangl.demo.repository.LogTomongoRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.MatchOperation;
+import org.springframework.data.mongodb.core.aggregation.ProjectionOperation;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +36,8 @@ import java.util.Optional;
 public class LogMongoController {
     @Autowired
     private LogTomongoRepository logTomongoRepository;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @ApiOperation("修改日志")
     @RequestMapping(value = "/updateLogs", method = RequestMethod.POST)
@@ -202,5 +211,29 @@ public class LogMongoController {
         result.put("success", true);
         result.put("result", logDocumentList);
         return result;
+    }
+
+    @ApiOperation("复合查询2")
+    @RequestMapping(value = "/aggregations", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> aggregations(String minPrice, String maxPrice) {
+        Criteria priceCriteria = Criteria.where("version").gt(minPrice).andOperator(Criteria.where("version").lt(maxPrice));
+        MatchOperation matchOperation = Aggregation.match(priceCriteria);
+
+//        GroupOperation groupOperation = Aggregation.group("warehouse")
+//                .last("warehouse").as("warehouse")
+//                .addToSet("id").as("productIds")
+//                .avg("price").as("averagePrice")
+//                .sum("price").as("totalRevenue");
+
+        ProjectionOperation projectionOperation = Aggregation.project("operateType", "params", "createTime");
+        //.and("warehouse").previousOperation();
+
+        List<Document> list = mongoTemplate.aggregate(Aggregation.newAggregation(
+                matchOperation,
+                //groupOperation,
+                projectionOperation
+        ), LogDocument.class, Document.class).getMappedResults();
+        return AjaxResult.success(list);
     }
 }
