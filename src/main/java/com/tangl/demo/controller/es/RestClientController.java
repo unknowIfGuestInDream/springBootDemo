@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSON;
 import com.tangl.demo.Document.es.User;
 import com.tangl.demo.common.AjaxResult;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.bulk.BulkRequest;
@@ -38,6 +40,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
@@ -216,22 +219,32 @@ public class RestClientController {
     @ApiOperation(value = "查询文档")
     @RequestMapping(value = "/searchDoc", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> searchDoc(String index) throws IOException {
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "index", value = "索引", dataType = "String", paramType = "query", example = "esuser"),
+            @ApiImplicitParam(name = "keyWork", value = "关键词", dataType = "String", paramType = "query", example = "java"),
+            @ApiImplicitParam(name = "pageNo", value = "页码", dataType = "int", paramType = "query", example = "0"),
+            @ApiImplicitParam(name = "pageNum", value = "每页数量", dataType = "int", paramType = "query", example = "5"),
+            @ApiImplicitParam(name = "field", value = "查询字段", dataType = "String", paramType = "query", example = "work")})
+    public Map<String, Object> searchDoc(@RequestParam(name = "index", defaultValue = "esuser") String index,
+                                         @RequestParam(name = "keyWork", defaultValue = "java") String keyWork,
+                                         @RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
+                                         @RequestParam(name = "pageNum", defaultValue = "5") Integer pageNum,
+                                         @RequestParam(name = "field", defaultValue = "work") String field) throws IOException {
         SearchRequest req = new SearchRequest(index);
 
         //构建查询条件
         SearchSourceBuilder reqSourceBuilder = new SearchSourceBuilder();
         //设置分页
-        reqSourceBuilder.from(0);
-        reqSourceBuilder.size(5);
+        reqSourceBuilder.from(pageNo);
+        reqSourceBuilder.size(pageNum);
         //设置高亮
         HighlightBuilder highlightBuilder = new HighlightBuilder();
-        highlightBuilder.field("title");
+        highlightBuilder.field(field); //field为索引字段
         highlightBuilder.preTags("<span style='color:red'>");
         highlightBuilder.postTags("</span>");
         reqSourceBuilder.highlighter(highlightBuilder);
         //term查询
-        TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery("title", "java");
+        TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery(field, keyWork);
         reqSourceBuilder.query(termQueryBuilder);
         reqSourceBuilder.timeout(new TimeValue(5, TimeUnit.SECONDS));
 
@@ -250,7 +263,7 @@ public class RestClientController {
         for (SearchHit hit : resp.getHits().getHits()) {
             //解析高亮的字段
             Map<String, HighlightField> highlightFields = hit.getHighlightFields();
-            HighlightField title = highlightFields.get("title");
+            HighlightField title = highlightFields.get(field);
             Map<String, Object> sourceAsMap = hit.getSourceAsMap();
             //解析高亮的字段
             if (title != null) {
@@ -260,7 +273,7 @@ public class RestClientController {
                     n_title += text;
                 }
                 //将高亮的字段替换掉原来的字段
-                sourceAsMap.put("title", n_title);
+                sourceAsMap.put(field, n_title);
             }
             list.add(sourceAsMap);
         }
