@@ -260,6 +260,9 @@ rabbitmq:
 dingTalk:
   enabled: true
   webhook-token: https://oapi.dingtalk.com/robot/send?access_token=4963205d35e1fa9555192cba6bfb8c35991e4763f5166fd6eb7c65b9536dd30a
-
+word:
+  picture:
+    request: /Document       #请求映射
+    memory: file:/E:/staticFiles/images/   #存放路径 file:/ + 路径
 
 
