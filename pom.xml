@@ -13,7 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>springBootDemo</name>
-    <description>Demo project for Spring Boot</description>
+    <description>springBoot结合组件学习demo</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -67,6 +67,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--  druid连接池 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
@@ -83,12 +84,12 @@
         <!--<artifactId>commons-httpclient</artifactId>-->
         <!--<version>3.0</version>-->
         <!--</dependency>-->
+        <!--  httpClient工具类，已弃用 -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.5.1</version>
         </dependency>
-
         <!--请求头user-Agent工具类-->
         <dependency>
             <groupId>eu.bitwalker</groupId>
@@ -153,41 +154,50 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.7.0</version>
         </dependency>
+        <!-- spring集成security安全框架-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+        <!-- spring集成mongodb-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
+        <!-- 阿里云短信业务-->
         <dependency>
             <groupId>com.aliyun</groupId>
             <artifactId>aliyun-java-sdk-core</artifactId>
             <version>4.5.3</version>
         </dependency>
+        <!-- spring集成Rabbit消息队列-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
+        <!-- spring集成邮件服务-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
+        <!-- spring集成elasticsearch-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
         </dependency>
+        <!-- logstash依赖-->
         <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
             <version>5.1</version>
         </dependency>
+        <!-- mariadb连接相关依赖-->
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
             <version>2.1.2</version>
         </dependency>
+        <!-- minio文件存储相关依赖-->
         <dependency>
             <groupId>io.minio</groupId>
             <artifactId>minio</artifactId>
@@ -211,6 +221,7 @@
             <artifactId>spring-boot-admin-starter-client</artifactId>
             <version>2.2.4</version>
         </dependency>
+        <!-- 谷歌工具组件-->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -232,11 +243,11 @@
             <artifactId>hutool-all</artifactId>
             <version>4.5.7</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.github.kfcfans</groupId>-->
-<!--            <artifactId>powerjob-worker-spring-boot-starter</artifactId>-->
-<!--            <version>3.2.3</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.github.kfcfans</groupId>-->
+        <!--            <artifactId>powerjob-worker-spring-boot-starter</artifactId>-->
+        <!--            <version>3.2.3</version>-->
+        <!--        </dependency>-->
         <!-- 添加 google 提供的二维码依赖 -->
         <dependency>
             <groupId>com.google.zxing</groupId>
@@ -253,6 +264,7 @@
             <artifactId>commons-codec</artifactId>
             <version>1.10</version>
         </dependency>
+        <!-- 添加 钉钉报警依赖 -->
         <dependency>
             <groupId>com.aliyun</groupId>
             <artifactId>alibaba-dingtalk-service-sdk</artifactId>

@@ -185,7 +185,8 @@ management:
         allowed-methods: post,delete,get,put #允许通过的请求，还有支持时间
 info: #下面的值全部自定义即可
   app:
-    name: springBootDemo
+    name: @name@
+    description: @description@
     version: v1.0.0
     encoding: @project.build.sourceEncoding@  #应用编码
     java:
