@@ -1,6 +1,10 @@
 package com.tangl.demo.controller.websocket;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.json.JSONUtil;
 import com.tangl.demo.common.AjaxResult;
+import com.tangl.demo.domain.Server;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -22,6 +26,7 @@ import java.util.Date;
  * @since: 1.0
  */
 @Controller
+@Slf4j
 public class WsController {
     private final SimpMessagingTemplate messagingTemplate;
 
@@ -33,6 +38,11 @@ public class WsController {
     @GetMapping("websocket")
     public String websocket(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
         return "pages/websocket/index";
+    }
+
+    @GetMapping("websocketserver")
+    public String websocketserver(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+        return "pages/websocket/server";
     }
 
     @MessageMapping("/welcome")
@@ -49,5 +59,18 @@ public class WsController {
         // 发现消息
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         messagingTemplate.convertAndSend("/topic/callback", "定时推送消息时间: " + df.format(new Date()));
+    }
+
+    /**
+     * 按照标准时间来算，每隔 2s 执行一次
+     */
+    //@Scheduled(cron = "0/2 * * * * ?")
+    public void websocket() throws Exception {
+        log.info("【推送消息】开始执行：{}", DateUtil.formatDateTime(new Date()));
+        // 查询服务器状态
+        Server server = new Server();
+        server.copyTo();
+        messagingTemplate.convertAndSend("/topic/server", JSONUtil.toJsonStr(server));
+        log.info("【推送消息】执行结束：{}", DateUtil.formatDateTime(new Date()));
     }
 }
