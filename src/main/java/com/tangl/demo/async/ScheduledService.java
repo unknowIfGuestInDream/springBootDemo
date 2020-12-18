@@ -3,7 +3,6 @@ package com.tangl.demo.async;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 /**
  * 定时任务测试
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Component;
  * @since: 1.0
  */
 @Slf4j
-@Component
+//@Component
 @Async
 public class ScheduledService {
     //https://cron.qqe2.com/

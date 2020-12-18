@@ -1,16 +1,16 @@
 package com.tangl.demo;
 
-import co.elastic.apm.attach.ElasticApmAttacher;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 //开启工作流 activiti
 //@SpringBootApplication(exclude = {SecurityAutoConfiguration.class, org.activiti.spring.boot.SecurityAutoConfiguration.class})
 @SpringBootApplication
-//@EnableScheduling //对定时任务支持
+@EnableScheduling //对定时任务支持
 @EnableCaching
 @EnableAsync
 @ServletComponentScan(basePackages = {"com.tangl.demo.filter", "com.tangl.demo.listener"})
