@@ -1,6 +1,5 @@
 package com.tangl.demo.controller.dingTalk;
 
-import com.tangl.demo.annotation.LogAnno;
 import com.tangl.demo.common.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,7 +24,6 @@ public class DingTalkController {
 
     @GetMapping("dingTalk")
     @ApiOperation("钉钉捕捉异常报警")
-    @LogAnno
     public Map dingTalk() {
         int i = 1 / 0;
         return AjaxResult.success(i);
@@ -33,14 +31,12 @@ public class DingTalkController {
 
     @GetMapping("CommonException")
     @ApiOperation("钉钉捕捉异常报警")
-    @LogAnno(operateType = "钉钉捕捉异常报警")
     public Map CommonException() {
         throw new CommonException(504,"捕捉到未知异常");
     }
 
     @GetMapping("HttpMessageNotReadableException")
     @ApiOperation("钉钉捕捉异常报警")
-    @LogAnno(operateType = "钉钉捕捉异常报警")
     public Map HttpMessageNotReadableException() {
         throw new HttpMessageNotReadableException("abc", new HttpInputMessage() {
             @Override
