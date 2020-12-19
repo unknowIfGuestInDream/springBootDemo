@@ -84,11 +84,14 @@ spring:
     host: smtp.163.com
     port: 994
     username: tang97155@163.com
-    password: ELACZHTZLMLVJYDF
+    password: ENC(SzxV1JbGYtj33t/lu5j/508Dez39Fe44UVhku7bB9hc=)
     default-encoding: UTF-8
     properties:
       mail:
+        display:
+          sendmail: spring-boot-demo
         smtp:
+          ssl: true
           auth: true
           starttls:
             enable: true
@@ -265,5 +268,9 @@ word:
   picture:
     request: /Document       #请求映射
     memory: file:/E:/staticFiles/images/   #存放路径 file:/ + 路径
+# 为 jasypt 配置解密秘钥
+jasypt:
+  encryptor:
+    password: spring-boot-demo
 
 
