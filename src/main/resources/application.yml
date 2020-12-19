@@ -156,8 +156,8 @@ logging:
         demo:
           config:
             RedisConfig: DEBUG
-  file:
-    path: demoLog
+#  file: #日志文件配置在logback中 yml不配置
+#    path: demoLog
 # actuator监控
 management:
   security:
