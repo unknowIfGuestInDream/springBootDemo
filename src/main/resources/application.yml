@@ -99,11 +99,6 @@ spring:
   elasticsearch:
     rest:
       uris: http://localhost:9200
-#  boot:
-#    admin:
-#      client:
-#        url: http://192.168.1.180:8000/admin-server
-
 
 #  quartz:
 #    job-store-type: jdbc # quartz任务存储类型：jdbc或memory
@@ -198,6 +193,7 @@ info: #下面的值全部自定义即可
   author:
     name: tangliang  #作者姓名
     phone: 15566418409  #作者联系方式
+#httpclient配置
 http:
   maxTotal: 500 #设置连接总数
   defaultMaxPerRoute: 100 #设置每个主机最大的并发数
@@ -222,6 +218,7 @@ redis:
       authCode: "demo:authCode:"
     expire:
       authCode: 120 # 验证码超期时间
+#阿里云短信业务
 aliyun:
   sms:
     accessKeyId: LTAI4G6ZehpPRL1MT59QoMoZ
@@ -254,6 +251,7 @@ rabbitmq:
     username: tang
     password: tang
     defaultTopic: testTopic
+#定时任务项目powerjob
 #powerjob:
 #  worker:
 #    akka-port: 27777 # akka 工作端口
@@ -261,9 +259,11 @@ rabbitmq:
 #    server-address: 192.168.1.180:7700 # 调度服务器地址
 #    store-strategy: disk # 持久化方式
 
+#钉钉报警机器人
 dingTalk:
   enabled: true
   webhook-token: https://oapi.dingtalk.com/robot/send?access_token=4963205d35e1fa9555192cba6bfb8c35991e4763f5166fd6eb7c65b9536dd30a
+#虚拟路径
 word:
   picture:
     request: /Document       #请求映射

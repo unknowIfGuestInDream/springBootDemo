@@ -5,7 +5,6 @@ import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
@@ -20,6 +19,26 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 @Configuration
 public class ThreadConfig implements AsyncConfigurer {
+
+    /**
+     * yml配置
+     * spring:
+     *   task:
+     *     execution:
+     *       pool:
+     *         # 最大线程数
+     *         max-size: 16
+     *         # 核心线程数
+     *         core-size: 16
+     *         # 存活时间
+     *         keep-alive: 10s
+     *         # 队列大小
+     *         queue-capacity: 100
+     *         # 是否允许核心线程超时
+     *         allow-core-thread-timeout: true
+     *       # 线程名称前缀
+     *       thread-name-prefix: async-task-
+     */
 
     @Value("${thread.corePoolSize}")//设置核心线程数
     private int corePoolSize;
