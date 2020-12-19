@@ -1,5 +1,6 @@
 package com.tangl.demo.controller.erweima;
 
+import com.tangl.demo.annotation.LogAnno;
 import com.tangl.demo.util.erweima.QRCodeUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 public class QRCodeGeneratorController {
 
     @GetMapping("/generator")
+    @LogAnno(operateType = "二维码生成")
     public void encodeQrCode(String codeContent, HttpServletResponse response) {
         // 嵌入二维码的图片路径
         String imgPath = "C:\\Users\\admin\\Pictures\\Camera Roll\\Q版照片.jpg";

@@ -1,6 +1,7 @@
 package com.tangl.demo.controller.mongo;
 
 import com.tangl.demo.Document.LogDocument;
+import com.tangl.demo.annotation.LogAnno;
 import com.tangl.demo.common.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,6 +42,7 @@ public class AggregationController {
     @ApiOperation("Group聚合操作")
     @RequestMapping(value = "/group", method = RequestMethod.POST)
     @ResponseBody
+    @LogAnno(operateType = "Group聚合操作")
     public Map group() {
 
 //        Criteria criteria = Criteria.where("userId").is(userId);
@@ -73,6 +75,7 @@ public class AggregationController {
     @ApiOperation("project操作")
     @RequestMapping(value = "/project", method = RequestMethod.POST)
     @ResponseBody
+    @LogAnno(operateType = "project操作")
     public Map project() {
         GroupOperation noRepeatGroup = Aggregation.group("operateType", "browser")
                 .count().as("num");
@@ -100,6 +103,7 @@ public class AggregationController {
     @ApiOperation("Bucket操作")
     @RequestMapping(value = "/bucket", method = RequestMethod.POST)
     @ResponseBody
+    @LogAnno(operateType = "Bucket操作")
     public Map bucket() {
         BucketOperation bucketOperation =
                 // 分组的字段
@@ -131,6 +135,7 @@ public class AggregationController {
     @ApiOperation("BucketAuto操作")
     @RequestMapping(value = "/bucketAuto", method = RequestMethod.POST)
     @ResponseBody
+    @LogAnno(operateType = "BucketAuto操作")
     public Map bucketAuto() {
         // 分组的字段
         BucketAutoOperation autoOperation = Aggregation.bucketAuto("version", 2)

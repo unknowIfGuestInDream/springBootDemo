@@ -1,5 +1,6 @@
 package com.tangl.demo.controller.MQTT;
 
+import com.tangl.demo.annotation.LogAnno;
 import com.tangl.demo.common.AjaxResult;
 import com.tangl.demo.config.MQTT.MqttGateway;
 import io.swagger.annotations.Api;
@@ -26,6 +27,7 @@ public class MqttController {
 
     @PostMapping("/sendToDefaultTopic")
     @ApiOperation("向默认主题发送消息")
+    @LogAnno(operateType = "向默认主题发送消息")
     public AjaxResult sendToDefaultTopic(String payload) {
         mqttGateway.sendToMqtt(payload);
         return AjaxResult.success(null);
@@ -33,6 +35,7 @@ public class MqttController {
 
     @PostMapping("/sendToTopic")
     @ApiOperation("向指定主题发送消息")
+    @LogAnno(operateType = "向指定主题发送消息")
     public AjaxResult sendToTopic(String payload, String topic) {
         mqttGateway.sendToMqtt(payload, topic);
         return AjaxResult.success(null);

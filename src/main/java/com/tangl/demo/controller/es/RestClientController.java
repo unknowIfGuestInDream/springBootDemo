@@ -3,6 +3,7 @@ package com.tangl.demo.controller.es;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.tangl.demo.Document.es.User;
+import com.tangl.demo.annotation.LogAnno;
 import com.tangl.demo.common.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -65,6 +66,7 @@ public class RestClientController {
     @ApiOperation(value = "创建索引")
     @RequestMapping(value = "/createIndex", method = RequestMethod.POST)
     @ResponseBody
+    @LogAnno(operateType = "创建索引")
     public Map<String, Object> createIndex(String index) throws IOException {
         CreateIndexRequest createReq = new CreateIndexRequest(index);
         CreateIndexResponse resp = restHighLevelClient.indices().create(createReq, RequestOptions.DEFAULT);
@@ -75,6 +77,7 @@ public class RestClientController {
     @ApiOperation(value = "判断索引是否存在")
     @RequestMapping(value = "/existIndex", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "判断索引是否存在")
     public Map<String, Object> existIndex(String index) throws IOException {
         final GetIndexRequest indexRequest = new GetIndexRequest(index);
         final boolean exists = restHighLevelClient.indices().exists(indexRequest, RequestOptions.DEFAULT);
@@ -84,6 +87,7 @@ public class RestClientController {
     @ApiOperation(value = "删除索引")
     @RequestMapping(value = "/deleteIndex", method = RequestMethod.DELETE)
     @ResponseBody
+    @LogAnno(operateType = "删除索引")
     public Map<String, Object> deleteIndex(String index) throws IOException {
         DeleteIndexRequest deleteReq = new DeleteIndexRequest(index);
         AcknowledgedResponse resp = restHighLevelClient.indices().delete(deleteReq, RequestOptions.DEFAULT);
@@ -93,6 +97,7 @@ public class RestClientController {
     @ApiOperation(value = "通过id查询数据：")
     @RequestMapping(value = "/getDataById", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "通过id查询数据")
     public Map<String, Object> getDataById(String index, String id) throws IOException {
         final GetRequest request = new GetRequest(index, id);
         final GetResponse response = restHighLevelClient.get(request, RequestOptions.DEFAULT);
@@ -103,6 +108,7 @@ public class RestClientController {
     @ApiOperation(value = "通过索引查询数据：")
     @RequestMapping(value = "/getDataByIndex", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "通过索引查询数据")
     public Map<String, Object> getDataByIndex(String index) throws IOException {
         SearchResponse search = restHighLevelClient.search(new SearchRequest(index), RequestOptions.DEFAULT);
         return AjaxResult.success(search);
@@ -111,6 +117,7 @@ public class RestClientController {
     @ApiOperation(value = "创建文档")
     @RequestMapping(value = "/addDoc", method = RequestMethod.POST)
     @ResponseBody
+    @LogAnno(operateType = "创建文档")
     public Map<String, Object> addDoc(String index, String id) throws IOException {
         User user = User.builder()
                 .id(id)
@@ -138,6 +145,7 @@ public class RestClientController {
     @ApiOperation(value = "判断文档是否存在")
     @RequestMapping(value = "/existDoc", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "判断文档是否存在")
     public Map<String, Object> existDoc(String index, String id) throws IOException {
         GetRequest req = new GetRequest(index, id);
         boolean exists = restHighLevelClient.exists(req, RequestOptions.DEFAULT);
@@ -147,6 +155,7 @@ public class RestClientController {
     @ApiOperation(value = "根据id获取文档")
     @RequestMapping(value = "/getDocById", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "根据id获取文档")
     public Map<String, Object> getDocById(String index, String id) throws IOException {
         GetRequest req = new GetRequest(index, id);
         GetResponse resp = restHighLevelClient.get(req, RequestOptions.DEFAULT);
@@ -156,6 +165,7 @@ public class RestClientController {
     @ApiOperation(value = "修改文档")
     @RequestMapping(value = "/updateDoc", method = RequestMethod.POST)
     @ResponseBody
+    @LogAnno(operateType = "修改文档")
     public Map<String, Object> updateDoc(String index, String id) throws IOException {
         User user = new User();
         user.setDesc("热爱生活和热爱工作");
@@ -174,6 +184,7 @@ public class RestClientController {
     @ApiOperation(value = "根据id删除文档")
     @RequestMapping(value = "/deleteDocById", method = RequestMethod.DELETE)
     @ResponseBody
+    @LogAnno(operateType = "根据id删除文档")
     public Map<String, Object> deleteDocById(String index, String id) throws IOException {
         DeleteRequest req = new DeleteRequest(index, id);
         DeleteResponse resp = restHighLevelClient.delete(req, RequestOptions.DEFAULT);
@@ -183,6 +194,7 @@ public class RestClientController {
     @ApiOperation(value = "批量添加文档")
     @RequestMapping(value = "/bulkAddDoc", method = RequestMethod.POST)
     @ResponseBody
+    @LogAnno(operateType = "批量添加文档")
     public Map<String, Object> bulkAddDoc(String index) throws IOException {
         List<User> userList = new ArrayList<>();
         for (int i = 1; i < 11; i++) {
@@ -219,6 +231,7 @@ public class RestClientController {
     @ApiOperation(value = "查询文档")
     @RequestMapping(value = "/searchDoc", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "查询文档")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "index", value = "索引", dataType = "String", paramType = "query", example = "esuser"),
             @ApiImplicitParam(name = "keyWork", value = "关键词", dataType = "String", paramType = "query", example = "java"),

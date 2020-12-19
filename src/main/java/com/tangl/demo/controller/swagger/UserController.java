@@ -1,7 +1,11 @@
 package com.tangl.demo.controller.swagger;
 
+import com.tangl.demo.annotation.LogAnno;
 import io.swagger.annotations.*;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +32,7 @@ public class UserController {
             @ApiImplicitParam(name = "userName", value = "用户名", dataType = "String", paramType = "query", example = "xingguo"),
             @ApiImplicitParam(name = "age", value = "用户名", dataType = "int", paramType = "query", example = "17")})
     @ApiResponse(code = 400, message = "参数没有填好")
+    @LogAnno(operateType = "获取用户信息")
     public Map getUserInfo(@RequestParam(name = "userName", defaultValue = "张三") String userName,
                            @RequestParam(name = "age") Integer age) {
         Map result = new HashMap();

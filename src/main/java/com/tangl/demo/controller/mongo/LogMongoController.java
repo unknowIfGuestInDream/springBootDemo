@@ -42,6 +42,7 @@ public class LogMongoController {
     @ApiOperation("修改日志")
     @RequestMapping(value = "/updateLogs", method = RequestMethod.POST)
     @ResponseBody
+    @LogAnno(operateType = "修改日志")
     public Map updateLogs(String id, String name) {
         Map result = new HashMap();
         Optional<LogDocument> optional = logTomongoRepository.findById(id);
@@ -61,6 +62,7 @@ public class LogMongoController {
     @ApiOperation("删除所有日志")
     @RequestMapping(value = "/deleteAll", method = RequestMethod.POST)
     @ResponseBody
+    @LogAnno(operateType = "删除所有日志")
     public Map deleteAll() {
         Map result = new HashMap();
         logTomongoRepository.deleteAll();
@@ -95,6 +97,7 @@ public class LogMongoController {
     @ApiOperation("查询日志分页+精确查询")
     @RequestMapping(value = "/findExample", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "查询日志分页+精确查询")
     public Map findExample(String id, Integer page, Integer size) {
         LogDocument logDocument = new LogDocument();
         if (StringUtils.isNotEmpty(id)) {
@@ -116,6 +119,7 @@ public class LogMongoController {
     @ApiOperation("ExampleMatcher匹配查询")
     @RequestMapping(value = "/findExampleLike", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "ExampleMatcher匹配查询日志")
     public Map findExampleLike(String id, String operateType, String browser, Integer page, Integer size) {
         LogDocument logDocument = new LogDocument();
         if (StringUtils.isNotEmpty(id)) {
@@ -151,6 +155,7 @@ public class LogMongoController {
     @ApiOperation("查询日志分页+精确查询+排序")
     @RequestMapping(value = "/findExampleSort", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "查询日志分页+精确查询+排序")
     public Map findExampleSort(Integer page, Integer size) {
         LogDocument logDocument = new LogDocument();
         logDocument.setOperateType("查询Test");
@@ -178,6 +183,7 @@ public class LogMongoController {
     @ApiOperation("查询日志总数")
     @RequestMapping(value = "/findLogSum", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "查询日志总数")
     public Map findLogSum() {
 
         Long total = logTomongoRepository.count();
@@ -190,6 +196,7 @@ public class LogMongoController {
     @ApiOperation("查询日志模糊查询")
     @RequestMapping(value = "/findByOperateTypeLike", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "查询日志模糊查询")
     public Map findByOperateTypeLike(String operateType) {
 
         List<LogDocument> logDocumentList = logTomongoRepository.findByOperateTypeLike(operateType);
@@ -203,6 +210,7 @@ public class LogMongoController {
     @ApiOperation("查询日志时间查询")
     @RequestMapping(value = "/findByCreateTimeBetween", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "查询日志时间查询")
     public Map findByCreateTimeBetween(String start, String end) {
 
         List<LogDocument> logDocumentList = logTomongoRepository.findByCreateTimeBetween(start, end);
@@ -216,6 +224,7 @@ public class LogMongoController {
     @ApiOperation("复合查询2")
     @RequestMapping(value = "/aggregations", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "复合查询2")
     public Map<String, Object> aggregations(String minPrice, String maxPrice) {
         Criteria priceCriteria = Criteria.where("version").gt(minPrice).andOperator(Criteria.where("version").lt(maxPrice));
         MatchOperation matchOperation = Aggregation.match(priceCriteria);

@@ -1,5 +1,6 @@
 package com.tangl.demo.controller.swagger;
 
+import com.tangl.demo.annotation.LogAnno;
 import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,7 @@ public class TestController {
 
     @ApiOperation("获取用户列表")
     @GetMapping("/list")
+    @LogAnno(operateType = "获取用户列表")
     public Map userList() {
         Map map = new HashMap();
         List<UserEntity> userList = new ArrayList<UserEntity>(users.values());
@@ -34,6 +36,7 @@ public class TestController {
     @ApiOperation("获取用户详细")
     @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "int", paramType = "path")
     @GetMapping("/{userId}")
+    @LogAnno(operateType = "获取用户详细")
     public Map getUser(@PathVariable Integer userId) {
         Map map = new HashMap();
         if (!users.isEmpty() && users.containsKey(userId)) {
@@ -49,6 +52,7 @@ public class TestController {
     @ApiOperation("新增用户")
     @ApiImplicitParam(name = "userEntity", value = "新增用户信息", dataType = "UserEntity")
     @PostMapping("/save")
+    @LogAnno(operateType = "新增用户")
     public Map save(UserEntity user) {
         Map map = new HashMap();
         if (user == null || user.getUserId() == null) {
@@ -64,6 +68,7 @@ public class TestController {
     @ApiOperation("更新用户")
     @ApiImplicitParam(name = "userEntity", value = "新增用户信息", dataType = "UserEntity")
     @PutMapping("/update")
+    @LogAnno(operateType = "更新用户")
     public Map update(UserEntity user) {
         Map map = new HashMap();
         if (user == null || user.getUserId() == null) {
@@ -83,6 +88,7 @@ public class TestController {
     @ApiOperation("删除用户信息")
     @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "int", paramType = "path")
     @DeleteMapping("/{userId}")
+    @LogAnno(operateType = "删除用户信息")
     public Map delete(@PathVariable Integer userId) {
         Map map = new HashMap();
         if (!users.isEmpty() && users.containsKey(userId)) {

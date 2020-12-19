@@ -1,6 +1,7 @@
 package com.tangl.demo.controller.valid;
 
 import com.tangl.demo.Document.valid.Information;
+import com.tangl.demo.annotation.LogAnno;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.BindingResult;
@@ -27,6 +28,7 @@ public class InformationController {
 
     @ApiOperation("传入信息")
     @PostMapping("/infor")
+    @LogAnno(operateType = "传参信息校验")
     public String testDemo(@Valid Information demo, BindingResult bindingResult) {
         StringBuffer stringBuffer = new StringBuffer();
         if (bindingResult.hasErrors()) {

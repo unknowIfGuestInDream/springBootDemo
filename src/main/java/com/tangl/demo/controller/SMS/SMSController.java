@@ -1,6 +1,7 @@
 package com.tangl.demo.controller.SMS;
 
 import com.alibaba.fastjson.JSONObject;
+import com.tangl.demo.annotation.LogAnno;
 import org.apache.http.ParseException;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -39,6 +40,7 @@ public class SMSController {
      * @CreateTime: 2019/4/2 10:06
      */
     @RequestMapping(value = "/sendsmsTest", method = RequestMethod.GET)
+    @LogAnno(operateType = "单发短信")
     public String sendsmsTest() throws URISyntaxException {
         //单发短信API
         JSONObject jsonObject = new JSONObject();
@@ -91,6 +93,7 @@ public class SMSController {
      * @CreateTime: 2019/4/2 11:23
      */
     @RequestMapping(value = "/sendBatchsmsTest", method = RequestMethod.GET)
+    @LogAnno(operateType = "群发短信")
     public String sendBatchsmsTest() {
         //群发短信API
         JSONObject jsonObject = new JSONObject();

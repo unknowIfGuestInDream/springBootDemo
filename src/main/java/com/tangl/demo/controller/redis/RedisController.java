@@ -1,5 +1,6 @@
 package com.tangl.demo.controller.redis;
 
+import com.tangl.demo.annotation.LogAnno;
 import com.tangl.demo.redis.RedisService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +28,7 @@ public class RedisController {
     @ApiOperation("测试简单缓存")
     @RequestMapping(value = "/simpleTest", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "测试简单缓存")
     public Map simpleTest() {
         Map result = new HashMap();
         String key = "redis:simple:" + "1001";
@@ -39,6 +41,7 @@ public class RedisController {
     @ApiOperation("测试简单缓存递增")
     @RequestMapping(value = "/simpleTestIns", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "测试简单缓存递增")
     public Map simpleTestIns() {
         Map result = new HashMap();
         String key = "redis:simple:" + "1001";
@@ -51,6 +54,7 @@ public class RedisController {
     @ApiOperation("测试Hash结构的缓存")
     @RequestMapping(value = "/hashTest", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "测试Hash结构的缓存")
     public Map hashTest() {
         Map result = new HashMap();
         String key = "redis:hash:" + "1002";
@@ -66,6 +70,7 @@ public class RedisController {
     @ApiOperation("测试Hash结构的缓存&添加一个key")
     @RequestMapping(value = "/hashTestKey", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "测试Hash结构的缓存&添加一个key")
     public Map hashTestKey() {
         Map result = new HashMap();
         String key = "redis:hash:" + "1002";
@@ -78,6 +83,7 @@ public class RedisController {
     @ApiOperation("测试Set结构的缓存")
     @RequestMapping(value = "/setTest", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "测试Set结构的缓存")
     public Map setTest() {
         Map result = new HashMap();
         String key = "redis:set:all";
@@ -93,6 +99,7 @@ public class RedisController {
     @ApiOperation("测试List结构的缓存")
     @RequestMapping(value = "/listTest", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "测试List结构的缓存")
     public Map listTest() {
         String key = "redis:list:all";
         Map result = new HashMap();
@@ -109,6 +116,7 @@ public class RedisController {
     @ApiOperation("测试List结构的缓存&根据索引获取")
     @RequestMapping(value = "/listTestIndex", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "测试List结构的缓存&根据索引获取")
     public Map listTestIndex() {
         String key = "redis:list:all";
         Map result = new HashMap();

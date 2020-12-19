@@ -1,6 +1,7 @@
 package com.tangl.demo.controller.es;
 
 import com.tangl.demo.Document.es.EsProduct;
+import com.tangl.demo.annotation.LogAnno;
 import com.tangl.demo.common.AjaxResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -43,6 +44,7 @@ public class EsRestController {
     @ApiOperation(value = "判断索引是否存在")
     @RequestMapping(value = "/existIndex", method = RequestMethod.POST)
     @ResponseBody
+    @LogAnno(operateType = "判断索引是否存在")
     public Map<String, Object> existIndex() throws IOException {
         IndexOperations ops = template.indexOps(EsProduct.class);
         boolean exists = ops.exists();
@@ -52,6 +54,7 @@ public class EsRestController {
     @ApiOperation(value = "通过id查询数据：")
     @RequestMapping(value = "/getDataById", method = RequestMethod.POST)
     @ResponseBody
+    @LogAnno(operateType = "通过id查询数据")
     public Map<String, Object> getDataById(String id) throws IOException {
         //通过id查询，已经废弃
         EsProduct user = template.queryForObject(GetQuery.getById(id), EsProduct.class);
@@ -63,6 +66,7 @@ public class EsRestController {
     @ApiOperation(value = "查询所有")
     @RequestMapping(value = "/getDataByIndex", method = RequestMethod.POST)
     @ResponseBody
+    @LogAnno(operateType = "查询所有")
     public Map<String, Object> getDataByIndex() throws IOException {
         final SearchHits<EsProduct> search = template.search(Query.findAll(), EsProduct.class);
 //        final Iterator<SearchHit<EsProduct>> iterator = search.iterator();
@@ -80,6 +84,7 @@ public class EsRestController {
     @ApiOperation(value = "权重分页搜索")
     @RequestMapping(value = "/getDataByWeights", method = RequestMethod.POST)
     @ResponseBody
+    @LogAnno(operateType = "权重分页搜索")
     public Map<String, Object> getDataByWeights(String keyword, Integer pageNumber, Integer pageSize) throws IOException {
         NativeSearchQueryBuilder searchQuery = new NativeSearchQueryBuilder();
 

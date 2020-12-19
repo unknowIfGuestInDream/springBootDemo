@@ -1,6 +1,7 @@
 package com.tangl.demo.controller.mongo;
 
 import com.tangl.demo.Document.User;
+import com.tangl.demo.annotation.LogAnno;
 import com.tangl.demo.service.impl.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,24 +26,28 @@ public class UserController {
 
     @GetMapping
     @ApiOperation("查询用户")
+    @LogAnno(operateType = "查询用户")
     public List<User> getUsers() {
         return userService.getUsers();
     }
 
     @PostMapping
     @ApiOperation("新建用户")
+    @LogAnno(operateType = "新建用户")
     public User createUser(User user) {
         return userService.createUser(user);
     }
 
     @DeleteMapping("/{id}")
     @ApiOperation("删除用户")
+    @LogAnno(operateType = "删除用户")
     public void deleteUser(@PathVariable String id) {
         userService.deleteUser(id);
     }
 
     @PutMapping("/{id}")
     @ApiOperation("修改用户")
+    @LogAnno(operateType = "修改用户")
     public void updateUser(@PathVariable String id, User user) {
         userService.updateUser(id, user);
     }
@@ -53,6 +58,7 @@ public class UserController {
      */
     @ApiOperation("获得用户")
     @GetMapping("/{id}")
+    @LogAnno(operateType = "获得用户")
     public User getUser(@PathVariable String id) {
         return userService.getUser(id).orElse(null);
     }
@@ -62,6 +68,7 @@ public class UserController {
      */
     @ApiOperation("根据年龄段来查找用户")
     @GetMapping("/age/{from}/{to}")
+    @LogAnno(operateType = "根据年龄段来查找用户")
     public List<User> getUserByAge(@PathVariable Integer from, @PathVariable Integer to) {
         return userService.getUserByAge(from, to);
     }
@@ -71,6 +78,7 @@ public class UserController {
      */
     @GetMapping("/name/{name}")
     @ApiOperation("根据用户名查找用户")
+    @LogAnno(operateType = "根据用户名查找用户")
     public List<User> getUserByName(@PathVariable String name) {
         return userService.getUserByName(name);
     }
@@ -80,6 +88,7 @@ public class UserController {
      */
     @ApiOperation("根据用户描述模糊查找用户")
     @GetMapping("/description/{description}")
+    @LogAnno(operateType = "根据用户描述模糊查找用户")
     public List<User> getUserByDescription(@PathVariable String description) {
         return userService.getUserByDescription(description);
     }
@@ -89,6 +98,7 @@ public class UserController {
      */
     @ApiOperation("根据多个检索条件查询用户")
     @GetMapping("/condition")
+    @LogAnno(operateType = "根据多个检索条件查询用户")
     public Page<User> getUserByCondition(int size, int page, User user) {
         return userService.getUserByCondition(size, page, user);
     }

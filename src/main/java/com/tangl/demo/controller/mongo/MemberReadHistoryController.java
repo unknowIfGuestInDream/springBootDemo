@@ -7,6 +7,7 @@ package com.tangl.demo.controller.mongo;
  */
 
 import com.tangl.demo.Document.MemberReadHistory;
+import com.tangl.demo.annotation.LogAnno;
 import com.tangl.demo.service.MemberReadHistoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,6 +34,7 @@ public class MemberReadHistoryController {
     @ApiOperation("创建浏览记录")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
+    @LogAnno(operateType = "创建浏览记录")
     public Map create(@RequestBody MemberReadHistory memberReadHistory) {
         Map result = new HashMap();
         int count = memberReadHistoryService.create(memberReadHistory);
@@ -47,6 +49,7 @@ public class MemberReadHistoryController {
     @ApiOperation("删除浏览记录")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
+    @LogAnno(operateType = "删除浏览记录")
     public Map delete(@RequestParam("ids") List<String> ids) {
         Map result = new HashMap();
         int count = memberReadHistoryService.delete(ids);
@@ -61,6 +64,7 @@ public class MemberReadHistoryController {
     @ApiOperation("展示浏览记录")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "展示浏览记录")
     public Map list(Long memberId) {
         Map result = new HashMap();
         List<MemberReadHistory> memberReadHistoryList = memberReadHistoryService.list(memberId);

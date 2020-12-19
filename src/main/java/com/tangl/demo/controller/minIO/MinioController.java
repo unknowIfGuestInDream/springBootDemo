@@ -1,5 +1,6 @@
 package com.tangl.demo.controller.minIO;
 
+import com.tangl.demo.annotation.LogAnno;
 import com.tangl.demo.common.AjaxResult;
 import io.minio.MinioClient;
 import io.minio.policy.PolicyType;
@@ -49,6 +50,7 @@ public class MinioController {
     @ApiOperation("文件上传")
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
+    @LogAnno(operateType = "文件上传minio")
     public AjaxResult upload(@RequestParam("file") MultipartFile file) {
         try {
             boolean isExist = minioClient.bucketExists(BUCKET_NAME);
@@ -77,6 +79,7 @@ public class MinioController {
     // fileUrl=http://127.0.0.1:9000/springbd/20200904/%E6%A3%80%E4%BF%AE%E5%86%99%E5%AE%9E%E9%97%AE%E9%A2%980812(1).doc
     @ApiOperation("文件下载")
     @GetMapping("/downloadFile")
+    @LogAnno(operateType = "minio文件下载")
     public void downloadFile(String fileUrl, HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (StringUtils.isBlank(fileUrl)) {
             response.setHeader("Content-type", "text/html;charset=UTF-8");
@@ -126,6 +129,7 @@ public class MinioController {
     @ApiOperation("文件删除")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
+    @LogAnno(operateType = "minio文件删除")
     public AjaxResult delete(@RequestParam("objectName") String objectName) {
         try {
             minioClient.removeObject(BUCKET_NAME, objectName);

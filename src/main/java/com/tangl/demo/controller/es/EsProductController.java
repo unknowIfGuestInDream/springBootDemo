@@ -1,6 +1,7 @@
 package com.tangl.demo.controller.es;
 
 import com.tangl.demo.Document.es.EsProduct;
+import com.tangl.demo.annotation.LogAnno;
 import com.tangl.demo.service.EsProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -29,6 +30,7 @@ public class EsProductController {
     @ApiOperation(value = "导入所有数据库中商品到ES")
     @RequestMapping(value = "/importAll", method = RequestMethod.POST)
     @ResponseBody
+    @LogAnno(operateType = "导入所有数据库中商品到ES")
     public Map<String, Object> importAllList() {
         Map<String, Object> result = new HashMap<>();
         int count = esProductService.importAll();
@@ -40,6 +42,7 @@ public class EsProductController {
     @ApiOperation(value = "根据id删除商品")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "根据id删除商品")
     public Map<String, Object> delete(@PathVariable Long id) {
         Map<String, Object> result = new HashMap<>();
         esProductService.delete(id);
@@ -50,6 +53,7 @@ public class EsProductController {
     @ApiOperation(value = "根据id批量删除商品")
     @RequestMapping(value = "/delete/batch", method = RequestMethod.POST)
     @ResponseBody
+    @LogAnno(operateType = "根据id批量删除商品")
     public Map<String, Object> delete(@RequestParam("ids") List<Long> ids) {
         Map<String, Object> result = new HashMap<>();
         esProductService.delete(ids);
@@ -60,6 +64,7 @@ public class EsProductController {
     @ApiOperation(value = "根据id创建商品")
     @RequestMapping(value = "/create/{id}", method = RequestMethod.POST)
     @ResponseBody
+    @LogAnno(operateType = "根据id创建商品")
     public Map<String, Object> create(@PathVariable Long id) {
         Map<String, Object> result = new HashMap<>();
         EsProduct esProduct = esProductService.create(id);
@@ -75,6 +80,7 @@ public class EsProductController {
     @ApiOperation(value = "简单搜索")
     @RequestMapping(value = "/search/simple", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "简单搜索")
     public Map<String, Object> search(@RequestParam(required = false) String keyword,
                                       @RequestParam(required = false, defaultValue = "0") Integer pageNum,
                                       @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
@@ -90,6 +96,7 @@ public class EsProductController {
             defaultValue = "0", allowableValues = "0,1,2,3,4", paramType = "query", dataType = "integer")
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "综合搜索、筛选、排序")
     public Map<String, Object> search(@RequestParam(required = false) String keyword,
                                       @RequestParam(required = false) Long brandId,
                                       @RequestParam(required = false) Long productCategoryId,
@@ -106,6 +113,7 @@ public class EsProductController {
     @ApiOperation(value = "根据商品id推荐商品")
     @RequestMapping(value = "/recommend/{id}", method = RequestMethod.GET)
     @ResponseBody
+    @LogAnno(operateType = "根据商品id推荐商品")
     public Map<String, Object> recommend(@PathVariable Long id,
                                          @RequestParam(required = false, defaultValue = "0") Integer pageNum,
                                          @RequestParam(required = false, defaultValue = "5") Integer pageSize) {

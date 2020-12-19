@@ -33,13 +33,14 @@ public class DingTalkController {
 
     @GetMapping("CommonException")
     @ApiOperation("钉钉捕捉异常报警")
+    @LogAnno(operateType = "钉钉捕捉异常报警")
     public Map CommonException() {
         throw new CommonException(504,"捕捉到未知异常");
     }
 
     @GetMapping("HttpMessageNotReadableException")
     @ApiOperation("钉钉捕捉异常报警")
-    @LogAnno
+    @LogAnno(operateType = "钉钉捕捉异常报警")
     public Map HttpMessageNotReadableException() {
         throw new HttpMessageNotReadableException("abc", new HttpInputMessage() {
             @Override

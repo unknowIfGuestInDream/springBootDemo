@@ -1,5 +1,6 @@
 package com.tangl.demo.controller.mail;
 
+import com.tangl.demo.annotation.LogAnno;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ public class EmailController {
 
     @ApiOperation("发送简单邮件")
     @RequestMapping(value = "/sendSimpleEmail", method = RequestMethod.GET)
+    @LogAnno(operateType = "发送简单邮件")
     public String sendSimpleEmail() {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
@@ -55,6 +57,7 @@ public class EmailController {
 
     @ApiOperation("发送HTML格式的邮件")
     @RequestMapping(value = "/sendHtmlEmail", method = RequestMethod.GET)
+    @LogAnno(operateType = "发送HTML格式的邮件")
     public String sendHtmlEmail() {
         MimeMessage message = null;
         try {
@@ -76,6 +79,7 @@ public class EmailController {
 
     @ApiOperation("发送带附件的邮件")
     @RequestMapping(value = "/sendAttachmentsMail", method = RequestMethod.GET)
+    @LogAnno(operateType = "发送带附件的邮件")
     public String sendAttachmentsMail() {
         MimeMessage message = null;
         try {
@@ -98,6 +102,7 @@ public class EmailController {
 
     @ApiOperation("发送带静态资源的邮件")
     @RequestMapping(value = "/sendInlineMail", method = RequestMethod.GET)
+    @LogAnno(operateType = "发送带静态资源的邮件")
     public String sendInlineMail() {
         MimeMessage message = null;
         try {
@@ -120,6 +125,7 @@ public class EmailController {
 
     @ApiOperation("发送模板邮件")
     @RequestMapping(value = "/sendTemplateEmail", method = RequestMethod.GET)
+    @LogAnno(operateType = "发送模板邮件")
     public String sendTemplateEmail(String id) {
         MimeMessage message = null;
         try {
@@ -145,6 +151,7 @@ public class EmailController {
 
     @ApiOperation("测试返回模板")
     @RequestMapping(value = "/getTemplateTest", method = RequestMethod.GET)
+    @LogAnno(operateType = "测试返回模板")
     public String getTemplateTest(String id) {
         try {
             Context context = new Context();
@@ -160,6 +167,7 @@ public class EmailController {
 
     @ApiOperation("测试返回二级菜单下的模板")
     @RequestMapping(value = "/getTemplateTestLevel", method = RequestMethod.GET)
+    @LogAnno(operateType = "测试返回二级菜单下的模板")
     public String getTemplateTestLevel(String id) {
         try {
             Context context = new Context();

@@ -1,5 +1,6 @@
 package com.tangl.demo.controller.async;
 
+import com.tangl.demo.annotation.LogAnno;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ public class FutureController {
 
     @PostMapping("/test")
     @ApiOperation(value = "异步测试")
+    @LogAnno(operateType = "异步测试")
     public String isDoneTest() throws InterruptedException, ExecutionException {
         System.out.println("开始访问");
         long l1 = System.currentTimeMillis();

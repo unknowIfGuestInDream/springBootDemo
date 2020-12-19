@@ -2,6 +2,7 @@ package com.tangl.demo.controller.quartz;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
+import com.tangl.demo.annotation.LogAnno;
 import com.tangl.demo.common.AjaxResult;
 import com.tangl.demo.quartz.CronProcessJob;
 import com.tangl.demo.quartz.ScheduleService;
@@ -38,6 +39,7 @@ public class ScheduleController {
 
     @ApiOperation("定时发送邮件")
     @PostMapping("/sendEmail")
+    @LogAnno(operateType = "定时发送邮件")
     public AjaxResult sendEmail(@RequestParam String startTime, @RequestParam String data) {
         Date date = DateUtil.parse(startTime, DatePattern.NORM_DATETIME_FORMAT);
         String jobName = scheduleService.scheduleFixTimeJob(SendEmailJob.class, date, data);
@@ -46,6 +48,7 @@ public class ScheduleController {
 
     @ApiOperation("定时发送站内信")
     @PostMapping("/sendMessage")
+    @LogAnno(operateType = "定时发送站内信")
     public AjaxResult sendMessage(@RequestParam String startTime, @RequestParam String data) {
         Date date = DateUtil.parse(startTime, DatePattern.NORM_DATETIME_FORMAT);
         String jobName = scheduleService.scheduleFixTimeJob(SendMessageJob.class, date, data);
@@ -54,6 +57,7 @@ public class ScheduleController {
 
     @ApiOperation("通过CRON表达式调度任务")
     @PostMapping("/scheduleJob")
+    @LogAnno(operateType = "通过CRON表达式调度任务")
     public AjaxResult scheduleJob(@RequestParam String cron, @RequestParam String data) {
         String jobName = scheduleService.scheduleJob(CronProcessJob.class, cron, data);
         return AjaxResult.success(jobName);
