@@ -31,7 +31,15 @@ public class UserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userName", value = "用户名", dataType = "String", paramType = "query", example = "xingguo"),
             @ApiImplicitParam(name = "age", value = "用户名", dataType = "int", paramType = "query", example = "17")})
-    @ApiResponse(code = 400, message = "参数没有填好")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "成功处理请求"),
+            @ApiResponse(code = 204, message = "成功处理请求，服务器无返回内容"),
+            @ApiResponse(code = 400, message = "参数没有填好"),
+            @ApiResponse(code = 401, message = "没有权限访问该服务"),
+            @ApiResponse(code = 403, message = "权限不足无法访问该服务"),
+            @ApiResponse(code = 404, message = "未发现该微服务"),
+            @ApiResponse(code = 500, message = "服务器内部错误")
+    })
     @LogAnno(operateType = "获取用户信息")
     public Map getUserInfo(@RequestParam(name = "userName", defaultValue = "张三") String userName,
                            @RequestParam(name = "age") Integer age) {

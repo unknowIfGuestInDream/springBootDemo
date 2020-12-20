@@ -1,5 +1,6 @@
 package com.tangl.demo.config;
 
+import com.google.common.base.Predicates;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -57,6 +58,7 @@ public class SwaggerConfig {
                 // .apis(RequestHandlerSelectors.basePackage("com.ruoyi.project.tool.swagger"))
                 // 扫描所有 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
+                .paths(Predicates.not(PathSelectors.regex("/actuator.*")))//actuator路径跳过
                 .build()
                 /* 设置安全模式，swagger可以设置访问token */
                 .securitySchemes(securitySchemes())
@@ -107,9 +109,9 @@ public class SwaggerConfig {
                 // 设置标题
                 .title("springBootDemo接口文档")
                 // 描述
-                .description("用于springBoot的练习项目")
+                .description("springBoot的学习项目")
                 // 作者信息
-                .contact(new Contact("唐亮", "https://www.baidu.com", null))
+                .contact(new Contact("唐亮", "https://gitee.com/tanglchen", "tang97155@163.com"))
                 // 版本
                 .version("版本号:" + "1.1")
                 .build();
