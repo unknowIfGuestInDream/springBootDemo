@@ -1,5 +1,6 @@
 package com.tangl.demo;
 
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
@@ -13,6 +14,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling //对定时任务支持
 @EnableCaching
 @EnableAsync
+@EnableBatchProcessing //对Batch支持
 @ServletComponentScan(basePackages = {"com.tangl.demo.filter", "com.tangl.demo.listener"})
 public class SpringBootDemoApplication {
 

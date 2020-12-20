@@ -286,6 +286,12 @@
             <artifactId>alibaba-dingtalk-service-sdk</artifactId>
             <version>1.0.1</version>
         </dependency>
+        <!-- batch读取xml文件所需依赖 -->
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.4.11.1</version>
+        </dependency>
     </dependencies>
 
     <build>
