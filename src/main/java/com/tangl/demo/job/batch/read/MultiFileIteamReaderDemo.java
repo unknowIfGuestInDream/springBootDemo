@@ -51,8 +51,8 @@ public class MultiFileIteamReaderDemo {
         reader.setDelegate(fileItemReader()); // 设置文件读取代理，方法可以使用前面文件读取中的例子
 
         Resource[] resources = new Resource[]{
-                new ClassPathResource("file1"),
-                new ClassPathResource("file2")
+                new ClassPathResource("batch/file"),
+                new ClassPathResource("batch/file2")
         };
 
         reader.setResources(resources); // 设置多文件源

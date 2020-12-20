@@ -45,7 +45,7 @@ public class JSONFileItemReaderDemo {
 
     private ItemReader<TestData> jsonItemReader() {
         // 设置json文件地址
-        ClassPathResource resource = new ClassPathResource("file.json");
+        ClassPathResource resource = new ClassPathResource("batch/file.json");
         // 设置json文件转换的目标对象类型
         JacksonJsonObjectReader<TestData> jacksonJsonObjectReader = new JacksonJsonObjectReader<>(TestData.class);
         JsonItemReader<TestData> reader = new JsonItemReader<>(resource, jacksonJsonObjectReader);

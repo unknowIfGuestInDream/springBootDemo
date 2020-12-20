@@ -47,7 +47,7 @@ public class FileItemReaderDemo {
 
     private ItemReader<TestData> fileItemReader() {
         FlatFileItemReader<TestData> reader = new FlatFileItemReader<>();
-        reader.setResource(new ClassPathResource("file")); // 设置文件资源地址
+        reader.setResource(new ClassPathResource("batch/file")); // 设置文件资源地址
         reader.setLinesToSkip(1); // 忽略第一行
 
         // AbstractLineTokenizer的三个实现类之一，以固定分隔符处理行数据读取,

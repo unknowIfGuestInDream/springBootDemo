@@ -48,7 +48,7 @@ public class XmlFileItemReaderDemo {
 
     private ItemReader<TestData> xmlFileItemReader() {
         StaxEventItemReader<TestData> reader = new StaxEventItemReader<>();
-        reader.setResource(new ClassPathResource("file.xml")); // 设置xml文件源
+        reader.setResource(new ClassPathResource("batch/file.xml")); // 设置xml文件源
         reader.setFragmentRootElementName("test"); // 指定xml文件的根标签
         // 将xml数据转换为TestData对象
 
