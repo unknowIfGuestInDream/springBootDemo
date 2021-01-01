@@ -4,9 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Random;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionStage;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -17,7 +15,17 @@ import java.util.stream.Stream;
 /**
  * java8 CompletableFuture类
  * 事实证明，只有当每个操作很复杂需要花费相对很长的时间（比如，调用多个其它的系统的接口；]
- * 比如，商品详情页面这种需要从多个系统中查数据显示的）的时候用CompletableFuture才合适，不然区别真的不大，还不如顺序同步执行
+ * 比如，商品详情页面这种需要从多个系统中查数据显示的）的时候用CompletableFuture才合适，
+ * 不然区别真的不大，还不如顺序同步执行
+ *
+ * <p>
+ * 并行流和CompletableFuture两者该如何选择
+ * </p>
+ * 这两者如何选择主要看任务类型，建议
+ * 如果你的任务是计算密集型的，并且没有I/O操作的话，那么推荐你选择Stream的并行流，
+ * 实现简单并行效率也是最高的
+ * 如果你的任务是有频繁的I/O或者网络连接等操作，那么推荐使用CompletableFuture，
+ * 采用自定义线程池的方式，根据服务器的情况设置线程池的大小，尽可能的让CPU忙碌起来
  *
  * @author: TangLiang
  * @date: 2021/1/1 22:09
@@ -56,6 +64,22 @@ public class CompletableFutureTest {
         CompletableFuture<String> async2 = CompletableFuture.supplyAsync(() -> {
             return "hello";
         });
+        String result = async2.get();
+        // String result2 = async2.get(5L, TimeUnit.SECONDS);
+        System.out.println(result);
+    }
+
+    /**
+     * 自定义线程池，优化CompletableFuture
+     *
+     * @throws Exception
+     */
+    @Test
+    public void asyncexecutor() throws Exception {
+        ExecutorService executorService = Executors.newFixedThreadPool(Math.min(5, 50));
+        CompletableFuture<String> async2 = CompletableFuture.supplyAsync(() -> {
+            return "hello";
+        }, executorService);
         String result = async2.get();
         // String result2 = async2.get(5L, TimeUnit.SECONDS);
         System.out.println(result);
@@ -118,6 +142,23 @@ public class CompletableFutureTest {
                 return result;
             }
         });
+        System.out.println(future.get());
+    }
+
+    /**
+     * exceptionally处理异常
+     */
+    @Test
+    public void exceptionally() throws Exception {
+        CompletableFuture<String> future = CompletableFuture
+                .supplyAsync(() -> {
+                    System.out.println("doSomething...");
+                    if (true) {
+                        throw new RuntimeException("Test Exception");
+                    }
+                    return "Finish";
+                })
+                .exceptionally(throwable -> "Throwable exception message:" + throwable.getMessage());
         System.out.println(future.get());
     }
 
