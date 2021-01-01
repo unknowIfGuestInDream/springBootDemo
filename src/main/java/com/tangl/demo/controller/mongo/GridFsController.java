@@ -80,7 +80,7 @@ public class GridFsController {
         return null;
     }
 
-    @LogAnno(operateType = "上传文件至mongodb")
+    //@LogAnno(operateType = "上传文件至mongodb")
     @ApiOperation("上传文件至mongodb")
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody

@@ -32,6 +32,13 @@ public class ItemReaderConfigure {
         testData2.setField2("22");
         testData2.setField3("23");
         data.add(testData2);
+        TestData testData3 = new TestData();
+        testData3.setId(3);
+        testData3.setField1("31");
+        testData3.setField2("32");
+        // 设置为空字符串，用于后面格式校验演示
+        testData3.setField3("");
+        data.add(testData3);
         return new ListItemReader<>(data);
     }
 }

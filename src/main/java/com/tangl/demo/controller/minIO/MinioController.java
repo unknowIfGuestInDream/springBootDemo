@@ -50,7 +50,7 @@ public class MinioController {
     @ApiOperation("文件上传")
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
-    @LogAnno(operateType = "文件上传minio")
+    //@LogAnno(operateType = "文件上传minio")
     public AjaxResult upload(@RequestParam("file") MultipartFile file) {
         try {
             boolean isExist = minioClient.bucketExists(BUCKET_NAME);
