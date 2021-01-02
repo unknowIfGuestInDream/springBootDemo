@@ -52,6 +52,11 @@ public class FirstController {
         return "pages/mqtt";
     }
 
+    @GetMapping(value = "mqtts")
+    public String mqtts(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+        return "pages/mqtts";
+    }
+
     @GetMapping(value = "qr")
     public String qr(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
         return "pages/erweima/qr";
