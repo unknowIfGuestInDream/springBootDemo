@@ -1,4 +1,4 @@
-package com.tangl.demo.config;
+package com.tangl.demo.config.websocket;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -35,5 +35,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         //定义了一个客户端订阅地址的前缀信息，也就是客户端接收服务端发送消息的前缀信息
         registry.enableSimpleBroker("/topic");
+        // 客户端向服务端发送消息需有/app 前缀
+        //registry.setApplicationDestinationPrefixes("/app");
+        // 指定用户发送（一对一）的前缀 /user/
+        //registry.setUserDestinationPrefix("/user/");
     }
 }
