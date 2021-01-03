@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,6 +61,7 @@ public class WsController {
      * 定时推送消息
      */
     @Scheduled(fixedRate = 1000)
+    @Async
     public void callback() {
         // 发现消息
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -69,7 +71,7 @@ public class WsController {
     /**
      * 按照标准时间来算，每隔 2s 执行一次
      */
-    @Scheduled(cron = "0/2 * * * * ?")
+    //@Scheduled(cron = "0/2 * * * * ?")
     //@Async
     public void websocket() throws Exception {
         log.info("【推送消息】开始执行：{}", DateUtil.formatDateTime(new Date()));
