@@ -40,6 +40,11 @@ public class WsController {
         return "pages/websocket/index";
     }
 
+    @GetMapping("websocketclient")
+    public String websocketclient(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+        return "pages/websocket/client";
+    }
+
     @GetMapping("websocketserver")
     public String websocketserver(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
         return "pages/websocket/server";
@@ -64,7 +69,8 @@ public class WsController {
     /**
      * 按照标准时间来算，每隔 2s 执行一次
      */
-    //@Scheduled(cron = "0/2 * * * * ?")
+    @Scheduled(cron = "0/2 * * * * ?")
+    //@Async
     public void websocket() throws Exception {
         log.info("【推送消息】开始执行：{}", DateUtil.formatDateTime(new Date()));
         // 查询服务器状态
