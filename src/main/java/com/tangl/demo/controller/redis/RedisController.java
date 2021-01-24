@@ -5,6 +5,8 @@ import com.tangl.demo.redis.RedisService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.data.redis.cache.RedisCache;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +26,41 @@ import java.util.Map;
 public class RedisController {
     @Autowired
     private RedisService redisService;
+    @Autowired
+    private CacheManager redisCacheManager;
+
+    @ApiOperation("获取缓存")
+    @RequestMapping(value = "/getCache", method = RequestMethod.GET)
+    @ResponseBody
+    @LogAnno(operateType = "获取缓存")
+    public Map getCache() {
+        Map result = new HashMap();
+        result.put("success", true);
+        result.put("result", redisCacheManager.getCacheNames());
+        return result;
+    }
+
+    @ApiOperation("获取某个缓存")
+    @RequestMapping(value = "/getCacheByName", method = RequestMethod.GET)
+    @ResponseBody
+    //@LogAnno(operateType = "获取某个缓存")
+    public RedisCache getCacheByName(String name) {
+//        Map result = new HashMap();
+//        result.put("success", true);
+//        result.put("result", redisCacheManager.getCache(name));
+        return (RedisCache) redisCacheManager.getCache(name);
+    }
+
+    @ApiOperation("获取模糊缓存")
+    @RequestMapping(value = "/gets", method = RequestMethod.GET)
+    @ResponseBody
+    @LogAnno(operateType = "获取模糊缓存")
+    public Map gets(String name) {
+        Map result = new HashMap();
+        result.put("success", true);
+        result.put("result", redisService.gets(name));
+        return result;
+    }
 
     @ApiOperation("测试简单缓存")
     @RequestMapping(value = "/simpleTest", method = RequestMethod.GET)
@@ -35,6 +72,17 @@ public class RedisController {
         redisService.set(key, 1000);
         result.put("success", true);
         result.put("result", redisService.get(key));
+        return result;
+    }
+
+    @ApiOperation("获取简单缓存")
+    @RequestMapping(value = "/getSimpleTest", method = RequestMethod.GET)
+    @ResponseBody
+    @LogAnno(operateType = "获取简单缓存")
+    public Map getSimpleTest(String name) {
+        Map result = new HashMap();
+        result.put("success", true);
+        result.put("result", redisService.get(name));
         return result;
     }
 

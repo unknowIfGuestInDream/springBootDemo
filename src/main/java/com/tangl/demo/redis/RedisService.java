@@ -28,6 +28,11 @@ public interface RedisService {
     Object get(String key);
 
     /**
+     * 模糊查询
+     */
+    Object gets(String pattern);
+
+    /**
      * 删除属性
      */
     Boolean del(String key);

@@ -37,6 +37,11 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
+    public Object gets(String pattern) {
+        return redisTemplate.opsForValue().multiGet(redisTemplate.keys(pattern));
+    }
+
+    @Override
     public Boolean del(String key) {
         return redisTemplate.delete(key);
     }
