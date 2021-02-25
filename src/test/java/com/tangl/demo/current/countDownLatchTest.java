@@ -3,6 +3,7 @@ package com.tangl.demo.current;
 import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSON;
 import com.tangl.demo.Document.LogDocument;
+import com.tangl.demo.async.AsyncCountDown;
 import com.tangl.demo.util.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,8 @@ import java.util.concurrent.CountDownLatch;
 public class countDownLatchTest {
     @Autowired
     private RabbitTemplate rabbitTemplate;
+    @Autowired
+    private AsyncCountDown asyncCountDown;
 
     private static int mobile = 0;
 
@@ -69,5 +72,17 @@ public class countDownLatchTest {
             }
 
         }
+    }
+
+    //和异步结合使用
+    @Test
+    public void async() throws InterruptedException {
+        log.info("=====开始了=====");
+        CountDownLatch countDownLatch = new CountDownLatch(2);
+        asyncCountDown.dealNoReturnTask(countDownLatch);
+        asyncCountDown.dealHaveReturnTask(6, countDownLatch);
+        log.info("=====方法调用完成=====");
+        countDownLatch.await();
+        log.info("=====方法结束=====");
     }
 }
