@@ -43,4 +43,18 @@ public class RunCommandController {
         // 执行自定义命令
         return mongoTemplate.getDb().runCommand(bson);
     }
+
+    /**
+     * https://www.docs4dev.com/docs/zh/mongodb/v3.6/reference/reference-command-connPoolStats.html
+     */
+    @ApiOperation("获取MongoDB Collection信息")
+    @RequestMapping(value = "/getInfo", method = RequestMethod.GET)
+    @ResponseBody
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "jsonCommand", value = "自定义命令", dataType = "String", paramType = "query")})
+    @LogAnno(operateType = "获取MongoDB Collection信息")
+    public Object getInfo(String jsonCommand) {
+        // 执行自定义命令
+        return mongoTemplate.getDb().runCommand(new Document("collStats", "collectionName"));
+    }
 }
