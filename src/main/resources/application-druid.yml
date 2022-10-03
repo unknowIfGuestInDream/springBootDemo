@@ -3,16 +3,16 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     master:
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://192.168.1.180:3306/mydb?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=Asia/Shanghai&autoReconnect=true
-      username: tangl
-      password: mysql
+      url: jdbc:mysql://121.4.62.212:3306/mydb?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=Asia/Shanghai&autoReconnect=true
+      username: tangliang
+      password: tangliang
       initialSize: 5
       maxActive: 300
       ## 配置获取连接等待超时的时间
       maxWait: 30000
-#      remove-abandoned: true
-#      remove-abandoned-timeout: 20
-#      log-abandoned: true
+      #      remove-abandoned: true
+      #      remove-abandoned-timeout: 20
+      #      log-abandoned: true
       ## 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
       timeBetweenEvictionRunsMillis: 60000
       ## 配置一个连接在池中最小生存的时间，单位是毫秒
@@ -71,7 +71,7 @@ spring:
         enable: true
         url-pattern: "/druid/*"
         #允许那些ip
-        allow: 192.168.1.180
+        allow:
         login-username:
         login-password:
         #禁止那些ip

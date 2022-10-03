@@ -16,7 +16,7 @@ spring:
     admin:
       client:
         # Spring Boot Admin 服务端地址
-        url: http://tang:123456@192.168.1.180:9301
+        url: http://tang:123456@121.4.62.212:9301
         instance:
           metadata:
             # 客户端端点信息的安全认证信息
@@ -40,8 +40,8 @@ spring:
   cache:
     type: redis
   redis:
-    host: 127.0.0.1
-    password:
+    host: 121.4.62.212
+    password: ENC(k27pYXuWBDRKKoL7g/AMwr17J/fwm46M)
     database: 1
     timeout: 3000
     lettuce:
@@ -62,18 +62,21 @@ spring:
       username: root
       password: root
       host: localhost # mongodb的连接地址
+      #      username: tangliang
+      #      password: ENC(k27pYXuWBDRKKoL7g/AMwr17J/fwm46M)
+      #      host: 121.4.62.212 # mongodb的连接地址
       port: 27017 # mongodb的连接端口号
       database: tl # mongodb的连接的数据库
-      authenticationDatabase: adminR
+      authenticationDatabase: admin
       grid-fs-database: powerjob_daily
     elasticsearch:
       repositories:
         enabled: true
   rabbitmq:
-    host: 192.168.1.180
+    host: 121.4.62.212
     port: 5672
-    username: tang
-    password: tang
+    username: admin
+    password: ENC(k27pYXuWBDRKKoL7g/AMwr17J/fwm46M)
     virtualHost: /
     listener:
       simple:
@@ -98,10 +101,12 @@ spring:
             required: true
   elasticsearch:
     rest:
-      uris: http://localhost:9200
-#  batch:
-#    job:
-#      enabled: false #关闭Spring Batch启动项目自动运行任务的机制
+      uris: http://121.4.62.212:9200
+      username: elastic
+      password: elastic
+  batch:
+    job:
+      enabled: false #关闭Spring Batch启动项目自动运行任务的机制
 
 #  quartz:
 #    job-store-type: jdbc # quartz任务存储类型：jdbc或memory
@@ -183,6 +188,7 @@ management:
         # 跨域处理
       cors:
         allowed-origins: http://localhost:8080/   #允许跨域的ip地址
+        #allowed-origins: 121.4.62.212   #允许跨域的ip地址
         allowed-methods: post,delete,get,put #允许通过的请求，还有支持时间
 info: #下面的值全部自定义即可
   app:
@@ -224,9 +230,9 @@ redis:
 #阿里云短信业务
 aliyun:
   sms:
-    accessKeyId: LTAI4G6ZehpPRL1MT59QoMoZ
-    accessKeySecret: yFpmuwHsuF630ua1iUBCDa0jcJh0Hy
-    template_code: SMS_198667593
+    accessKeyId: xxxx
+    accessKeySecret: yyyy
+    template_code: zzz
     sign_name: ABC商城
 #线程池配置
 thread:
@@ -244,7 +250,7 @@ xss:
   urlPatterns: /*
 # MinIO对象存储相关配置
 minio:
-  endpoint: http://192.168.1.180:9000 #MinIO服务所在地址
+  endpoint: http://121.4.62.212:9000 #MinIO服务所在地址
   bucketName: springbd #存储桶名称
   accessKey: tangliang #访问的key
   secretKey: tangliang #访问的秘钥
@@ -252,7 +258,7 @@ rabbitmq:
   mqtt:
     url: tcp://localhost:1883
     username: tang
-    password: tang
+    password: ENC(UFFrenEUkRVBDu4w1a+DNg==)
     defaultTopic: testTopic
 #定时任务项目powerjob
 #powerjob:
